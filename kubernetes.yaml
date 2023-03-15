@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sot
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sot
+  template:
+    metadata:
+      labels:
+        app: sot
+    spec:
+      containers:
+        - name: sot
+          image: sot:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: '1'
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sot-balancer
+spec:
+  selector:
+    app: sot
+  ports:
+    - protocol: TCP
+      port: 8000 # The port to expose to the outside
+      targetPort: 8080 # The port the application is running on in the pods
+  type: LoadBalancer
+  sessionAffinity: ClientIP
