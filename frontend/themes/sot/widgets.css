@@ -1,0 +1,13 @@
+.green {
+  stroke: #55BF3B;
+  fill: #55BF3B;
+}
+
+.highcharts-plot-band.band-0 {
+  stroke: #55BF3B;
+  fill: #55BF3B;
+}
+
+/*vaadin-text-field::part(label) {
+  color: green;
+}*/

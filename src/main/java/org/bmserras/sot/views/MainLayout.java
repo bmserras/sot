@@ -12,8 +12,11 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import org.bmserras.sot.components.appnav.AppNav;
 import org.bmserras.sot.components.appnav.AppNavItem;
-import org.bmserras.sot.views.about.AboutView;
+import org.bmserras.sot.views.cabin.CabinView;
 import org.bmserras.sot.views.helloworld.HelloWorldView;
+import org.bmserras.sot.views.map.MapView;
+import org.bmserras.sot.views.widgets.GaugeView;
+import org.bmserras.sot.views.widgets.SolidGaugeView;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 /**
@@ -54,8 +57,14 @@ public class MainLayout extends AppLayout {
         // For documentation, visit https://github.com/vaadin/vcf-nav#readme
         AppNav nav = new AppNav();
 
-        nav.addItem(new AppNavItem("Hello World", HelloWorldView.class, LineAwesomeIcon.GLOBE_SOLID.create()));
-        nav.addItem(new AppNavItem("About", AboutView.class, LineAwesomeIcon.FILE.create()));
+        nav.addItem(new AppNavItem("General View", HelloWorldView.class,
+                LineAwesomeIcon.GLOBE_SOLID.create()));
+        nav.addItem(new AppNavItem("Map", MapView.class, LineAwesomeIcon.MAP.create()));
+        nav.addItem(new AppNavItem("Gauge", GaugeView.class, LineAwesomeIcon.FILE.create()));
+        nav.addItem(new AppNavItem("Solid Gauge", SolidGaugeView.class, LineAwesomeIcon.FILE.create()));
+        nav.addItem(new AppNavItem("Cabin", CabinView.class, LineAwesomeIcon.FILE.create()));
+        nav.addItem(new AppNavItem("List", ListView.class, LineAwesomeIcon.FILE.create()));
+        nav.addItem(new AppNavItem("Form", FormView.class, LineAwesomeIcon.FILE.create()));
 
         return nav;
     }

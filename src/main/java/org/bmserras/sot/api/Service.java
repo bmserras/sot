@@ -7,7 +7,10 @@ import java.io.IOException;
 
 public class Service {
 
-    public Event getLatestData() throws IOException {
+    public Service() {
+    }
+
+    public Event getLatestData(int hostId) throws IOException {
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         MediaType mediaType = MediaType.parse("application/json");
 
@@ -21,14 +24,14 @@ public class Service {
         params.setLimit(1);
         params.setSortorder("DESC");
         params.setSortfield("clock");
-        params.setHostids(10558);
+        params.setHostids(hostId);
 
         getLatestValueInput.setParams(params);
         getLatestValueInput.setId(1);
         getLatestValueInput.setAuth("9be244ebbbc4a773bb8fab8c806d0205");
 
         String bodyRaw = objectMapper.writeValueAsString(getLatestValueInput);
-        System.out.println(bodyRaw);
+        //System.out.println(bodyRaw);
         RequestBody body = RequestBody.create(bodyRaw,
                 mediaType);
 
@@ -41,7 +44,7 @@ public class Service {
 
         String json = response.body().string();
         Event event = objectMapper.readValue(json, Event.class);
-        System.out.println(event.toString());
+        //System.out.println(event.toString());
         return event;
     }
 
