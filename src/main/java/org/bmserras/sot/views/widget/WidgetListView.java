@@ -1,7 +1,6 @@
-package org.bmserras.sot.views;
+package org.bmserras.sot.views.widget;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.contextmenu.SubMenu;
 import com.vaadin.flow.component.grid.Grid;
@@ -16,10 +15,11 @@ import org.bmserras.sot.data.entity.RadarWidget;
 import org.bmserras.sot.data.entity.VideoCameraWidget;
 import org.bmserras.sot.data.entity.Widget;
 import org.bmserras.sot.data.service.WidgetService;
+import org.bmserras.sot.views.MainLayout;
 
-@PageTitle("List View")
-@Route(value = "list", layout = MainLayout.class)
-public class ListView extends VerticalLayout {
+@PageTitle("Widget CRUD")
+@Route(value = "widget-crud", layout = MainLayout.class)
+public class WidgetListView extends VerticalLayout {
 
     Grid<Widget> grid = new Grid<>(Widget.class);
     TextField filterText = new TextField();
@@ -31,7 +31,7 @@ public class ListView extends VerticalLayout {
     RadarWidgetForm radarWidgetForm;
     VideoCameraWidgetForm videoCameraWidgetForm;
 
-    public ListView(WidgetService service) {
+    public WidgetListView(WidgetService service) {
         this.service = service;
         addClassName("list-view");
         setSizeFull();
@@ -48,7 +48,7 @@ public class ListView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassNames("widget-grid");
         grid.setSizeFull();
-        grid.setColumns("identifier", "name", "type");
+        grid.setColumns("identifier", "name");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
         grid.asSingleSelect().addValueChangeListener(event -> {
@@ -112,8 +112,14 @@ public class ListView extends VerticalLayout {
         MenuItem addWidgetMenuItem = optionsMenu.addItem("Add widget");
         SubMenu addWidgetSubMenu = addWidgetMenuItem.getSubMenu();
 
-        addWidgetSubMenu.addItem("Speed Radar", click -> editWidget(new RadarWidget()));
-        addWidgetSubMenu.addItem("Video Camera", click -> editWidget(new VideoCameraWidget()));
+        addWidgetSubMenu.addItem("Speed Radar", click -> {
+            grid.asSingleSelect().clear();
+            editWidget(new RadarWidget());
+        });
+        addWidgetSubMenu.addItem("Video Camera", click -> {
+            grid.asSingleSelect().clear();
+            editWidget(new VideoCameraWidget());
+        });
 
         var toolbar = new HorizontalLayout(filterText, optionsMenu);
         toolbar.addClassName("toolbar");

@@ -15,8 +15,10 @@ import org.bmserras.sot.components.appnav.AppNavItem;
 import org.bmserras.sot.views.cabin.CabinView;
 import org.bmserras.sot.views.helloworld.HelloWorldView;
 import org.bmserras.sot.views.map.MapView;
-import org.bmserras.sot.views.widgets.GaugeView;
-import org.bmserras.sot.views.widgets.SolidGaugeView;
+import org.bmserras.sot.views.gauges.GaugeView;
+import org.bmserras.sot.views.gauges.SolidGaugeView;
+import org.bmserras.sot.views.synoptic.SynopticListView;
+import org.bmserras.sot.views.widget.WidgetListView;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 /**
@@ -63,8 +65,8 @@ public class MainLayout extends AppLayout {
         nav.addItem(new AppNavItem("Gauge", GaugeView.class, LineAwesomeIcon.FILE.create()));
         nav.addItem(new AppNavItem("Solid Gauge", SolidGaugeView.class, LineAwesomeIcon.FILE.create()));
         nav.addItem(new AppNavItem("Cabin", CabinView.class, LineAwesomeIcon.FILE.create()));
-        nav.addItem(new AppNavItem("List", ListView.class, LineAwesomeIcon.FILE.create()));
-        nav.addItem(new AppNavItem("Form", FormView.class, LineAwesomeIcon.FILE.create()));
+        nav.addItem(new AppNavItem("Widget CRUD", WidgetListView.class, LineAwesomeIcon.FILE.create()));
+        nav.addItem(new AppNavItem("Synoptic CRUD", SynopticListView.class, LineAwesomeIcon.FILE.create()));
 
         return nav;
     }

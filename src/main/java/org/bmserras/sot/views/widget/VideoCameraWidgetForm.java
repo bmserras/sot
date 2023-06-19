@@ -1,4 +1,4 @@
-package org.bmserras.sot.views;
+package org.bmserras.sot.views.widget;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.textfield.TextField;

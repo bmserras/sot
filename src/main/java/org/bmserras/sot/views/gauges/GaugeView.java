@@ -1,4 +1,4 @@
-package org.bmserras.sot.views.widgets;
+package org.bmserras.sot.views.gauges;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.charts.Chart;

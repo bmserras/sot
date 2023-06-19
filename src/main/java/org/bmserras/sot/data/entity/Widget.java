@@ -2,30 +2,39 @@ package org.bmserras.sot.data.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+
 @Entity
 @Table(name = "widget")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Widget {
 
     @Id
-    private String identifier;
+    private long identifier;
+
     private String name;
-    private String type;
+
+    @ManyToMany(mappedBy = "widgets")
+    //@OneToMany(mappedBy = "widget")
+    private List<Synoptic> synoptic = new LinkedList<>();
 
     public Widget() {
+        this.identifier = new Date().getTime();
     }
 
-    public Widget(String identifier, String name, String type) {
+    public Widget(int identifier, String name) {
         this.identifier = identifier;
         this.name = name;
-        this.type = type;
     }
 
-    public String getIdentifier() {
+    public long getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(String identifier) {
+    public void setIdentifier(long identifier) {
         this.identifier = identifier;
     }
 
@@ -37,12 +46,12 @@ public abstract class Widget {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public List<Synoptic> getSynoptic() {
+        return synoptic;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setSynoptic(List<Synoptic> synoptic) {
+        this.synoptic = synoptic;
     }
 
     @Override
@@ -50,7 +59,19 @@ public abstract class Widget {
         return "Widget{" +
                 "identifier='" + identifier + '\'' +
                 ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Widget widget = (Widget) o;
+        return identifier == widget.identifier;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(identifier);
     }
 }

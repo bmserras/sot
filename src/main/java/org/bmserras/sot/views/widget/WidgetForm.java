@@ -1,4 +1,4 @@
-package org.bmserras.sot.views;
+package org.bmserras.sot.views.widget;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
@@ -8,6 +8,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.shared.Registration;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public abstract class WidgetForm extends FormLayout {
 
-    private final TextField identifier = new TextField("Identifier");
+    private final NumberField identifier = new NumberField("Identifier");
     private final TextField name = new TextField("Name");
 
     private final Button save = new Button("Save");
@@ -27,7 +28,10 @@ public abstract class WidgetForm extends FormLayout {
     private final Binder<Widget> binder = new Binder<>(Widget.class);
 
     public WidgetForm() {
-        binder.bindInstanceFields(this);
+
+        binder.bind(identifier, widget -> (double) widget.getIdentifier(), null);
+        binder.bind(name, Widget::getName, Widget::setName);
+
         add(identifier, name);
 
         add(createOtherFields());

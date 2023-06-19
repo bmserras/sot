@@ -12,8 +12,8 @@ public class RadarWidget extends Widget {
     public RadarWidget() {
     }
 
-    public RadarWidget(String identifier, String name, String type, String ipAddress, String latitude, String longitude) {
-        super(identifier, name, type);
+    public RadarWidget(int identifier, String name, String ipAddress, String latitude, String longitude) {
+        super(identifier, name);
         this.ipAddress = ipAddress;
         this.latitude = latitude;
         this.longitude = longitude;

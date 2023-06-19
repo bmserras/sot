@@ -11,8 +11,8 @@ public class VideoCameraWidget extends Widget {
     public VideoCameraWidget() {
     }
 
-    public VideoCameraWidget(String identifier, String name, String type, String username, String password) {
-        super(identifier, name, type);
+    public VideoCameraWidget(int identifier, String name, String username, String password) {
+        super(identifier, name);
         this.username = username;
         this.password = password;
     }

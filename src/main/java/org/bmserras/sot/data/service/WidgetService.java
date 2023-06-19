@@ -45,4 +45,8 @@ public class WidgetService {
 
         widgetRepository.delete(widget);
     }
+
+    public List<Widget> findAllWidgets() {
+        return widgetRepository.findAll();
+    }
 }

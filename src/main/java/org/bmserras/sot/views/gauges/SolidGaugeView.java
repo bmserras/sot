@@ -1,4 +1,4 @@
-package org.bmserras.sot.views.widgets;
+package org.bmserras.sot.views.gauges;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.charts.Chart;
@@ -7,7 +7,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import org.bmserras.sot.components.SolidGaugeWidget;
 import org.bmserras.sot.views.MainLayout;
 
 @PageTitle("Solid Gauge")
