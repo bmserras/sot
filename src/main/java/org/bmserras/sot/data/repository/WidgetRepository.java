@@ -11,4 +11,7 @@ public interface WidgetRepository extends JpaRepository<Widget, String> {
 
     @Query("select w from Widget w where lower(w.name) like lower(concat('%', :searchTerm, '%'))")
     List<Widget> search(@Param("searchTerm") String searchTerm);
+
+    @Query("select w from Widget w where w.name = :name")
+    Widget findByName(@Param("name") String name);
 }

@@ -12,4 +12,7 @@ public interface SynopticRepository extends JpaRepository<Synoptic, String> {
     @Query("select s from Synoptic s where lower(s.name) like lower(concat('%', :searchTerm, '%'))")
     List<Synoptic> search(@Param("searchTerm") String searchTerm);
 
+    @Query("select s from Synoptic s where s.name = :name")
+    Synoptic findByName(@Param("name") String name);
+
 }

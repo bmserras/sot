@@ -30,6 +30,11 @@ public abstract class Widget {
         this.name = name;
     }
 
+    public Widget(String name) {
+        this();
+        this.name = name;
+    }
+
     public long getIdentifier() {
         return identifier;
     }

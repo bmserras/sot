@@ -1,7 +1,7 @@
 package org.bmserras.sot.data.service;
 
 import org.bmserras.sot.data.entity.Synoptic;
-import org.bmserras.sot.data.repository.SynopticRepository;
+import org.bmserras.sot.data.entity.Widget;
 import org.bmserras.sot.data.repository.SynopticRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +12,11 @@ public class SynopticService {
 
     private final SynopticRepository synopticRepository;
 
-    public SynopticService(SynopticRepository wsynopticRepository) {
-        this.synopticRepository = wsynopticRepository;
+    private final WidgetService widgetService;
+
+    public SynopticService(SynopticRepository synopticRepository, WidgetService widgetService) {
+        this.synopticRepository = synopticRepository;
+        this.widgetService = widgetService;
     }
 
     public List<Synoptic> findAllSynoptics(String stringFilter) {
@@ -26,15 +29,27 @@ public class SynopticService {
         }
     }
 
-
-    public void saveSynoptic(Synoptic wsynoptic) {
-        if (wsynoptic == null) {
-            return;
-        }
-        synopticRepository.save(wsynoptic);
+    public Synoptic findSynopticByName(String name) {
+        return synopticRepository.findByName(name);
     }
 
-    public void deleteSynoptic(Synoptic wsynoptic) {
-        synopticRepository.delete(wsynoptic);
+
+    public void saveSynoptic(Synoptic synoptic) {
+        if (synoptic == null) {
+            return;
+        }
+        synopticRepository.save(synoptic);
+    }
+
+    public void deleteSynoptic(Synoptic synoptic) {
+        synopticRepository.delete(synoptic);
+    }
+
+    public void addWidget(String synopticName, String widgetName) {
+        Synoptic synoptic = findSynopticByName(synopticName);
+        Widget widget = widgetService.findWidgetByName(widgetName);
+
+        synoptic.addWidget(widget);
+        saveSynoptic(synoptic);
     }
 }

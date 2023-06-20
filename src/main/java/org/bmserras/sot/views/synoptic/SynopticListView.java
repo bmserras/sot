@@ -3,6 +3,7 @@ package org.bmserras.sot.views.synoptic;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -14,15 +15,20 @@ import org.bmserras.sot.data.service.SynopticService;
 import org.bmserras.sot.data.service.WidgetService;
 import org.bmserras.sot.views.MainLayout;
 
+import java.util.function.Consumer;
+
 @PageTitle("Synoptic CRUD")
 @Route(value = "synoptic-crud", layout = MainLayout.class)
 public class SynopticListView extends VerticalLayout {
 
     Grid<Synoptic> grid = new Grid<>(Synoptic.class);
+    SynopticContextMenu contextMenu = new SynopticContextMenu(grid);
+
     TextField filterText = new TextField();
     SynopticForm form;
     SynopticService synopticService;
     WidgetService widgetService;
+
 
     public SynopticListView(SynopticService synopticService, WidgetService widgetService) {
         this.synopticService = synopticService;
@@ -70,8 +76,7 @@ public class SynopticListView extends VerticalLayout {
     public void editSynoptic(Synoptic synoptic) {
         if (synoptic == null) {
             closeEditor();
-        }
-        else {
+        } else {
             form.setSynoptic(synoptic);
             form.setVisible(true);
             addClassName("editing");
@@ -113,6 +118,20 @@ public class SynopticListView extends VerticalLayout {
         synopticService.deleteSynoptic(event.getSynoptic());
         updateList();
         closeEditor();
+    }
+
+    private static class SynopticContextMenu extends GridContextMenu<Synoptic> {
+
+        public SynopticContextMenu(Grid<Synoptic> target) {
+            super(target);
+
+            addItem("Open", click -> getUI().ifPresent(ui ->
+                    click.getItem().ifPresent(synoptic -> ui.navigate("synoptic/" + synoptic.getName()))));
+            addItem("Edit");
+            addItem("Delete");
+
+
+        }
     }
 
 }

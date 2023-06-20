@@ -10,15 +10,21 @@ public class Synoptic {
     @Id
     private long identifier;
 
+    @Column(unique = true)
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="synoptic_widget")
+    @JoinTable(name = "synoptic_widget")
     //@OneToMany(mappedBy = "synoptic")
     private List<Widget> widgets = new ArrayList<>();
 
     public Synoptic() {
         this.identifier = new Date().getTime();
+    }
+
+    public Synoptic(String name) {
+        this();
+        this.name = name;
     }
 
     public Synoptic(long identifier, String name) {
@@ -49,6 +55,8 @@ public class Synoptic {
     public void setWidgets(List<Widget> widgets) {
         this.widgets = widgets;
     }
+
+    public void addWidget(Widget widget) { this.widgets.add(widget); }
 
     @Override
     public String toString() {

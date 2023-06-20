@@ -4,8 +4,6 @@ import org.bmserras.sot.data.entity.Widget;
 import org.bmserras.sot.data.repository.WidgetRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -29,11 +27,6 @@ public class WidgetService {
 
 
     public void saveWidget(Widget widget) {
-        /*if (widgets.get(widget.getIdentifier()) != null)
-            widgets.put(widget.getIdentifier(), widget);
-        else
-            widgets.put(widget.getIdentifier(), widget);*/
-
         if (widget == null) {
             return;
         }
@@ -48,5 +41,9 @@ public class WidgetService {
 
     public List<Widget> findAllWidgets() {
         return widgetRepository.findAll();
+    }
+
+    public Widget findWidgetByName(String name) {
+        return widgetRepository.findByName(name);
     }
 }
