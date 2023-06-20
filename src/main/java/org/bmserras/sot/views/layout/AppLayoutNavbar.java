@@ -1,8 +1,10 @@
 package org.bmserras.sot.views.layout;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.avatar.Avatar;
+import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.contextmenu.SubMenu;
 import com.vaadin.flow.component.html.Image;
@@ -15,6 +17,8 @@ import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.router.RouterLink;
+import org.bmserras.sot.security.AuthenticatedUser;
+import org.bmserras.sot.security.LoginView;
 import org.bmserras.sot.views.project.ProjectsView;
 import org.bmserras.sot.views.widgettype.WidgetsView;
 import org.vaadin.lineawesome.LineAwesomeIcon;
@@ -27,7 +31,11 @@ public class AppLayoutNavbar extends AppLayout {
     private Tabs menu;
     private MenuBar avatar;
 
-    public AppLayoutNavbar() {
+    private AuthenticatedUser authenticatedUser;
+
+    public AppLayoutNavbar(AuthenticatedUser authenticatedUser) {
+
+        this.authenticatedUser = authenticatedUser;
 
         logo = getLogo();
         menu = getMenu();
@@ -71,6 +79,8 @@ public class AppLayoutNavbar extends AppLayout {
 
     private MenuBar getAvatar() {
 
+        String u = authenticatedUser.get().get().getName();
+
         Avatar avatar = new Avatar();
 
         avatar.getStyle().set("margin-right", "20px")
@@ -84,7 +94,22 @@ public class AppLayoutNavbar extends AppLayout {
         subMenu.addItem("Profile");
         subMenu.addItem("Settings");
         subMenu.addItem("Help");
-        subMenu.addItem("Sign out");
+        subMenu.addItem("Sign out " + u, click -> {
+
+            ConfirmDialog dialog = new ConfirmDialog();
+            dialog.setHeader("Are you sure you want to sign out?");
+            dialog.setText("If so, you will be redirected to the login page.");
+
+            dialog.setCancelable(true);
+
+            dialog.setConfirmText("Sign out");
+
+            dialog.addConfirmListener(confirmEvent -> {
+                authenticatedUser.logout();
+            });
+
+            dialog.open();
+        });
 
         return menuBar;
     }

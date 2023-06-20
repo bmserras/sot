@@ -1,71 +1,73 @@
 package org.bmserras.sot.security;
 
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
+import org.bmserras.sot.data.entity.user.User;
+import org.bmserras.sot.data.repository.user.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @EnableWebSecurity
 @Configuration
-public class SecurityConfiguration
-        extends VaadinWebSecurity {
+public class SecurityConfiguration extends VaadinWebSecurity {
+
+    private final UserRepository userRepository;
+
+    public SecurityConfiguration(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        // Delegating the responsibility of general configurations
-        // of http security to the super class. It's configuring
-        // the followings: Vaadin's CSRF protection by ignoring
-        // framework's internal requests, default request cache,
-        // ignoring public views annotated with @AnonymousAllowed,
-        // restricting access to other views/endpoints, and enabling
-        // ViewAccessChecker authorization.
-        // You can add any possible extra configurations of your own
-        // here (the following is just an example):
+    public void configure(HttpSecurity http) throws Exception {
 
-        // http.rememberMe().alwaysRemember(false);
-
-        // Configure your static resources with public access before calling
-        // super.configure(HttpSecurity) as it adds final anyRequest matcher
-        http.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/public/**"))
-                .permitAll();
+        http.authorizeHttpRequests().requestMatchers(
+                new AntPathRequestMatcher("/public/**"),
+                new AntPathRequestMatcher("/icons/**"),
+                new AntPathRequestMatcher("/line-awesome/**/*.svg")
+        ).permitAll();
 
         super.configure(http);
 
-        // This is important to register your login view to the
-        // view access checker mechanism:
+        // Allow access to LoginView
         setLoginView(http, LoginView.class);
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        // Customize your WebSecurity configuration.
-        super.configure(web);
-    }
-
-    /**
-     * Demo UserDetailsManager which only provides two hardcoded
-     * in memory users and their roles.
-     * NOTE: This shouldn't be used in real world applications.
-     */
     @Bean
-    public UserDetailsManager userDetailsService() {
-        UserDetails user =
-                User.withUsername("o")
-                        .password("{noop}o")
-                        .roles("USER")
-                        .build();
-        UserDetails admin =
-                User.withUsername("a")
-                        .password("{noop}a")
-                        .roles("ADMIN")
-                        .build();
-        return new InMemoryUserDetailsManager(user, admin);
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                User user = userRepository.findByName(username);
+                if (user == null) {
+                    throw new UsernameNotFoundException("No user present with username: " + username);
+                } else {
+                    return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPasswordHash(),
+                            getAuthorities(user));
+                }
+            }
+
+            private static List<GrantedAuthority> getAuthorities(User user) {
+                List<GrantedAuthority> list = new ArrayList<>();
+                list.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
+                return list;
+            }
+        };
     }
 }

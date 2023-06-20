@@ -303,10 +303,10 @@ public class SynopticView extends HorizontalLayout implements HasUrlParameter<St
         synopticService.findById(parameter).ifPresent(synoptic -> synopticName.setValue(synoptic.getName()));
         populateCanvas();
 
-        authContext.getAuthenticatedUser(UserDetails.class).map(user -> {
+        /*authContext.getAuthenticatedUser(UserDetails.class).map(user -> {
             if (!user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
                 runSynoptic();
             return null;
-        });
+        });*/
     }
 }

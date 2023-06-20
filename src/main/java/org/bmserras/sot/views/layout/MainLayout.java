@@ -15,7 +15,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import org.bmserras.sot.components.appnav.AppNav;
 import org.bmserras.sot.components.appnav.AppNavItem;
-import org.bmserras.sot.security.SecurityService;
+import org.bmserras.sot.security.AuthenticatedUser;
 import org.bmserras.sot.views.synoptic.SynopticListView;
 import org.bmserras.sot.views.widget.WidgetListView;
 import org.vaadin.lineawesome.LineAwesomeIcon;
@@ -25,11 +25,11 @@ import org.vaadin.lineawesome.LineAwesomeIcon;
  */
 public class MainLayout extends AppLayout {
 
-    private SecurityService securityService;
+    private AuthenticatedUser securityService;
 
     private H2 viewTitle;
 
-    public MainLayout(SecurityService securityService) {
+    public MainLayout(AuthenticatedUser securityService) {
         this.securityService = securityService;
 
         setPrimarySection(Section.DRAWER);
@@ -45,7 +45,7 @@ public class MainLayout extends AppLayout {
         viewTitle.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
 
         HorizontalLayout header;
-        if (securityService.getAuthenticatedUser() != null) {
+        if (securityService.get().isPresent()) {
             Button logout = new Button("Logout", click ->
                     securityService.logout());
             header = new HorizontalLayout(viewTitle, logout);

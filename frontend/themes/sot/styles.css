@@ -28,3 +28,18 @@ html {
 .highlight {
     outline: 6px dotted greenyellow;
 }
+
+.login-form {
+    width: 90%;
+}
+
+.register-form {
+    padding: 24px;
+}
+.register-title {
+    margin-top: 12px;
+}
+.register-button {
+    margin-top: 24px;
+    margin-bottom: 8px;
+}

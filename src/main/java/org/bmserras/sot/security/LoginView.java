@@ -1,12 +1,12 @@
 package org.bmserras.sot.security;
 
-import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.BeforeEnterEvent;
-import com.vaadin.flow.router.BeforeEnterObserver;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.*;
+import com.vaadin.flow.router.internal.RouteUtil;
+import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 @Route("login")
@@ -14,27 +14,33 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @AnonymousAllowed
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
-    private LoginForm login = new LoginForm();
+    private final AuthenticatedUser authenticatedUser;
 
-    public LoginView() {
-        addClassName("login-view");
+    private final Image logo = new Image("icons/logo-variation-sot.svg", "Synoptics of Things");
+    private final LoginForm login = new LoginForm();
+    private final RouterLink register = new RouterLink("Register", RegisterView.class);
+
+    public LoginView(AuthenticatedUser authenticatedUser) {
+        this.authenticatedUser = authenticatedUser;
+
         setSizeFull();
-
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
 
-        login.setAction("login");
+        logo.setWidth("30%");
 
-        add(new H1("Synoptics of Things"), login);
+        login.setAction(RouteUtil.getRoutePath(VaadinService.getCurrent().getContext(), getClass()));
+        login.setForgotPasswordButtonVisible(false);
+
+        add(logo, login, register);
     }
 
     @Override
-    public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-        if(beforeEnterEvent.getLocation()
-                .getQueryParameters()
-                .getParameters()
-                .containsKey("error")) {
-            login.setError(true);
+    public void beforeEnter(BeforeEnterEvent event) {
+        if (authenticatedUser.get().isPresent()) {
+            // Already logged in
+            event.forwardTo("");
         }
+        login.setError(event.getLocation().getQueryParameters().getParameters().containsKey("error"));
     }
 }
