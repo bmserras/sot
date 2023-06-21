@@ -31,7 +31,7 @@ public class SynopticForm extends FormLayout {
 
     private final NumberField identifier = new NumberField("Identifier");
     private final TextField name = new TextField("Name");
-    private final MultiSelectComboBox<Widget> widgets = new MultiSelectComboBox<>("Widgets");
+    //private final MultiSelectComboBox<Widget> widgets = new MultiSelectComboBox<>("Widgets");
 
     private final Button save = new Button("Save");
     private final Button delete = new Button("Delete");
@@ -45,7 +45,7 @@ public class SynopticForm extends FormLayout {
         binder.bind(identifier, synoptic -> (double) synoptic.getIdentifier(), null);
         binder.bind(name, Synoptic::getName, Synoptic::setName);
 
-        widgets.setItems(widgetList);
+        /*widgets.setItems(widgetList);
         widgets.setItemLabelGenerator(Widget::getName);
         binder.forField(widgets)
                 .withConverter(new Converter<Set<Widget>, List<Widget>>() {
@@ -59,9 +59,9 @@ public class SynopticForm extends FormLayout {
                         return new HashSet<>(list);
                     }
                 })
-                .bind(Synoptic::getWidgets, Synoptic::setWidgets);
+                .bind(Synoptic::getWidgets, Synoptic::setWidgets);*/
 
-        add(identifier, name, widgets, createButtonsLayout());
+        add(identifier, name, /*widgets, */createButtonsLayout());
     }
 
     private HorizontalLayout createButtonsLayout() {

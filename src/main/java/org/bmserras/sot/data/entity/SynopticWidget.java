@@ -5,12 +5,12 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-/*@Entity
+@Entity
 @Table(name = "synoptic_widget")
-@IdClass(SynopticWidget.SynopticWidgetId.class)*/
-public class SynopticWidget {
+@IdClass(SynopticWidget.SynopticWidgetId.class)
+public class SynopticWidget implements Serializable {
 
-    /*@Id
+    @Id
     @ManyToOne
     @JoinColumn(name = "synoptic_identifier", referencedColumnName = "identifier")
     private Synoptic synoptic;
@@ -20,10 +20,15 @@ public class SynopticWidget {
     @JoinColumn(name = "widget_identifier", referencedColumnName = "identifier")
     private Widget widget;
 
-    private int posX;
-    private int posy;
+    private int pos;
 
     public SynopticWidget() {
+    }
+
+    public SynopticWidget(Synoptic synoptic, Widget widget, int pos) {
+        this.synoptic = synoptic;
+        this.widget = widget;
+        this.pos = pos;
     }
 
     public Synoptic getSynoptic() {
@@ -42,33 +47,36 @@ public class SynopticWidget {
         this.widget = widget;
     }
 
-    public int getPosX() {
-        return posX;
+    public int getPos() {
+        return pos;
     }
 
-    public void setPosX(int posX) {
-        this.posX = posX;
-    }
-
-    public int getPosy() {
-        return posy;
-    }
-
-    public void setPosy(int posy) {
-        this.posy = posy;
+    public void setPos(int posX) {
+        this.pos = posX;
     }
 
     @Override
     public String toString() {
         return "SynopticWidget{" +
-                "synoptic=" + synoptic +
                 ", widget=" + widget +
-                ", posX=" + posX +
-                ", posy=" + posy +
+                ", posX=" + pos +
                 '}';
     }
 
-    static class SynopticWidgetId implements Serializable {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SynopticWidget that = (SynopticWidget) o;
+        return pos == that.pos && synoptic.equals(that.synoptic) && widget.equals(that.widget);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(synoptic, widget, pos);
+    }
+
+    public static class SynopticWidgetId implements Serializable {
 
         private long synoptic;
         private long widget;
@@ -101,5 +109,5 @@ public class SynopticWidget {
         public int hashCode() {
             return Objects.hash(synoptic, widget);
         }
-    }*/
+    }
 }

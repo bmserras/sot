@@ -2,8 +2,10 @@ package org.bmserras.sot.data;
 
 import org.bmserras.sot.data.entity.RadarWidget;
 import org.bmserras.sot.data.entity.Synoptic;
+import org.bmserras.sot.data.entity.SynopticWidget;
 import org.bmserras.sot.data.entity.Widget;
 import org.bmserras.sot.data.repository.SynopticRepository;
+import org.bmserras.sot.data.repository.SynopticWidgetRepository;
 import org.bmserras.sot.data.repository.WidgetRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class DataTest {
     @Autowired
     SynopticRepository synopticRepository;
 
+    @Autowired
+    SynopticWidgetRepository synopticWidgetRepository;
+
     private void deleteAll() {
         widgetRepository.deleteAll();
         synopticRepository.deleteAll();
@@ -29,9 +34,9 @@ public class DataTest {
     @Test
     public void populateDb() {
 
-        /*deleteAll();
+        deleteAll();
 
-        Widget r1 = new RadarWidget("radar1", "a", "b", "c");
+        /*Widget r1 = new RadarWidget("radar1", "a", "b", "c");
         widgetRepository.save(r1);
 
         Widget r2 = new RadarWidget("radar2", "a", "b", "c");
@@ -43,11 +48,11 @@ public class DataTest {
 
         synopticRepository.save(s1);*/
 
-        Synoptic s1 = synopticRepository.findByName("s1");
+        /*Synoptic s1 = synopticRepository.findByName("s1");
         Widget r2 = widgetRepository.findByName("radar2");
-        s1.addWidget(r2);
+        s1.addWidget(r2, 1);
 
-        synopticRepository.save(s1);
+        synopticRepository.save(s1);*/
     }
 
     /*@Test
@@ -73,6 +78,17 @@ public class DataTest {
         List<Synoptic> all = synopticRepository.findAll();
 
         System.out.println(all);
+
+        Synoptic s1 = synopticRepository.findByName("s1");
+        Widget r1 = widgetRepository.findByName("r1");
+
+
+        SynopticWidget synopticWidget = new SynopticWidget(s1, r1, 1);
+        synopticWidgetRepository.save(synopticWidget);
+
+        /*s1.addWidget(r1, 1);
+
+        System.out.println(s1.getWidgets());*/
 
     }
 

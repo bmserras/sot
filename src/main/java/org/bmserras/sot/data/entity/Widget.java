@@ -3,8 +3,6 @@ package org.bmserras.sot.data.entity;
 import jakarta.persistence.*;
 
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,10 +14,6 @@ public abstract class Widget {
     private long identifier;
 
     private String name;
-
-    @ManyToMany(mappedBy = "widgets")
-    //@OneToMany(mappedBy = "widget")
-    private List<Synoptic> synoptic = new LinkedList<>();
 
     public Widget() {
         this.identifier = new Date().getTime();
@@ -49,14 +43,6 @@ public abstract class Widget {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Synoptic> getSynoptic() {
-        return synoptic;
-    }
-
-    public void setSynoptic(List<Synoptic> synoptic) {
-        this.synoptic = synoptic;
     }
 
     @Override

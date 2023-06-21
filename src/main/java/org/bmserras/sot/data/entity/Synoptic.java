@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.*;
 
 @Entity
+@Table(name = "synoptic")
 public class Synoptic {
 
     @Id
@@ -13,10 +14,8 @@ public class Synoptic {
     @Column(unique = true)
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "synoptic_widget")
-    //@OneToMany(mappedBy = "synoptic")
-    private List<Widget> widgets = new ArrayList<>();
+    @OneToMany(mappedBy = "synoptic", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<SynopticWidget> widgets = new ArrayList<>();
 
     public Synoptic() {
         this.identifier = new Date().getTime();
@@ -48,15 +47,21 @@ public class Synoptic {
         this.name = name;
     }
 
-    public List<Widget> getWidgets() {
+    public List<SynopticWidget> getWidgets() {
         return widgets;
     }
 
-    public void setWidgets(List<Widget> widgets) {
+    public void setWidgets(List<SynopticWidget> widgets) {
         this.widgets = widgets;
     }
 
-    public void addWidget(Widget widget) { this.widgets.add(widget); }
+    public void addWidget(Widget widget, int pos) {
+        widgets.add(new SynopticWidget(this, widget, pos));
+    }
+
+    public void removeWidget(Widget widget, int pos) {
+        widgets.remove(new SynopticWidget(this, widget, pos));
+    }
 
     @Override
     public String toString() {
@@ -65,5 +70,18 @@ public class Synoptic {
                 ", name='" + name + '\'' +
                 ", widgets=" + widgets +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Synoptic synoptic = (Synoptic) o;
+        return identifier == synoptic.identifier;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(identifier);
     }
 }
