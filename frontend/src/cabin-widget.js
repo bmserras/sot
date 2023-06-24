@@ -75,7 +75,8 @@ export class CabinWidget extends LitElement {
 
     render() {
         return html`
-            <p>Circle and rectangle example</p>
+            <p>Name: ${this.name}</p>
+            <p>Battery: ${this.battery}</p>
             ${this.svgImage()}
         `;
     }

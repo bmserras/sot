@@ -2,7 +2,8 @@ package org.bmserras.sot.views.synoptic;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
-import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
@@ -12,20 +13,23 @@ import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import org.bmserras.sot.components.RadarWidgetComponent;
+import org.bmserras.sot.components.WidgetComponent;
+import org.bmserras.sot.data.entity.RadarWidget;
 import org.bmserras.sot.data.entity.Synoptic;
 import org.bmserras.sot.data.entity.Widget;
 import org.bmserras.sot.data.service.SynopticService;
 import org.bmserras.sot.data.service.WidgetService;
-import org.bmserras.sot.views.MainLayout;
+import org.bmserras.sot.views.layout.MainLayout;
 
 @PageTitle("Synoptic View")
 @Route(value = "synoptic", layout = MainLayout.class)
 public class SynopticView extends VerticalLayout implements HasUrlParameter<String> {
 
     private final TextField synopticName = new TextField();
-    private final Button runSynoptic = new Button("Run");
-    private final Button stopSynoptic = new Button("Stop");
-    private final Button addWidget = new Button("Add");
+    private final Button runSynoptic = new Button("Run", new Icon(VaadinIcon.PLAY));
+    private final Button stopSynoptic = new Button("Stop", new Icon(VaadinIcon.STOP));
+    private final Button addWidget = new Button("Add", new Icon(VaadinIcon.PLUS));
 
     private final SynopticCanvas canvas = new SynopticCanvas();
 
@@ -34,8 +38,6 @@ public class SynopticView extends VerticalLayout implements HasUrlParameter<Stri
 
     public SynopticView(WidgetService widgetService, SynopticService synopticService) {
         setSizeFull();
-
-        System.out.println("CTOR");
 
         this.widgetService = widgetService;
         this.synopticService = synopticService;
@@ -54,17 +56,25 @@ public class SynopticView extends VerticalLayout implements HasUrlParameter<Stri
         synoptic.getWidgets().forEach(sw -> {
             Widget widget = sw.getWidget();
             int pos = sw.getPos();
-            canvas.add(new Span(widget.getName()), pos);
+
+            if (widget instanceof RadarWidget) {
+                canvas.add(new RadarWidgetComponent(widgetService, (RadarWidget) widget), pos);
+            }
+            else {
+                System.out.println("WHAT???");
+            }
+
         });
     }
 
     private HorizontalLayout getToolbar() {
-
-        synopticName.setLabel("Synoptic");
         synopticName.setReadOnly(true);
 
         runSynoptic.addClickListener(click -> runSynoptic());
+
         stopSynoptic.addClickListener(click -> stopSynoptic());
+        stopSynoptic.setEnabled(false);
+
         addWidget.addClickListener(click -> addWidget());
 
         HorizontalLayout toolbar = new HorizontalLayout(synopticName, runSynoptic, stopSynoptic, addWidget);
@@ -86,23 +96,42 @@ public class SynopticView extends VerticalLayout implements HasUrlParameter<Stri
 
         addWidget.addClickListener(click -> {
 
-            canvas.add(new Span(selectWidget.getValue().getName()), position.getValue());
-            addWidgetDialog.close();
-
             Synoptic synoptic = synopticService.findSynopticByName(synopticName.getValue());
             Widget widget = widgetService.findWidgetByName(selectWidget.getValue().getName());
             synoptic.addWidget(widget, position.getValue());
-
             synopticService.saveSynoptic(synoptic);
+
+            if (widget instanceof RadarWidget) {
+                canvas.add(new RadarWidgetComponent(widgetService, (RadarWidget) widget), position.getValue());
+            }
+            else {
+                System.out.println("WHAT???");
+            }
+
+            addWidgetDialog.close();
         });
 
         addWidgetDialog.open();
     }
 
     private void stopSynoptic() {
+        canvas.getChildren().forEach(component -> {
+            WidgetComponent wc = (WidgetComponent) component;
+            wc.stop();
+        });
+        stopSynoptic.setEnabled(false);
+        runSynoptic.setEnabled(true);
+        addWidget.setEnabled(true);
     }
 
     private void runSynoptic() {
+        canvas.getChildren().forEach(component -> {
+            WidgetComponent wc = (WidgetComponent) component;
+            wc.run();
+        });
+        runSynoptic.setEnabled(false);
+        stopSynoptic.setEnabled(true);
+        addWidget.setEnabled(false);
     }
 
     @Override

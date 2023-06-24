@@ -268,13 +268,11 @@
   "Frontend/generated/jar-resources/vaadin-time-picker/timepickerConnector.js",
   "Frontend/generated/jar-resources/virtualListConnector.js",
   "Frontend/src/cabin-widget.js",
-  "Frontend/src/my-element.js",
   "Frontend/src/radar-widget.js"
  ],
  "frontendHashes": {
-  "src/cabin-widget.js": "a94001175f5f595a215c8dd0175c1bac49056b847cb8520789d529631c862b3e",
-  "src/my-element.js": "6404c12a0f653dea307e1bdb7cf56d2f3cf5eaef723bd4697685b37d46b044c2",
-  "src/radar-widget.js": "6b93c4a5dd9195cfc1e27888d50270ce2ce57428190a2376658813d694cd3550",
+  "src/radar-widget.js": "f22bd7fd7694a34598c9b8ca7ead981246a3bfc3cb489f7aab1812f79a81d997",
+  "src/cabin-widget.js": "ec0e445f65ffc3089fa87f42a245823631f968945821578982f02fc10d5e2204",
   "buttonFunctions.js": "c852123f9b2c44eb75e555119d3e05a7dbe78b91d0ab616feb9df1654474707d",
   "comboBoxConnector.js": "1d004c3dae9c76f8bcc68678abe1b8f7bdc8b456f5c9c4c7f190df8ed25d66cd",
   "contextMenuConnector.js": "25a200f8086461635ddd92316ebeb5a868294c8650a190efbae120edb1088f4f",
@@ -300,7 +298,7 @@
   "sot": "{\n  \"lumoImports\" : [ \"typography\", \"color\", \"spacing\", \"badge\", \"utility\" ]\n}"
  },
  "entryScripts": [
-  "VAADIN/build/indexhtml-cec37dfa.js"
+  "VAADIN/build/indexhtml-1c426f15.js"
  ],
  "webComponents": [],
  "cvdlModules": {
@@ -335,6 +333,6 @@
  },
  "packageJsonHash": "5ece2624af9b760c1a3c8f10ef055fff2fc1fe9ae70dc2f5e41aee94bfb07c18",
  "indexHtmlGenerated": [
-  "  <script type=\"module\" crossorigin src=\"./VAADIN/build/indexhtml-cec37dfa.js\"></script>"
+  "  <script type=\"module\" crossorigin src=\"./VAADIN/build/indexhtml-1c426f15.js\"></script>"
  ]
 }

@@ -15,9 +15,9 @@ import org.bmserras.sot.data.entity.RadarWidget;
 import org.bmserras.sot.data.entity.VideoCameraWidget;
 import org.bmserras.sot.data.entity.Widget;
 import org.bmserras.sot.data.service.WidgetService;
-import org.bmserras.sot.views.MainLayout;
+import org.bmserras.sot.views.layout.MainLayout;
 
-@PageTitle("Widget CRUD")
+@PageTitle("Widgets")
 @Route(value = "widget-crud", layout = MainLayout.class)
 public class WidgetListView extends VerticalLayout {
 

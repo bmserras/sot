@@ -1,7 +1,7 @@
 package org.bmserras.sot.views.synoptic;
 
-import com.vaadin.flow.component.Component;
-import org.bmserras.sot.views.AbsoluteLayout;
+import org.bmserras.sot.components.WidgetComponent;
+import org.bmserras.sot.views.layout.AbsoluteLayout;
 
 public class SynopticCanvas extends AbsoluteLayout {
 
@@ -9,7 +9,7 @@ public class SynopticCanvas extends AbsoluteLayout {
 
     }
 
-    public void add(Component widget, int position) {
+    public void add(WidgetComponent widget, int position) {
         switch (position) {
             case 1 -> add(widget, 0, 0);
             case 2 -> add(widget, 300, 0);

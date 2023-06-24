@@ -49,36 +49,75 @@ const cabin = svg`
       </g>
 `;
 
+const radar = (scale) => html`
+    <svg
+            width="${scale * 100}"
+            height="${scale * 160}"
+            viewBox="0 0 100 160"
+            id="svg659"
+            xmlns="http://www.w3.org/2000/svg">
+        <g
+                id="Layer1"
+                transform="translate(-60.459947,-64.118949)">
+            <g
+                    id="Radar"
+                    transform="matrix(0.3972782,0,0,0.39506173,-291.17462,-293.64583)">
+                ${cabin}
+                ${cinemometer}
+            </g>
+        </g>
+    </svg>
+`;
+
+const title = (title) => html`
+    <h3>${title}</h3>
+`;
+
 export class RadarWidget extends LitElement {
 
+    static styles = css`
+        :host {
+            border-width: 10px;
+            border-style: solid;
+            border-radius: 20px;
+        }
+    `;
+
     static properties = {
-        scale: {type: Number}
+        name: {type: String},
+        scale: {type: Number},
+        warning: {type : Number}
     };
 
     constructor() {
         super();
+        this.name = "Default Name"
         this.scale = 1;
+        this.warning = 0;
     }
 
     render() {
+        const greyBorder = html`<style> :host { border-color: grey; } </style>`;
+        const redBorder = html`<style> :host { border-color: red; } </style>`;
+        const yellowBorder = html`<style> :host { border-color: yellow; } </style>`;
+        const greenBorder = html`<style> :host { border-color: green; } </style>`;
+        let borderStyle;
+        switch (this.warning) {
+            case 1:
+                borderStyle = greenBorder; break;
+            case 2:
+                borderStyle = yellowBorder; break;
+            case 3:
+                borderStyle = redBorder; break;
+            default:
+                borderStyle = greyBorder;
+        }
         return html`
-            <svg
-                    width="${this.scale * 100}"
-                    height="${this.scale * 160}"
-                    viewBox="0 0 100 160"
-                    id="svg659"
-                    xmlns="http://www.w3.org/2000/svg">
-                <g
-                        id="Layer1"
-                        transform="translate(-60.459947,-64.118949)">
-                    <g
-                            id="Radar"
-                            transform="matrix(0.3972782,0,0,0.39506173,-291.17462,-293.64583)">
-                        ${cabin}
-                        ${cinemometer}
-                    </g>
-                </g>
-            </svg>
+            ${borderStyle}
+            <div style="text-align:center;">
+                ${title(this.name)}
+                ${radar(this.scale)}
+            </div>
         `;
     }
 }

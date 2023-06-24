@@ -4,6 +4,9 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
+import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -13,11 +16,9 @@ import com.vaadin.flow.router.Route;
 import org.bmserras.sot.data.entity.Synoptic;
 import org.bmserras.sot.data.service.SynopticService;
 import org.bmserras.sot.data.service.WidgetService;
-import org.bmserras.sot.views.MainLayout;
+import org.bmserras.sot.views.layout.MainLayout;
 
-import java.util.function.Consumer;
-
-@PageTitle("Synoptic CRUD")
+@PageTitle("Synoptics")
 @Route(value = "synoptic-crud", layout = MainLayout.class)
 public class SynopticListView extends VerticalLayout {
 
@@ -125,12 +126,14 @@ public class SynopticListView extends VerticalLayout {
         public SynopticContextMenu(Grid<Synoptic> target) {
             super(target);
 
-            addItem("Open", click -> getUI().ifPresent(ui ->
+            addItem(new HorizontalLayout(new Icon(VaadinIcon.ARROW_FORWARD), new Span("Open")),
+                    click -> getUI().ifPresent(ui ->
                     click.getItem().ifPresent(synoptic -> ui.navigate("synoptic/" + synoptic.getName()))));
-            addItem("Edit");
-            addItem("Delete");
-
-
+            addItem(new HorizontalLayout(new Icon(VaadinIcon.MAP_MARKER), new Span("Map")),
+                    click -> getUI().ifPresent(ui ->
+                            click.getItem().ifPresent(synoptic -> ui.navigate("map"))));
+            addItem(new HorizontalLayout(new Icon(VaadinIcon.EDIT), new Span("Edit")));
+            addItem(new HorizontalLayout(new Icon(VaadinIcon.CLOSE), new Span("Remove")));
         }
     }
 

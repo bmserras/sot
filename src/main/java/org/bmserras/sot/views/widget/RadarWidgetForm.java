@@ -20,7 +20,7 @@ public class RadarWidgetForm extends WidgetForm {
 
     @Override
     public List<Component> createOtherFields() {
-        ipAddress = new TextField("IP Address");
+        ipAddress = new TextField("IP:Port");
         latitude = new TextField("Latitude");
         longitude = new TextField("Longitude");
         return Arrays.asList(ipAddress, latitude, longitude);

@@ -2,7 +2,7 @@ package org.bmserras.sot.events;
 
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.DomEvent;
-import org.bmserras.sot.components.CabinWidget;
+import org.bmserras.sot.views.example.cabinwidget.CabinWidget;
 
 @DomEvent("circle-click")
 public class CircleClickEvent extends ComponentEvent<CabinWidget> {

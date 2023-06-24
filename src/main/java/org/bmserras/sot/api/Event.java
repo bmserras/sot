@@ -4,6 +4,9 @@ import java.util.List;
 
 public class Event {
 
+    // This has to be removed...
+    private int hostId;
+
     private String jsonrpc;
 
     private List<Result> result;
@@ -32,6 +35,14 @@ public class Event {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getHostId() {
+        return hostId;
+    }
+
+    public void setHostId(int hostId) {
+        this.hostId = hostId;
     }
 
     @Override
