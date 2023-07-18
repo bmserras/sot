@@ -3,7 +3,7 @@ package org.bmserras.sot.components;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.contextmenu.MenuItem;
-import org.bmserras.sot.data.entity.Widget;
+import org.bmserras.sot.data.entity.widget.Widget;
 import org.bmserras.sot.data.service.WidgetService;
 
 public abstract class WidgetComponent extends Component implements HasSize, HasTheme {

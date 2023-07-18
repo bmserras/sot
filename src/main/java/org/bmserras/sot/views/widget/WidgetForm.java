@@ -12,7 +12,7 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.shared.Registration;
-import org.bmserras.sot.data.entity.Widget;
+import org.bmserras.sot.data.entity.widget.Widget;
 
 import java.util.List;
 

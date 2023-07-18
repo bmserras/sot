@@ -1,12 +1,7 @@
-package org.bmserras.sot.data.repository;
+package org.bmserras.sot.data.repository.synoptic;
 
-import org.bmserras.sot.data.entity.Synoptic;
-import org.bmserras.sot.data.entity.SynopticWidget;
+import org.bmserras.sot.data.entity.synoptic.SynopticWidget;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
-import java.util.List;
 
 public interface SynopticWidgetRepository extends JpaRepository<SynopticWidget, SynopticWidget.SynopticWidgetId> {
 

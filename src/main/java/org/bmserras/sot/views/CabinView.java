@@ -4,16 +4,20 @@ import com.vaadin.flow.component.UIDetachedException;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.security.AuthenticationContext;
+import jakarta.annotation.security.PermitAll;
 import org.bmserras.sot.api.Event;
 import org.bmserras.sot.api.Service;
 import org.bmserras.sot.views.example.cabingauge.SolidGaugeWidget;
 import org.bmserras.sot.views.layout.MainLayout;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.IOException;
 import java.util.concurrent.Executors;
@@ -22,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 
 @PageTitle("Cabin View")
 @Route(value = "cabin", layout = MainLayout.class)
+@PermitAll
 public class CabinView extends VerticalLayout implements HasUrlParameter<String> {
 
     private final SolidGaugeWidget batteryGauge;

@@ -3,15 +3,19 @@ package org.bmserras.sot.views.layout;
 
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Footer;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Header;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import org.bmserras.sot.components.appnav.AppNav;
 import org.bmserras.sot.components.appnav.AppNavItem;
+import org.bmserras.sot.security.SecurityService;
 import org.bmserras.sot.views.TestView;
 import org.bmserras.sot.views.example.cabingauge.CabinGauge;
 import org.bmserras.sot.views.example.cabingauge.CabinGaugeView;
@@ -29,9 +33,13 @@ import org.vaadin.lineawesome.LineAwesomeIcon;
  */
 public class MainLayout extends AppLayout {
 
+    private SecurityService securityService;
+
     private H2 viewTitle;
 
-    public MainLayout() {
+    public MainLayout(SecurityService securityService) {
+        this.securityService = securityService;
+
         setPrimarySection(Section.DRAWER);
         addDrawerContent();
         addHeaderContent();
@@ -44,7 +52,20 @@ public class MainLayout extends AppLayout {
         viewTitle = new H2();
         viewTitle.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
 
-        addToNavbar(true, toggle, viewTitle);
+        HorizontalLayout header;
+        if (securityService.getAuthenticatedUser() != null) {
+            Button logout = new Button("Logout", click ->
+                    securityService.logout());
+            header = new HorizontalLayout(viewTitle, logout);
+        } else {
+            header = new HorizontalLayout(viewTitle);
+        }
+        header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
+        header.expand(viewTitle); // <4>
+        header.setWidthFull();
+        header.addClassNames(LumoUtility.Padding.Vertical.NONE, LumoUtility.Padding.Horizontal.MEDIUM);
+
+        addToNavbar(true, toggle, header);
     }
 
     private void addDrawerContent() {

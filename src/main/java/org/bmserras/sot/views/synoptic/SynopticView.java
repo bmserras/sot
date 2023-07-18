@@ -13,17 +13,22 @@ import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.security.AuthenticationContext;
+import jakarta.annotation.security.PermitAll;
 import org.bmserras.sot.components.RadarWidgetComponent;
 import org.bmserras.sot.components.WidgetComponent;
-import org.bmserras.sot.data.entity.RadarWidget;
-import org.bmserras.sot.data.entity.Synoptic;
-import org.bmserras.sot.data.entity.Widget;
+import org.bmserras.sot.data.entity.widget.RadarWidget;
+import org.bmserras.sot.data.entity.synoptic.Synoptic;
+import org.bmserras.sot.data.entity.widget.Widget;
 import org.bmserras.sot.data.service.SynopticService;
 import org.bmserras.sot.data.service.WidgetService;
 import org.bmserras.sot.views.layout.MainLayout;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @PageTitle("Synoptic View")
 @Route(value = "synoptic", layout = MainLayout.class)
+@PermitAll
 public class SynopticView extends VerticalLayout implements HasUrlParameter<String> {
 
     private final TextField synopticName = new TextField();
@@ -36,7 +41,10 @@ public class SynopticView extends VerticalLayout implements HasUrlParameter<Stri
     private final WidgetService widgetService;
     private final SynopticService synopticService;
 
-    public SynopticView(WidgetService widgetService, SynopticService synopticService) {
+    private final transient AuthenticationContext authContext;
+
+    public SynopticView(AuthenticationContext authContext, WidgetService widgetService, SynopticService synopticService) {
+        this.authContext = authContext;
         setSizeFull();
 
         this.widgetService = widgetService;
@@ -77,7 +85,12 @@ public class SynopticView extends VerticalLayout implements HasUrlParameter<Stri
 
         addWidget.addClickListener(click -> addWidget());
 
-        HorizontalLayout toolbar = new HorizontalLayout(synopticName, runSynoptic, stopSynoptic, addWidget);
+        HorizontalLayout toolbar = authContext.getAuthenticatedUser(UserDetails.class).map(user -> {
+            if (user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
+                return new HorizontalLayout(synopticName, runSynoptic, stopSynoptic, addWidget);
+            return new HorizontalLayout(synopticName);
+        }).orElseThrow((() -> new RuntimeException("User should be logged in!")));
+
         toolbar.setAlignItems(Alignment.BASELINE);
 
         return toolbar;
@@ -138,5 +151,11 @@ public class SynopticView extends VerticalLayout implements HasUrlParameter<Stri
     public void setParameter(BeforeEvent beforeEvent, String parameter) {
         synopticName.setValue(parameter);
         populateCanvas();
+
+        authContext.getAuthenticatedUser(UserDetails.class).map(user -> {
+            if (!user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
+                runSynoptic();
+            return null;
+        });
     }
 }

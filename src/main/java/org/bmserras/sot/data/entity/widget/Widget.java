@@ -1,4 +1,4 @@
-package org.bmserras.sot.data.entity;
+package org.bmserras.sot.data.entity.widget;
 
 import jakarta.persistence.*;
 

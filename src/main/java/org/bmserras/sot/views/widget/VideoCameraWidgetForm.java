@@ -3,8 +3,8 @@ package org.bmserras.sot.views.widget;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-import org.bmserras.sot.data.entity.VideoCameraWidget;
-import org.bmserras.sot.data.entity.Widget;
+import org.bmserras.sot.data.entity.widget.VideoCameraWidget;
+import org.bmserras.sot.data.entity.widget.Widget;
 
 import java.util.Arrays;
 import java.util.List;

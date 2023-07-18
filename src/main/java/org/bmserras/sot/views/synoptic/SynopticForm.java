@@ -5,27 +5,16 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.combobox.MultiSelectComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.listbox.ListBox;
-import com.vaadin.flow.component.listbox.MultiSelectListBox;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.binder.Result;
-import com.vaadin.flow.data.binder.ValueContext;
-import com.vaadin.flow.data.converter.Converter;
 import com.vaadin.flow.shared.Registration;
-import org.bmserras.sot.data.entity.Synoptic;
-import org.bmserras.sot.data.entity.SynopticWidget;
-import org.bmserras.sot.data.entity.Widget;
+import org.bmserras.sot.data.entity.synoptic.Synoptic;
+import org.bmserras.sot.data.entity.widget.Widget;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class SynopticForm extends FormLayout {
 
@@ -39,27 +28,11 @@ public class SynopticForm extends FormLayout {
 
     private final Binder<Synoptic> binder = new Binder<>(Synoptic.class);
 
-    public SynopticForm(List<Widget> widgetList) {
+    public SynopticForm() {
         addClassName("synoptic-form");
 
         binder.bind(identifier, synoptic -> (double) synoptic.getIdentifier(), null);
         binder.bind(name, Synoptic::getName, Synoptic::setName);
-
-        /*widgets.setItems(widgetList);
-        widgets.setItemLabelGenerator(Widget::getName);
-        binder.forField(widgets)
-                .withConverter(new Converter<Set<Widget>, List<Widget>>() {
-                    @Override
-                    public Result<List<Widget>> convertToModel(Set<Widget> widgets, ValueContext valueContext) {
-                        return Result.ok(new ArrayList<>(widgets));
-                    }
-
-                    @Override
-                    public Set<Widget> convertToPresentation(List<Widget> list, ValueContext valueContext) {
-                        return new HashSet<>(list);
-                    }
-                })
-                .bind(Synoptic::getWidgets, Synoptic::setWidgets);*/
 
         add(identifier, name, /*widgets, */createButtonsLayout());
     }

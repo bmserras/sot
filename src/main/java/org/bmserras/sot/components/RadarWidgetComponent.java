@@ -11,13 +11,11 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import org.bmserras.sot.api.Event;
 import org.bmserras.sot.api.Service;
-import org.bmserras.sot.data.entity.RadarWidget;
-import org.bmserras.sot.data.entity.Widget;
+import org.bmserras.sot.data.entity.widget.RadarWidget;
 import org.bmserras.sot.data.service.WidgetService;
 import org.bmserras.sot.views.widget.RadarWidgetForm;
 import org.bmserras.sot.views.widget.WidgetForm;
 
-import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -120,8 +118,8 @@ public class RadarWidgetComponent extends WidgetComponent {
 
     @Override
     public void stop() {
-        executor.shutdown();
         setWarning(0);
+        executor.shutdown();
         editItem.setEnabled(true);
         removeItem.setEnabled(true);
         cabinItem.setEnabled(false);

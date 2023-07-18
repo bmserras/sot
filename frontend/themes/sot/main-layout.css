@@ -15,3 +15,12 @@ vaadin-scroller[slot="drawer"] {
   display: none;
 }
 
+.styled-svg > svg > * {
+  fill: inherit;
+  stroke: inherit;
+}
+
+.styled-svg > svg {
+  width: inherit;
+  height: inherit;
+}

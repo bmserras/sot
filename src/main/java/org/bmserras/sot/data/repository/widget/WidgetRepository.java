@@ -1,6 +1,6 @@
-package org.bmserras.sot.data.repository;
+package org.bmserras.sot.data.repository.widget;
 
-import org.bmserras.sot.data.entity.Widget;
+import org.bmserras.sot.data.entity.widget.Widget;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

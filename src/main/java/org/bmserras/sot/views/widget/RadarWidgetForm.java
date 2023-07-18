@@ -1,10 +1,11 @@
 package org.bmserras.sot.views.widget;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-import org.bmserras.sot.data.entity.RadarWidget;
-import org.bmserras.sot.data.entity.Widget;
+import org.bmserras.sot.data.entity.widget.RadarWidget;
+import org.bmserras.sot.data.entity.widget.Widget;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,8 +13,8 @@ import java.util.List;
 public class RadarWidgetForm extends WidgetForm {
 
     private TextField ipAddress;
-    private TextField latitude;
-    private TextField longitude;
+    private NumberField latitude;
+    private NumberField longitude;
 
     public RadarWidgetForm() {
     }
@@ -21,8 +22,8 @@ public class RadarWidgetForm extends WidgetForm {
     @Override
     public List<Component> createOtherFields() {
         ipAddress = new TextField("IP:Port");
-        latitude = new TextField("Latitude");
-        longitude = new TextField("Longitude");
+        latitude = new NumberField("Latitude");
+        longitude = new NumberField("Longitude");
         return Arrays.asList(ipAddress, latitude, longitude);
     }
 

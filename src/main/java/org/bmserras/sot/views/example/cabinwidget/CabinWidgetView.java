@@ -15,7 +15,6 @@ import java.io.IOException;
 
 @PageTitle("CabinWidget View")
 @Route(value = "cabin-widget", layout = MainLayout.class)
-@RouteAlias(value = "", layout = MainLayout.class)
 public class CabinWidgetView extends VerticalLayout {
 
     private TextField textField;

@@ -1,7 +1,7 @@
 package org.bmserras.sot.data.service;
 
-import org.bmserras.sot.data.entity.Synoptic;
-import org.bmserras.sot.data.repository.SynopticRepository;
+import org.bmserras.sot.data.entity.synoptic.Synoptic;
+import org.bmserras.sot.data.repository.synoptic.SynopticRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,6 +37,4 @@ public class SynopticService {
     public void deleteSynoptic(Synoptic synoptic) {
         synopticRepository.delete(synoptic);
     }
-
-
 }
