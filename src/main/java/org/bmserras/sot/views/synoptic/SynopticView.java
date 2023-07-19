@@ -1,5 +1,6 @@
 package org.bmserras.sot.views.synoptic;
 
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.icon.Icon;
@@ -22,6 +23,7 @@ import org.bmserras.sot.data.entity.synoptic.Synoptic;
 import org.bmserras.sot.data.entity.widget.Widget;
 import org.bmserras.sot.data.service.SynopticService;
 import org.bmserras.sot.data.service.WidgetService;
+import org.bmserras.sot.events.RemoveWidgetEvent;
 import org.bmserras.sot.views.layout.MainLayout;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -66,7 +68,13 @@ public class SynopticView extends VerticalLayout implements HasUrlParameter<Stri
             int pos = sw.getPos();
 
             if (widget instanceof RadarWidget) {
-                canvas.add(new RadarWidgetComponent(widgetService, (RadarWidget) widget), pos);
+                RadarWidgetComponent radarWidgetComponent = new RadarWidgetComponent(widgetService, (RadarWidget) widget);
+                radarWidgetComponent.addRemoveWidgetListener(event -> {
+                    synoptic.removeWidget(widget, pos);
+                    synopticService.saveSynoptic(synoptic);
+                    canvas.remove(radarWidgetComponent);
+                });
+                canvas.add(radarWidgetComponent, pos);
             }
             else {
                 System.out.println("WHAT???");

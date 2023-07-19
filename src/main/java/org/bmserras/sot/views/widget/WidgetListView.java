@@ -21,6 +21,7 @@ import org.apache.zookeeper.KeeperException;
 import org.bmserras.sot.data.entity.widget.RadarWidget;
 import org.bmserras.sot.data.entity.widget.VideoCameraWidget;
 import org.bmserras.sot.data.entity.widget.Widget;
+import org.bmserras.sot.data.entity.zabbix.ZabbixConfig;
 import org.bmserras.sot.data.service.WidgetService;
 import org.bmserras.sot.views.layout.MainLayout;
 
@@ -150,26 +151,50 @@ public class WidgetListView extends VerticalLayout {
                 service2.getPropList().getPropList().forEach(prop -> props2.put(prop.getName(), prop.getValue()));
                 service3.getPropList().getPropList().forEach(prop -> props3.put(prop.getName(), prop.getValue()));
 
-                service.saveWidget(new RadarWidget(
+
+                RadarWidget radarWidget1 = new RadarWidget(
                         service1.getName(),
                         props1.get("ip"),
                         Integer.parseInt(props1.get("port")),
                         Double.parseDouble(props1.get("lat")),
                         Double.parseDouble(props1.get("long"))
+                );
+                radarWidget1.setZabbixConfig(new ZabbixConfig(
+                        Integer.parseInt(props1.get("zabbix-host-id")),
+                        Integer.parseInt(props1.get("zabbix-item-id-temperature")),
+                        Integer.parseInt(props1.get("zabbix-item-id-voltage")),
+                        Integer.parseInt(props1.get("zabbix-item-id-battery"))
                 ));
-                service.saveWidget(new RadarWidget(
+                service.saveWidget(radarWidget1);
+
+                RadarWidget radarWidget2 = new RadarWidget(
                         service2.getName(),
                         props2.get("ip"),
                         Integer.parseInt(props2.get("port")),
                         Double.parseDouble(props2.get("lat")),
                         Double.parseDouble(props2.get("long"))
+                );
+                radarWidget2.setZabbixConfig(new ZabbixConfig(
+                        Integer.parseInt(props2.get("zabbix-host-id")),
+                        Integer.parseInt(props2.get("zabbix-item-id-temperature")),
+                        Integer.parseInt(props2.get("zabbix-item-id-voltage")),
+                        Integer.parseInt(props2.get("zabbix-item-id-battery"))
                 ));
-                service.saveWidget(new RadarWidget(
+                service.saveWidget(radarWidget2);
+
+                RadarWidget radarWidget3 = new RadarWidget(
                         service3.getName(), props3.get("ip"),
                         Integer.parseInt(props3.get("port")),
                         Double.parseDouble(props3.get("lat")),
                         Double.parseDouble(props3.get("long"))
+                );
+                radarWidget3.setZabbixConfig(new ZabbixConfig(
+                        Integer.parseInt(props3.get("zabbix-host-id")),
+                        Integer.parseInt(props3.get("zabbix-item-id-temperature")),
+                        Integer.parseInt(props3.get("zabbix-item-id-voltage")),
+                        Integer.parseInt(props3.get("zabbix-item-id-battery"))
                 ));
+                service.saveWidget(radarWidget3);
                 updateList();
                 closeEditor();
 

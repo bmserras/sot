@@ -1,14 +1,25 @@
 package org.bmserras.sot.data.entity.widget;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import org.bmserras.sot.data.entity.zabbix.ZabbixConfig;
 
 @Entity
 public class RadarWidget extends Widget {
 
     private String ipAddress;
+
     private int port;
+
     private double latitude;
+
     private double longitude;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "zabbix_config_identifier", referencedColumnName = "identifier")
+    private ZabbixConfig zabbixConfig;
 
     public RadarWidget() {
     }
@@ -61,6 +72,14 @@ public class RadarWidget extends Widget {
         this.longitude = longitude;
     }
 
+    public ZabbixConfig getZabbixConfig() {
+        return zabbixConfig;
+    }
+
+    public void setZabbixConfig(ZabbixConfig zabbixConfig) {
+        this.zabbixConfig = zabbixConfig;
+    }
+
     @Override
     public String toString() {
         return "RadarWidget{" +
@@ -68,6 +87,7 @@ public class RadarWidget extends Widget {
                 ", port=" + port +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
+                ", zabbixConfig=" + zabbixConfig +
                 "} " + super.toString();
     }
 }

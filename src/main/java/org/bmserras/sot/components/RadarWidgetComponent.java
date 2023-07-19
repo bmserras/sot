@@ -9,13 +9,19 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.shared.Registration;
 import org.bmserras.sot.api.Event;
 import org.bmserras.sot.api.Service;
 import org.bmserras.sot.data.entity.widget.RadarWidget;
 import org.bmserras.sot.data.service.WidgetService;
+import org.bmserras.sot.events.OpenEvent;
+import org.bmserras.sot.events.RemoveEvent;
+import org.bmserras.sot.events.RemoveWidgetEvent;
+import org.bmserras.sot.views.example.cabingauge.SolidGaugeWidget;
 import org.bmserras.sot.views.widget.RadarWidgetForm;
 import org.bmserras.sot.views.widget.WidgetForm;
 
+import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -30,8 +36,8 @@ public class RadarWidgetComponent extends WidgetComponent {
 
     private static final PropertyDescriptor<Integer, Integer> warningProperty =
             PropertyDescriptors.propertyWithDefault(
-            "warning",
-            0);
+                    "warning",
+                    0);
 
     private final Dialog dialog = new Dialog("Edit widget");
     private final RadarWidgetForm form = new RadarWidgetForm();
@@ -41,34 +47,61 @@ public class RadarWidgetComponent extends WidgetComponent {
     private final MenuItem cabinItem;
     private final MenuItem cinemometerItem;
 
+    private final RadarWidget radarWidget;
+
+    private final SolidGaugeWidget batteryGauge;
+    private final SolidGaugeWidget voltageGauge;
+    private final SolidGaugeWidget temperatureGauge;
+
     public RadarWidgetComponent(WidgetService widgetService, RadarWidget radarWidget) {
         super(widgetService, radarWidget);
         setScale(0.8);
         setWarning(0);
 
-        int hostId = switch (getName()) {
-            case "IC19 6 D - Cabin" -> 10556;
-            case "IC19 7 D - Cabin" -> 10557;
-            case "A1 12 C - Cabin" -> 10558;
-            default -> 0;
-        };
+        this.radarWidget = radarWidget;
+
+        HorizontalLayout gaugesLayout = new HorizontalLayout();
+        gaugesLayout.setHeight("200px");
+        //expand(gaugesLayout);
+
+        batteryGauge = new SolidGaugeWidget("Battery", 0, 0, 100);
+        voltageGauge = new SolidGaugeWidget("Voltage", 0, 0, 500);
+        temperatureGauge = new SolidGaugeWidget("Temperature", 0, 0, 100);
+        gaugesLayout.add(batteryGauge, voltageGauge, temperatureGauge);
+
+        Dialog dialogCabin = new Dialog();
+        dialogCabin.setWidth("80%");
+        dialogCabin.setHeight("80%");
+        dialogCabin.add(gaugesLayout);
+
+        int hostId = radarWidget.getZabbixConfig().getHostId();
 
         dialog.add(form);
         dialog.setWidth(30, Unit.PERCENTAGE);
 
         editItem = contextMenu.addItem(new HorizontalLayout(new Icon(VaadinIcon.EDIT), new Span("Edit")),
                 click -> {
-            form.addSaveListener(this::saveWidget);
-            /*form.addDeleteListener(this::deleteWidget);*/
-            form.addCloseListener(e -> dialog.close());
+                    form.addSaveListener(this::saveWidget);
+                    /*form.addDeleteListener(this::deleteWidget);*/
+                    form.addCloseListener(e -> dialog.close());
 
-            form.setWidget(getWidget());
-            dialog.open();
-        });
+                    form.setWidget(getWidget());
+                    dialog.open();
+                });
         removeItem = contextMenu.addItem(new HorizontalLayout(new Icon(VaadinIcon.CLOSE), new Span("Remove")),
-                click -> {});
+                click -> fireEvent(new RemoveWidgetEvent(this, Optional.of(radarWidget))));
         contextMenu.add(new Hr());
-        cabinItem = contextMenu.addItem("Cabin", click -> getUI().ifPresent(ui -> ui.navigate("cabin/" + hostId)));
+
+        cabinItem = contextMenu.addItem("Cabin", click -> getUI().ifPresent(ui -> ui.navigate(
+                "cabin/" + hostId
+                        + "?temperatureId=" + radarWidget.getZabbixConfig().getTemperatureItemId()
+                        + "&voltageId=" + radarWidget.getZabbixConfig().getVoltageItemId()
+                        + "&batteryId=" + radarWidget.getZabbixConfig().getBatteryItemId()
+        )));
+        /*cabinItem = contextMenu.addItem("Cabin", click -> {
+            dialogCabin.open();
+        });*/
+
         cinemometerItem = contextMenu.addItem("Cinemometer", click -> getUI().ifPresent(ui -> ui.navigate("cinemometer")));
 
         cabinItem.setEnabled(false);
@@ -134,26 +167,34 @@ public class RadarWidgetComponent extends WidgetComponent {
         executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(() -> {
             try {
-                int hostId = switch (getName()) {
-                    case "IC19 6 D - Cabin" -> 10556;
-                    case "IC19 7 D - Cabin" -> 10557;
-                    case "A1 12 C - Cabin" -> 10558;
-                    default -> 0;
-                };
+                int hostId = radarWidget.getZabbixConfig().getHostId();
+
                 Event latestData = service.getLatestData(hostId);
                 getUI().ifPresent(ui -> ui.access(() -> {
-                    int battery = service.getBattery(latestData);
-                    int voltage = service.getVoltage(latestData);
-                    int temperature = service.getTemperature(latestData);
-                    if (battery <= 20 || voltage != 220 || temperature > 40) {
+                    int battery = service.getValueFromLatestData(latestData,
+                            radarWidget.getZabbixConfig().getBatteryItemId());
+                    int voltage = service.getValueFromLatestData(latestData,
+                            radarWidget.getZabbixConfig().getVoltageItemId());
+                    int temperature = service.getValueFromLatestData(latestData,
+                            radarWidget.getZabbixConfig().getTemperatureItemId());
+
+                    if (battery <= 20 || voltage != 220 || temperature >= 40) {
                         setWarning(3);
                     } else {
                         setWarning(1);
                     }
+
+                    batteryGauge.setValue(battery);
+                    voltageGauge.setValue(voltage);
+                    temperatureGauge.setValue(temperature);
                 }));
             } catch (Exception e) {
                 //e.printStackTrace();
             }
         }, 500, 1000, TimeUnit.MILLISECONDS);
+    }
+
+    public Registration addRemoveWidgetListener(ComponentEventListener<RemoveWidgetEvent> listener) {
+        return addListener(RemoveWidgetEvent.class, listener);
     }
 }

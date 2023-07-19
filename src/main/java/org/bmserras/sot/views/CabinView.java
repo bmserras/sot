@@ -1,25 +1,18 @@
 package org.bmserras.sot.views;
 
-import com.vaadin.flow.component.UIDetachedException;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.BeforeEvent;
-import com.vaadin.flow.router.HasUrlParameter;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
-import com.vaadin.flow.spring.security.AuthenticationContext;
+import com.vaadin.flow.router.*;
 import jakarta.annotation.security.PermitAll;
 import org.bmserras.sot.api.Event;
 import org.bmserras.sot.api.Service;
 import org.bmserras.sot.views.example.cabingauge.SolidGaugeWidget;
 import org.bmserras.sot.views.layout.MainLayout;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -36,6 +29,9 @@ public class CabinView extends VerticalLayout implements HasUrlParameter<String>
     private final Service service;
 
     private int hostId;
+    private int temperatureId;
+    private int voltageId;
+    private int batteryId;
 
     public CabinView() {
         setSizeFull();
@@ -75,9 +71,17 @@ public class CabinView extends VerticalLayout implements HasUrlParameter<String>
             try {
                 Event latestData = service.getLatestData(hostId);
                 getUI().ifPresent(ui -> ui.access(() -> {
-                    batteryGauge.setValue(service.getBattery(latestData));
-                    voltageGauge.setValue(service.getVoltage(latestData));
-                    temperatureGauge.setValue(service.getTemperature(latestData));
+
+                    int battery = service.getValueFromLatestData(latestData,
+                            batteryId);
+                    int voltage = service.getValueFromLatestData(latestData,
+                            voltageId);
+                    int temperature = service.getValueFromLatestData(latestData,
+                            temperatureId);
+
+                    batteryGauge.setValue(battery);
+                    voltageGauge.setValue(voltage);
+                    temperatureGauge.setValue(temperature);
                 }));
             } catch (Exception e) {
                 //e.printStackTrace();
@@ -86,8 +90,41 @@ public class CabinView extends VerticalLayout implements HasUrlParameter<String>
     }
 
     @Override
-    public void setParameter(BeforeEvent beforeEvent, String parameter) {
-        hostId  = Integer.parseInt(parameter);
+    public void setParameter(BeforeEvent beforeEvent, @OptionalParameter String parameter) {
+        System.out.println(parameter);
+
+        String[] parameterSplit = parameter.split("\\?");
+        String param = parameterSplit[0];
+        String query = parameterSplit[1];
+
+        hostId  = Integer.parseInt(param);
+
+        HashMap<String, String> pairsMap = new HashMap<>();
+        String[] pairs = query.split("&");
+        for (String pair : pairs) {
+            String[] nameValueSplit = pair.split("=");
+            String name = nameValueSplit[0];
+            String value = nameValueSplit[1];
+            pairsMap.put(name, value);
+        }
+
+        temperatureId = Integer.parseInt(pairsMap.get("temperatureId"));
+        voltageId = Integer.parseInt(pairsMap.get("voltageId"));
+        batteryId = Integer.parseInt(pairsMap.get("batteryId"));
+
+        // For some reason, there are some unexpected bugs here
+        /*
+        Location location = beforeEvent.getLocation();
+        QueryParameters queryParameters = location.getQueryParameters();
+
+        Map<String, List<String>> parametersMap = queryParameters.getParameters();
+        System.out.println(parametersMap);
+
+        temperatureId = Integer.parseInt(parametersMap.get("temperatureId").get(0));
+        voltageId = Integer.parseInt(parametersMap.get("voltageId").get(0));
+        batteryId = Integer.parseInt(parametersMap.get("batteryId").get(0));
+        */
+
         schedule();
     }
 
