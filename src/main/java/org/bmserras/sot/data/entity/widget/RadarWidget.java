@@ -6,22 +6,25 @@ import jakarta.persistence.Entity;
 public class RadarWidget extends Widget {
 
     private String ipAddress;
+    private int port;
     private double latitude;
     private double longitude;
 
     public RadarWidget() {
     }
 
-    public RadarWidget(String name, String ipAddress, double latitude, double longitude) {
+    public RadarWidget(String name, String ipAddress, int port, double latitude, double longitude) {
         super(name);
         this.ipAddress = ipAddress;
+        this.port = port;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public RadarWidget(int identifier, String name, String ipAddress, double latitude, double longitude) {
+    public RadarWidget(int identifier, String name, String ipAddress, int port, double latitude, double longitude) {
         super(identifier, name);
         this.ipAddress = ipAddress;
+        this.port = port;
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -32,6 +35,14 @@ public class RadarWidget extends Widget {
 
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 
     public double getLatitude() {
@@ -54,8 +65,9 @@ public class RadarWidget extends Widget {
     public String toString() {
         return "RadarWidget{" +
                 "ipAddress='" + ipAddress + '\'' +
-                ", latitude='" + latitude + '\'' +
-                ", longitude='" + longitude + '\'' +
+                ", port=" + port +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 "} " + super.toString();
     }
 }

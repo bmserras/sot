@@ -1,6 +1,7 @@
 package org.bmserras.sot.views.synoptic;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
@@ -14,6 +15,7 @@ import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 import org.bmserras.sot.data.entity.synoptic.Synoptic;
 import org.bmserras.sot.data.service.SynopticService;
+import org.bmserras.sot.events.SynopticEvent;
 import org.bmserras.sot.views.layout.MainLayout;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
@@ -34,12 +36,10 @@ public class SynopticListView extends VerticalLayout {
 
     TextField filterText = new TextField();
     Button addSynopticButton = new Button(addIcon.create());
-    Button openButton = new Button(openIcon.create());
-    Button mapButton = new Button(mapIcon.create());
-    Button removeButton = new Button(removeIcon.create());
 
     Optional<Synoptic> selectedSynoptic = Optional.empty();
     SynopticForm form;
+    SynopticToolbar toolbar;
     SynopticService synopticService;
 
     public SynopticListView(SynopticService synopticService) {
@@ -52,7 +52,6 @@ public class SynopticListView extends VerticalLayout {
         add(getToolbar(), getContent());
         updateList();
         closeEditor();
-        showToolbarButtons(false);
     }
 
     private void configureGrid() {
@@ -62,16 +61,15 @@ public class SynopticListView extends VerticalLayout {
         grid.asSingleSelect().addValueChangeListener(event -> {
             selectedSynoptic = Optional.ofNullable(event.getValue());
             editSynoptic(selectedSynoptic);
-            showToolbarButtons(selectedSynoptic.isPresent());
         });
     }
 
     private void configureForm() {
         form = new SynopticForm();
         form.setWidth("25em");
-        form.addSaveListener(this::saveSynoptic);
-        form.addDeleteListener(this::deleteSynoptic);
-        form.addCloseListener(e -> closeEditor());
+        form.addSaveListener(event -> saveSynoptic(event.getSynoptic()));
+        form.addDeleteListener(event -> deleteSynoptic(event.getSynoptic()));
+        form.addCloseListener(event -> closeEditor());
     }
 
     private Component getToolbar() {
@@ -81,13 +79,13 @@ public class SynopticListView extends VerticalLayout {
         filterText.addValueChangeListener(e -> updateList());
 
         addSynopticButton.addClickListener(click -> addSynoptic());
-        openButton.addClickListener(click -> openSynoptic(selectedSynoptic));
-        mapButton.addClickListener(click -> openMap(selectedSynoptic));
-        removeButton.addClickListener(click -> {});
 
-        var toolbar = new HorizontalLayout(filterText, addSynopticButton, openButton, mapButton, removeButton);
-        toolbar.addClassName("toolbar");
-        return toolbar;
+        toolbar = new SynopticToolbar();
+        toolbar.addOpenListener(event -> openSynoptic(event.getSynoptic()));
+        toolbar.addMapListener(event -> openMap(event.getSynoptic()));
+        toolbar.addRemoveListener(event -> removeSynoptic(event.getSynoptic()));
+
+        return new HorizontalLayout(filterText, addSynopticButton, toolbar/*openButton, mapButton, removeButton*/);
     }
 
     private HorizontalLayout getContent() {
@@ -109,6 +107,9 @@ public class SynopticListView extends VerticalLayout {
         else {
             form.setSynoptic(synoptic.get());
             form.setVisible(true);
+
+            toolbar.setSynoptic(synoptic.get());
+            toolbar.setVisible(!synoptic.get().equals(new Synoptic()));
         }
     }
 
@@ -125,28 +126,36 @@ public class SynopticListView extends VerticalLayout {
         synoptic.ifPresent(syn -> getUI().ifPresent(ui -> ui.navigate("map/" + syn.getName())));
     }
 
+    private void removeSynoptic(Optional<Synoptic> synoptic) {
+        synoptic.ifPresent(syn -> {
+            synopticService.deleteSynoptic(syn);
+            updateList();
+            closeEditor();
+        });
+    }
+
     private void closeEditor() {
         form.setSynoptic(null);
         form.setVisible(false);
+
+        toolbar.setSynoptic(null);
+        toolbar.setVisible(false);
     }
 
-    private void saveSynoptic(SynopticForm.SaveEvent event) {
-        synopticService.saveSynoptic(event.getSynoptic());
-        updateList();
-        closeEditor();
+    private void saveSynoptic(Optional<Synoptic> synoptic) {
+        synoptic.ifPresent(syn -> {
+            synopticService.saveSynoptic(syn);
+            updateList();
+            closeEditor();
+        });
     }
 
-    private void deleteSynoptic(SynopticForm.DeleteEvent event) {
-        synopticService.deleteSynoptic(event.getSynoptic());
-        updateList();
-        closeEditor();
-        showToolbarButtons(false);
-    }
-
-    private void showToolbarButtons(boolean show) {
-        openButton.setVisible(show);
-        mapButton.setVisible(show);
-        removeButton.setVisible(show);
+    private void deleteSynoptic(Optional<Synoptic> synoptic) {
+        synoptic.ifPresent(syn -> {
+            synopticService.deleteSynoptic(syn);
+            updateList();
+            closeEditor();
+        });
     }
 
     private class SynopticContextMenu extends GridContextMenu<Synoptic> {
@@ -156,7 +165,7 @@ public class SynopticListView extends VerticalLayout {
 
             addItem(new HorizontalLayout(openIcon.create(), new Span("Open")), click -> openSynoptic(click.getItem()));
             addItem(new HorizontalLayout(mapIcon.create(), new Span("Map")), click -> openMap(click.getItem()));
-            addItem(new HorizontalLayout(removeIcon.create(), new Span("Remove")), click -> {});
+            addItem(new HorizontalLayout(removeIcon.create(), new Span("Remove")), click -> removeSynoptic(click.getItem()));
         }
     }
 

@@ -13,6 +13,7 @@ import java.util.List;
 public class RadarWidgetForm extends WidgetForm {
 
     private TextField ipAddress;
+    private NumberField port;
     private NumberField latitude;
     private NumberField longitude;
 
@@ -21,10 +22,11 @@ public class RadarWidgetForm extends WidgetForm {
 
     @Override
     public List<Component> createOtherFields() {
-        ipAddress = new TextField("IP:Port");
+        ipAddress = new TextField("IP");
+        port = new NumberField("Port");
         latitude = new NumberField("Latitude");
         longitude = new NumberField("Longitude");
-        return Arrays.asList(ipAddress, latitude, longitude);
+        return Arrays.asList(ipAddress, port, latitude, longitude);
     }
 
     @Override
@@ -32,6 +34,10 @@ public class RadarWidgetForm extends WidgetForm {
         binder.bind(ipAddress,
                 widget -> convert(widget).getIpAddress(),
                 (widget, ipAddress) -> convert(widget).setIpAddress(ipAddress)
+        );
+        binder.bind(port,
+                widget -> Double.parseDouble("" + convert(widget).getPort()),
+                (widget, port) -> convert(widget).setPort(port.intValue())
         );
         binder.bind(latitude,
                 widget -> convert(widget).getLatitude(),

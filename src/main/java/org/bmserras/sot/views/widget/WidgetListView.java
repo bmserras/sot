@@ -1,6 +1,7 @@
 package org.bmserras.sot.views.widget;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.contextmenu.SubMenu;
 import com.vaadin.flow.component.grid.Grid;
@@ -13,11 +14,18 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import jakarta.annotation.security.PermitAll;
+import jakarta.xml.bind.JAXBException;
+import mdeos.isos.isystem0lib.ISystem0ZK;
+import mdeos.isos.model.Service;
+import org.apache.zookeeper.KeeperException;
 import org.bmserras.sot.data.entity.widget.RadarWidget;
 import org.bmserras.sot.data.entity.widget.VideoCameraWidget;
 import org.bmserras.sot.data.entity.widget.Widget;
 import org.bmserras.sot.data.service.WidgetService;
 import org.bmserras.sot.views.layout.MainLayout;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 
 @PageTitle("Widgets")
 @Route(value = "widget-crud", layout = MainLayout.class)
@@ -34,6 +42,8 @@ public class WidgetListView extends VerticalLayout {
 
     RadarWidgetForm radarWidgetForm;
     VideoCameraWidgetForm videoCameraWidgetForm;
+
+    Button importButton = new Button("Import");
 
     public WidgetListView(WidgetService service) {
         this.service = service;
@@ -60,7 +70,7 @@ public class WidgetListView extends VerticalLayout {
         });
     }
 
-    private void configureForms(WidgetForm ...widgetForms) {
+    private void configureForms(WidgetForm... widgetForms) {
 
         /*for (WidgetForm widgetForm : widgetForms) {
             widgetForm = new RadarWidgetForm();
@@ -125,8 +135,51 @@ public class WidgetListView extends VerticalLayout {
             editWidget(new VideoCameraWidget());
         });
 
-        var toolbar = new HorizontalLayout(filterText, optionsMenu);
-        toolbar.addClassName("toolbar");
+        importButton.addClickListener(click -> {
+            try {
+                ISystem0ZK iSystem0ZK = new ISystem0ZK();
+                Service service1 = iSystem0ZK.getService("/TFM/SIGET/Radar A1 12 C/Cabin");
+                Service service2 = iSystem0ZK.getService("/TFM/SIGET/Radar IC19 6 D/Cabin");
+                Service service3 = iSystem0ZK.getService("/TFM/SIGET/Radar IC19 7 D/Cabin");
+
+                HashMap<String, String> props1 = new HashMap<>();
+                HashMap<String, String> props2 = new HashMap<>();
+                HashMap<String, String> props3 = new HashMap<>();
+
+                service1.getPropList().getPropList().forEach(prop -> props1.put(prop.getName(), prop.getValue()));
+                service2.getPropList().getPropList().forEach(prop -> props2.put(prop.getName(), prop.getValue()));
+                service3.getPropList().getPropList().forEach(prop -> props3.put(prop.getName(), prop.getValue()));
+
+                service.saveWidget(new RadarWidget(
+                        service1.getName(),
+                        props1.get("ip"),
+                        Integer.parseInt(props1.get("port")),
+                        Double.parseDouble(props1.get("lat")),
+                        Double.parseDouble(props1.get("long"))
+                ));
+                service.saveWidget(new RadarWidget(
+                        service2.getName(),
+                        props2.get("ip"),
+                        Integer.parseInt(props2.get("port")),
+                        Double.parseDouble(props2.get("lat")),
+                        Double.parseDouble(props2.get("long"))
+                ));
+                service.saveWidget(new RadarWidget(
+                        service3.getName(), props3.get("ip"),
+                        Integer.parseInt(props3.get("port")),
+                        Double.parseDouble(props3.get("lat")),
+                        Double.parseDouble(props3.get("long"))
+                ));
+                updateList();
+                closeEditor();
+
+            } catch (UnsupportedEncodingException | KeeperException | InterruptedException | JAXBException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        HorizontalLayout toolbar = new HorizontalLayout(filterText, optionsMenu, importButton);
+        toolbar.setAlignItems(Alignment.BASELINE);
         return toolbar;
     }
 

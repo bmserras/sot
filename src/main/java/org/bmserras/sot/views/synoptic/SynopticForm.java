@@ -13,14 +13,17 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.shared.Registration;
 import org.bmserras.sot.data.entity.synoptic.Synoptic;
 import org.bmserras.sot.data.entity.widget.Widget;
+import org.bmserras.sot.events.CloseEvent;
+import org.bmserras.sot.events.RemoveEvent;
+import org.bmserras.sot.events.SaveEvent;
 
 import java.util.List;
+import java.util.Optional;
 
 public class SynopticForm extends FormLayout {
 
     private final NumberField identifier = new NumberField("Identifier");
     private final TextField name = new TextField("Name");
-    //private final MultiSelectComboBox<Widget> widgets = new MultiSelectComboBox<>("Widgets");
 
     private final Button save = new Button("Save");
     private final Button delete = new Button("Delete");
@@ -29,12 +32,10 @@ public class SynopticForm extends FormLayout {
     private final Binder<Synoptic> binder = new Binder<>(Synoptic.class);
 
     public SynopticForm() {
-        addClassName("synoptic-form");
-
         binder.bind(identifier, synoptic -> (double) synoptic.getIdentifier(), null);
         binder.bind(name, Synoptic::getName, Synoptic::setName);
 
-        add(identifier, name, /*widgets, */createButtonsLayout());
+        add(identifier, name, createButtonsLayout());
     }
 
     private HorizontalLayout createButtonsLayout() {
@@ -46,7 +47,7 @@ public class SynopticForm extends FormLayout {
         close.addClickShortcut(Key.ESCAPE);
 
         save.addClickListener(event -> validateAndSave()); // <1>
-        delete.addClickListener(event -> fireEvent(new DeleteEvent(this, binder.getBean()))); // <2>
+        delete.addClickListener(event -> fireEvent(new RemoveEvent(this, Optional.of(binder.getBean())))); // <2>
         close.addClickListener(event -> fireEvent(new CloseEvent(this))); // <3>
 
         binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid())); // <4>
@@ -55,7 +56,7 @@ public class SynopticForm extends FormLayout {
 
     private void validateAndSave() {
         if (binder.isValid()) {
-            fireEvent(new SaveEvent(this, binder.getBean())); // <6>
+            fireEvent(new SaveEvent(this, Optional.of(binder.getBean()))); // <6>
         }
     }
 
@@ -63,41 +64,8 @@ public class SynopticForm extends FormLayout {
         binder.setBean(synoptic);
     }
 
-    // Events
-    public static abstract class SynopticFormEvent extends ComponentEvent<SynopticForm> {
-        private Synoptic synoptic;
-
-        protected SynopticFormEvent(SynopticForm source, Synoptic synoptic) {
-            super(source, false);
-            this.synoptic = synoptic;
-        }
-
-        public Synoptic getSynoptic() {
-            return synoptic;
-        }
-    }
-
-    public static class SaveEvent extends SynopticFormEvent {
-        SaveEvent(SynopticForm source, Synoptic synoptic) {
-            super(source, synoptic);
-        }
-    }
-
-    public static class DeleteEvent extends SynopticFormEvent {
-        DeleteEvent(SynopticForm source, Synoptic synoptic) {
-            super(source, synoptic);
-        }
-
-    }
-
-    public static class CloseEvent extends SynopticFormEvent {
-        CloseEvent(SynopticForm source) {
-            super(source, null);
-        }
-    }
-
-    public Registration addDeleteListener(ComponentEventListener<DeleteEvent> listener) {
-        return addListener(DeleteEvent.class, listener);
+    public Registration addDeleteListener(ComponentEventListener<RemoveEvent> listener) {
+        return addListener(RemoveEvent.class, listener);
     }
 
     public Registration addSaveListener(ComponentEventListener<SaveEvent> listener) {
