@@ -5,11 +5,13 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import jakarta.annotation.security.PermitAll;
 import org.bmserras.sot.SVGWrapper;
 import org.bmserras.sot.views.layout.MainLayout;
 
 @PageTitle("Test View")
 @Route(value = "test", layout = MainLayout.class)
+@PermitAll
 public class TestView extends HorizontalLayout {
 
     /*private final RadarWidgetComponent radarWidgetComponent;

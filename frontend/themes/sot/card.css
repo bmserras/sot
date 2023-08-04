@@ -1,0 +1,65 @@
+.card {
+
+    max-width: 15%;
+
+    border: 1px solid grey;
+    border-radius: 10px;
+
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    /*transition: 0.3s;*/
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.card .main-button {
+    width: 100%;
+    color: black;
+    flex-grow: 1;
+    background-color: white;
+}
+
+.card .main-button::part(prefix) {
+    scale: 2.5;
+}
+
+.card .container {
+    width: 100%;
+    border-top: 1px solid grey;
+}
+
+.card .container .title {
+    color: black;
+    align-self: baseline;
+}
+
+.card .container .options-button {
+    color: black;
+    background-color: white;
+    --lumo-button-size:var(--lumo-size-xs);
+    margin-left: auto;
+    align-self: baseline;
+}
+
+.new-card {
+    border-color: darkgrey;
+}
+
+.new-card .main-button {
+    color: darkgrey;
+}
+
+.new-card .container {
+    border-top: 1px solid darkgrey;
+}
+
+.new-card .container .title {
+    color: darkgrey;
+}
+
+.new-card .container .options-button {
+    color: darkgrey;
+}
+
+

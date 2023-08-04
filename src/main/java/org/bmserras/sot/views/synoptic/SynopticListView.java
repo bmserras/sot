@@ -3,9 +3,13 @@ package org.bmserras.sot.views.synoptic;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.map.Map;
+import com.vaadin.flow.component.map.configuration.Coordinate;
+import com.vaadin.flow.component.map.configuration.feature.MarkerFeature;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -14,11 +18,15 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 import org.bmserras.sot.data.entity.synoptic.Synoptic;
+import org.bmserras.sot.data.entity.widget.RadarWidget;
+import org.bmserras.sot.data.entity.widget.Widget;
 import org.bmserras.sot.data.service.SynopticService;
 import org.bmserras.sot.events.SynopticEvent;
 import org.bmserras.sot.views.layout.MainLayout;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @PageTitle("Synoptics")
@@ -123,7 +131,27 @@ public class SynopticListView extends VerticalLayout {
     }
 
     private void openMap(Optional<Synoptic> synoptic) {
-        synoptic.ifPresent(syn -> getUI().ifPresent(ui -> ui.navigate("map/" + syn.getName())));
+        //synoptic.ifPresent(syn -> getUI().ifPresent(ui -> ui.navigate("map/" + syn.getName())));
+
+        Map map = new Map();
+
+        Coordinate coordinate = new Coordinate(-9.273775502600436, 38.830215466868566);
+        map.setCenter(coordinate);
+        map.setZoom(10);
+
+        synoptic.get().getWidgets().forEach(w -> {
+            RadarWidget widget = (RadarWidget) w.getWidget();
+
+            Coordinate coords = new Coordinate(widget.getLongitude(), widget.getLatitude());
+            MarkerFeature marker = new MarkerFeature(coords);
+            map.getFeatureLayer().addFeature(marker);
+        });
+
+        Dialog dialog = new Dialog();
+        dialog.setWidth("70%");
+        dialog.setHeight("80%");
+        dialog.add(map);
+        dialog.open();
     }
 
     private void removeSynoptic(Optional<Synoptic> synoptic) {

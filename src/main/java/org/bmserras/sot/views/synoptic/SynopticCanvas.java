@@ -7,6 +7,9 @@ public class SynopticCanvas extends AbsoluteLayout {
 
     public SynopticCanvas() {
 
+
+
+
     }
 
     public void add(WidgetComponent widget, int position) {
