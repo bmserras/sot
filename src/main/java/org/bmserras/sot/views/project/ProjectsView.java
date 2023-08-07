@@ -22,7 +22,7 @@ import java.util.List;
 
 @PageTitle("Projects")
 @Route(value = "projects", layout = AppLayoutNavbar.class)
-@RouteAlias(value = "", layout = MainLayout.class)
+@RouteAlias(value = "", layout = AppLayoutNavbar.class)
 @PermitAll
 public class ProjectsView extends VerticalLayout {
 
