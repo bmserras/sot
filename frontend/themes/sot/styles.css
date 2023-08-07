@@ -6,3 +6,12 @@
 vaadin-context-menu-item[focused] {
     box-shadow: none;
 }
+
+@font-face {
+    font-family: "Roboto";
+    src: url("fonts/Roboto-Regular.ttf") format("ttf");
+}
+
+html {
+    --lumo-font-family: "Roboto", sans-serif;
+}
