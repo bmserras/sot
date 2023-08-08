@@ -11,8 +11,11 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 import org.bmserras.sot.data.entity.project.Project;
+import org.bmserras.sot.data.entity.synoptic.Synoptic;
 import org.bmserras.sot.data.service.ProjectService;
+import org.bmserras.sot.data.service.SynopticService;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;
+import org.bmserras.sot.views.synoptic.SynopticCardView;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.util.Optional;
@@ -23,13 +26,15 @@ import java.util.Optional;
 public class ProjectView extends VerticalLayout implements HasUrlParameter<String> {
 
     private ProjectService service;
+    private SynopticService synopticService;
 
     private Button back;
 
     private TextField name;
 
-    public ProjectView(ProjectService service) {
+    public ProjectView(ProjectService service, SynopticService synopticService) {
         this.service = service;
+        this.synopticService = synopticService;
 
         back = new Button(LineAwesomeIcon.ARROW_LEFT_SOLID.create(), click ->
                 click.getSource().getUI().ifPresent(ui -> ui.navigate(ProjectsView.class))
@@ -40,7 +45,7 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Strin
         HorizontalLayout horizontalLayout = new HorizontalLayout(back, name);
         horizontalLayout.setAlignItems(Alignment.CENTER);
 
-        add(horizontalLayout, new H2("Synoptics"), new H2("Widgets"));
+        add(horizontalLayout, new H2("Synoptics"), new SynopticCardView(synopticService), new H2("Widgets"));
     }
 
     @Override

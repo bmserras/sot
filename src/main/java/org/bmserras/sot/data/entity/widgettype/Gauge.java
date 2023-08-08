@@ -23,6 +23,11 @@ public class Gauge extends AbstractEntity {
         super();
     }
 
+    @Override
+    public String getPath() {
+        return "gauge/";
+    }
+
     public Gauge(String name, double minValue, double maxValue, String color, String type) {
         super(name);
         this.minValue = minValue;

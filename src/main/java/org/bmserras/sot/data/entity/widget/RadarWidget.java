@@ -24,6 +24,11 @@ public class RadarWidget extends Widget {
     public RadarWidget() {
     }
 
+    @Override
+    public String getPath() {
+        return "widget/";
+    }
+
     public RadarWidget(String name, String ipAddress, int port, double latitude, double longitude) {
         super(name);
         this.ipAddress = ipAddress;

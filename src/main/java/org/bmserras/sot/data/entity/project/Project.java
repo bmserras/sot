@@ -26,6 +26,11 @@ public class Project extends AbstractEntity {
         super(identifier, name);
     }
 
+    @Override
+    public String getPath() {
+        return "project/";
+    }
+
     public List<ProjectSynoptic> getSynoptics() {
         return synoptics;
     }

@@ -44,6 +44,8 @@ public abstract class AbstractEntity {
         this.name = name;
     }
 
+    public abstract String getPath();
+
     @Override
     public String toString() {
         return "CustomEntity{" +

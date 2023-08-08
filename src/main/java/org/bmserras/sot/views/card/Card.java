@@ -1,4 +1,4 @@
-package org.bmserras.sot.components.card;
+package org.bmserras.sot.views.card;
 
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Component;
@@ -43,5 +43,17 @@ public abstract class Card extends VerticalLayout {
 
     public void addMainButtonClickListener(ComponentEventListener<ClickEvent<Button>> listener) {
         mainButton.addClickListener(listener);
+    }
+
+    public void setMainButtonIcon(Component icon) {
+        this.mainButton.setIcon(icon);
+    }
+
+    public void setTitle(String title) {
+        this.title.setText(title);
+    }
+
+    public void setTooltipText(String tooltipText) {
+        this.mainButton.setTooltipText(tooltipText);
     }
 }

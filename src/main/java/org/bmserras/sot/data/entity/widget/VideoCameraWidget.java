@@ -11,6 +11,11 @@ public class VideoCameraWidget extends Widget {
     public VideoCameraWidget() {
     }
 
+    @Override
+    public String getPath() {
+        return "widget/";
+    }
+
     public VideoCameraWidget(int identifier, String name, String username, String password) {
         super(identifier, name);
         this.username = username;

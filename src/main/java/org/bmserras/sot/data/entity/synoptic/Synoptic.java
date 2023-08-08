@@ -25,6 +25,11 @@ public class Synoptic extends AbstractEntity {
         super(identifier, name);
     }
 
+    @Override
+    public String getPath() {
+        return "synoptic/";
+    }
+
     public List<SynopticWidget> getWidgets() {
         return widgets;
     }

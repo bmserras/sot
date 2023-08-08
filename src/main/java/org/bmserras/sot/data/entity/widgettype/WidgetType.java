@@ -23,6 +23,11 @@ public class WidgetType extends AbstractEntity {
         super();
     }
 
+    @Override
+    public String getPath() {
+        return "widget-type/";
+    }
+
     public WidgetType(String name, String image) {
         super(name);
         this.image = image;

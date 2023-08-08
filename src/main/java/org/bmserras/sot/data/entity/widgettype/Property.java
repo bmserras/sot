@@ -17,6 +17,11 @@ public class Property extends AbstractEntity {
         super();
     }
 
+    @Override
+    public String getPath() {
+        return "property/";
+    }
+
     public Property(String name, String type) {
         super(name);
         this.type = type;

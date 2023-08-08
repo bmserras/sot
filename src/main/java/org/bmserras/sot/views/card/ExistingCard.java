@@ -1,4 +1,4 @@
-package org.bmserras.sot.components.card;
+package org.bmserras.sot.views.card;
 
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Component;
@@ -11,11 +11,19 @@ import org.vaadin.lineawesome.LineAwesomeIcon;
 
 public class ExistingCard extends Card {
 
-    MenuItem open;
-    MenuItem delete;
+    private static final Component DEFAULT_ICON = LineAwesomeIcon.CHECK_CIRCLE_SOLID.create();
+    private static final String DEFAULT_TEXT = "Existing Card";
+    private static final String DEFAULT_TOOLTIP_TEXT = "Open card";
 
-    public ExistingCard(Component icon, String title) {
-        super(icon, title, "Open project");
+    private MenuItem open;
+    private MenuItem delete;
+
+    public ExistingCard() {
+        this(DEFAULT_ICON, DEFAULT_TEXT, DEFAULT_TOOLTIP_TEXT);
+    }
+
+    public ExistingCard(Component icon, String title, String tooltipText) {
+        super(icon, title, tooltipText);
     }
 
     protected void createContextMenu(Component target, boolean openOnClick) {
