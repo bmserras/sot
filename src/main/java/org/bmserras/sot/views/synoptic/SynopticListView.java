@@ -1,7 +1,6 @@
 package org.bmserras.sot.views.synoptic;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
@@ -19,14 +18,10 @@ import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 import org.bmserras.sot.data.entity.synoptic.Synoptic;
 import org.bmserras.sot.data.entity.widget.RadarWidget;
-import org.bmserras.sot.data.entity.widget.Widget;
 import org.bmserras.sot.data.service.SynopticService;
-import org.bmserras.sot.events.SynopticEvent;
 import org.bmserras.sot.views.layout.MainLayout;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @PageTitle("Synoptics")

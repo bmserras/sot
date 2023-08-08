@@ -1,13 +1,13 @@
-package org.bmserras.sot.events;
+package org.bmserras.sot.events.synoptic;
 
 import com.vaadin.flow.component.Component;
 import org.bmserras.sot.data.entity.synoptic.Synoptic;
 
 import java.util.Optional;
 
-public class MapEvent extends SynopticEvent {
+public class RemoveEvent extends SynopticEvent {
 
-    public MapEvent(Component source, Optional<Synoptic> synoptic) {
+    public RemoveEvent(Component source, Optional<Synoptic> synoptic) {
         super(source, synoptic);
     }
 }

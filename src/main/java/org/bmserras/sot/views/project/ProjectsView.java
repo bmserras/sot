@@ -1,8 +1,10 @@
 package org.bmserras.sot.views.project;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -15,7 +17,6 @@ import org.bmserras.sot.components.card.NewCard;
 import org.bmserras.sot.data.entity.project.Project;
 import org.bmserras.sot.data.service.ProjectService;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;
-import org.bmserras.sot.views.layout.MainLayout;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.util.List;
@@ -28,8 +29,16 @@ public class ProjectsView extends VerticalLayout {
 
     private ProjectService service;
 
-    private final HorizontalLayout horizontalLayout;
     private final NewCard newProject;
+
+    private final int NUMBER_OF_CARDS_PER_ROW = 6;
+
+    private final Button changeView;
+    private final Button info;
+
+    private final VerticalLayout content;
+
+    private boolean initInCardView = true;
 
     public ProjectsView(ProjectService service) {
         this.service = service;
@@ -51,44 +60,76 @@ public class ProjectsView extends VerticalLayout {
             dialog.open();
         });
 
-        horizontalLayout = new HorizontalLayout(newProject);
-        horizontalLayout.setWidthFull();
-        horizontalLayout.setHeight("40%");
+        changeView = new Button(getIcon(initInCardView));
+        info = new Button(LineAwesomeIcon.INFO_CIRCLE_SOLID.create());
 
-        add(new H2("My Projects"), horizontalLayout);
+        content = new VerticalLayout();
+        content.setSizeFull();
 
-        updateList();
+        changeView.addClickListener(click -> {
+            initInCardView = !initInCardView;
+            changeView.setIcon(getIcon(initInCardView));
+
+            updateContent();
+        });
+
+        add(new HorizontalLayout(new H2("My Projects"), changeView, info), content);
+
+        updateContent();
+    }
+
+    private void updateContent() {
+        content.removeAll();
+        if (initInCardView) {
+            updateCards();
+        } else {
+            updateList();
+        }
     }
 
     private void updateList() {
+        content.add(new ProjectList(service));
+    }
+
+    private Component getIcon(boolean isCardView) {
+        return isCardView ? LineAwesomeIcon.LIST_SOLID.create() : LineAwesomeIcon.TH_SOLID.create();
+    }
+
+    private void updateCards() {
         List<Project> allProjects = service.findAllProjects("");
 
-        /*int lines = ((allProjects.size()) / 5) + 1;
-        int c = 0;
-        for (int i = 0; i < lines; i++) {
+        int lines = ((allProjects.size()) / NUMBER_OF_CARDS_PER_ROW) + 1;
+        for (int line = 0; line < lines; line++) {
+
             HorizontalLayout horizontalLayout = new HorizontalLayout();
             horizontalLayout.setWidthFull();
             horizontalLayout.setHeight("40%");
-            add(horizontalLayout);
-            if (i == 0) {
+            content.add(horizontalLayout);
+
+            if (line == 0) {
                 horizontalLayout.add(newProject);
             }
-            ++c;
-            for (int j = c*(i+1); j < 5 && j < allProjects.size(); j++) {
-                horizontalLayout.add(new ExistingCard(LineAwesomeIcon.FOLDER_OPEN.create(), allProjects.get(j).getName()));
-            }
-        }*/
 
-        for (Project project : allProjects) {
-            ExistingCard existingCard = new ExistingCard(LineAwesomeIcon.FOLDER_OPEN.create(), project.getName());
-            existingCard.addMainButtonClickListener(mainButtonClick ->
-                    mainButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate("project/" + project.getIdentifier())));
-            existingCard.addOpenButtonClickListener(openButtonClick -> openButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate("project/" + project.getIdentifier())));
-            existingCard.addDeleteButtonClickListener(deleteButtonClick -> {
-                service.deleteProject(project);
-                horizontalLayout.remove(existingCard);
-            });
-            horizontalLayout.add(existingCard);
+            int row = line == 0 ? 1 : 0;
+            int index = (line * NUMBER_OF_CARDS_PER_ROW) + row - 1;
+            while (row < NUMBER_OF_CARDS_PER_ROW && index < allProjects.size()) {
+
+                Project project = allProjects.get(index);
+                ExistingCard existingCard = new ExistingCard(LineAwesomeIcon.FOLDER_OPEN.create(), project.getName());
+                existingCard.addMainButtonClickListener(mainButtonClick ->
+                        mainButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate("project/" + project.getIdentifier())));
+                existingCard.addOpenButtonClickListener(openButtonClick -> openButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate("project/" + project.getIdentifier())));
+                existingCard.addDeleteButtonClickListener(deleteButtonClick -> {
+                    service.deleteProject(project);
+                    horizontalLayout.remove(existingCard);
+                });
+                horizontalLayout.add(existingCard);
+
+                ++row;
+                ++index;
+            }
+
         }
+
     }
 }

@@ -5,9 +5,9 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.shared.Registration;
 import org.bmserras.sot.data.entity.synoptic.Synoptic;
-import org.bmserras.sot.events.MapEvent;
-import org.bmserras.sot.events.OpenEvent;
-import org.bmserras.sot.events.RemoveEvent;
+import org.bmserras.sot.events.synoptic.MapEvent;
+import org.bmserras.sot.events.synoptic.OpenEvent;
+import org.bmserras.sot.events.synoptic.RemoveEvent;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.util.Optional;

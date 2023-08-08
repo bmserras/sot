@@ -1,7 +1,6 @@
-package org.bmserras.sot.events;
+package org.bmserras.sot.events.widget;
 
 import com.vaadin.flow.component.Component;
-import org.bmserras.sot.data.entity.synoptic.Synoptic;
 import org.bmserras.sot.data.entity.widget.Widget;
 
 import java.util.Optional;

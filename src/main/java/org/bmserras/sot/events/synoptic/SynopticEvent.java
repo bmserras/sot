@@ -1,4 +1,4 @@
-package org.bmserras.sot.events;
+package org.bmserras.sot.events.synoptic;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;

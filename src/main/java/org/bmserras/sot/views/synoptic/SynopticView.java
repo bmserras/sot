@@ -1,6 +1,5 @@
 package org.bmserras.sot.views.synoptic;
 
-import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.icon.Icon;
@@ -23,7 +22,6 @@ import org.bmserras.sot.data.entity.synoptic.Synoptic;
 import org.bmserras.sot.data.entity.widget.Widget;
 import org.bmserras.sot.data.service.SynopticService;
 import org.bmserras.sot.data.service.WidgetService;
-import org.bmserras.sot.events.RemoveWidgetEvent;
 import org.bmserras.sot.views.layout.MainLayout;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
