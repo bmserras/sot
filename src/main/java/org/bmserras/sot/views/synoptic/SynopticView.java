@@ -157,7 +157,7 @@ public class SynopticView extends VerticalLayout implements HasUrlParameter<Stri
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, String parameter) {
-        synopticName.setValue(parameter);
+        synopticService.findById(parameter).ifPresent(synoptic -> synopticName.setValue(synoptic.getName()));
         populateCanvas();
 
         authContext.getAuthenticatedUser(UserDetails.class).map(user -> {
