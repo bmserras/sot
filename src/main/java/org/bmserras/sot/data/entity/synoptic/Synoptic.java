@@ -1,51 +1,28 @@
 package org.bmserras.sot.data.entity.synoptic;
 
 import jakarta.persistence.*;
+import org.bmserras.sot.data.entity.AbstractEntity;
 import org.bmserras.sot.data.entity.widget.Widget;
 
 import java.util.*;
 
 @Entity
 @Table(name = "synoptic")
-public class Synoptic {
-
-    @Id
-    private long identifier;
-
-    @Column(unique = true)
-    private String name;
+public class Synoptic extends AbstractEntity {
 
     @OneToMany(mappedBy = "synoptic", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<SynopticWidget> widgets = new ArrayList<>();
 
     public Synoptic() {
-        this.identifier = new Date().getTime();
+        super();
     }
 
     public Synoptic(String name) {
-        this();
-        this.name = name;
+        super(name);
     }
 
     public Synoptic(long identifier, String name) {
-        this.identifier = identifier;
-        this.name = name;
-    }
-
-    public long getIdentifier() {
-        return identifier;
-    }
-
-    public void setIdentifier(long identifier) {
-        this.identifier = identifier;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        super(identifier, name);
     }
 
     public List<SynopticWidget> getWidgets() {
@@ -67,22 +44,7 @@ public class Synoptic {
     @Override
     public String toString() {
         return "Synoptic{" +
-                "identifier=" + identifier +
-                ", name='" + name + '\'' +
-                ", widgets=" + widgets +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Synoptic synoptic = (Synoptic) o;
-        return identifier == synoptic.identifier;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(identifier);
+                "widgets=" + widgets +
+                "} " + super.toString();
     }
 }

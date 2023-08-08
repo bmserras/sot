@@ -1,6 +1,7 @@
 package org.bmserras.sot.data.entity.widgettype;
 
 import jakarta.persistence.*;
+import org.bmserras.sot.data.entity.AbstractEntity;
 import org.bmserras.sot.data.entity.synoptic.SynopticWidget;
 import org.bmserras.sot.data.entity.widget.Widget;
 
@@ -11,13 +12,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "widget_type")
-public class WidgetType {
-
-    @Id
-    private long identifier;
-
-    @Column(unique = true)
-    private String name;
+public class WidgetType extends AbstractEntity {
 
     private String image;
 
@@ -25,29 +20,12 @@ public class WidgetType {
     private List<WidgetTypeProperty> properties = new ArrayList<>();
 
     public WidgetType() {
-        this.identifier = new Date().getTime();
+        super();
     }
 
     public WidgetType(String name, String image) {
-        this();
-        this.name = name;
+        super(name);
         this.image = image;
-    }
-
-    public long getIdentifier() {
-        return identifier;
-    }
-
-    public void setIdentifier(long identifier) {
-        this.identifier = identifier;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getImage() {
@@ -77,24 +55,9 @@ public class WidgetType {
     @Override
     public String toString() {
         return "WidgetType{" +
-                "identifier=" + identifier +
-                ", name='" + name + '\'' +
-                ", image='" + image + '\'' +
+                "image='" + image + '\'' +
                 ", properties=" + properties +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        WidgetType that = (WidgetType) o;
-        return identifier == that.identifier;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(identifier);
+                "} " + super.toString();
     }
 }
 

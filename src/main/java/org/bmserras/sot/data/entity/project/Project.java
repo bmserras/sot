@@ -1,6 +1,7 @@
 package org.bmserras.sot.data.entity.project;
 
 import jakarta.persistence.*;
+import org.bmserras.sot.data.entity.AbstractEntity;
 import org.bmserras.sot.data.entity.synoptic.Synoptic;
 
 import java.util.ArrayList;
@@ -10,45 +11,21 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "project")
-public class Project {
-
-    @Id
-    private long identifier;
-
-    private String name;
+public class Project extends AbstractEntity {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<ProjectSynoptic> synoptics = new ArrayList<>();
 
     public Project() {
-        this.identifier = new Date().getTime();
-        this.name = "Blank project";
+        super();
     }
 
     public Project(String name) {
-        this();
-        this.name = name;
+        super(name);
     }
 
     public Project(long identifier, String name) {
-        this.identifier = identifier;
-        this.name = name;
-    }
-
-    public long getIdentifier() {
-        return identifier;
-    }
-
-    public void setIdentifier(long identifier) {
-        this.identifier = identifier;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        super(identifier, name);
     }
 
     public List<ProjectSynoptic> getSynoptics() {
@@ -70,22 +47,7 @@ public class Project {
     @Override
     public String toString() {
         return "Project{" +
-                "identifier=" + identifier +
-                ", name='" + name + '\'' +
-                ", synoptics=" + synoptics +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Project project = (Project) o;
-        return identifier == project.identifier;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(identifier);
+                "synoptics=" + synoptics +
+                "} " + super.toString();
     }
 }
