@@ -15,6 +15,8 @@ import org.bmserras.sot.data.service.ProjectService;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
+import java.util.Optional;
+
 @PageTitle("Project")
 @Route(value = "project", layout = AppLayoutNavbar.class)
 @PermitAll
@@ -43,12 +45,12 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Strin
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, String parameter) {
-        service.findProjectById(parameter).ifPresent(project -> name.setValue(project.getName()));
+        service.findById(parameter).ifPresent(project -> name.setValue(project.getName()));
 
         name.addValueChangeListener(valueChangeEvent -> {
-            Project project = service.findProjectByName(valueChangeEvent.getOldValue());
-            project.setName(valueChangeEvent.getValue());
-            service.saveProject(project);
+            Optional<Project> project = service.findByName(valueChangeEvent.getOldValue());
+            project.get().setName(valueChangeEvent.getValue());
+            service.save(project.get());
         });
     }
 }

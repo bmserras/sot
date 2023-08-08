@@ -100,7 +100,7 @@ public class SynopticListView extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(synopticService.findAllSynoptics(filterText.getValue()));
+        grid.setItems(synopticService.findAll(filterText.getValue()));
     }
 
     public void editSynoptic(Optional<Synoptic> synoptic) {
@@ -151,7 +151,7 @@ public class SynopticListView extends VerticalLayout {
 
     private void removeSynoptic(Optional<Synoptic> synoptic) {
         synoptic.ifPresent(syn -> {
-            synopticService.deleteSynoptic(syn);
+            synopticService.delete(syn);
             updateList();
             closeEditor();
         });
@@ -167,7 +167,7 @@ public class SynopticListView extends VerticalLayout {
 
     private void saveSynoptic(Optional<Synoptic> synoptic) {
         synoptic.ifPresent(syn -> {
-            synopticService.saveSynoptic(syn);
+            synopticService.save(syn);
             updateList();
             closeEditor();
         });
@@ -175,7 +175,7 @@ public class SynopticListView extends VerticalLayout {
 
     private void deleteSynoptic(Optional<Synoptic> synoptic) {
         synoptic.ifPresent(syn -> {
-            synopticService.deleteSynoptic(syn);
+            synopticService.delete(syn);
             updateList();
             closeEditor();
         });

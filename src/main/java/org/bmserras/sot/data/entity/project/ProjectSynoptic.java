@@ -21,15 +21,12 @@ public class ProjectSynoptic implements Serializable {
     @JoinColumn(name = "synoptic_identifier", referencedColumnName = "identifier")
     private Synoptic synoptic;
 
-    private int pos;
-
     public ProjectSynoptic() {
     }
 
-    public ProjectSynoptic(Project project, Synoptic synoptic, int pos) {
+    public ProjectSynoptic(Project project, Synoptic synoptic) {
         this.project = project;
         this.synoptic = synoptic;
-        this.pos = pos;
     }
 
     public Project getProject() {
@@ -48,19 +45,10 @@ public class ProjectSynoptic implements Serializable {
         this.synoptic = synoptic;
     }
 
-    public int getPos() {
-        return pos;
-    }
-
-    public void setPos(int posX) {
-        this.pos = posX;
-    }
-
     @Override
     public String toString() {
         return "ProjectSynoptic{" +
                 ", synoptic=" + synoptic +
-                ", posX=" + pos +
                 '}';
     }
 
@@ -69,12 +57,12 @@ public class ProjectSynoptic implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProjectSynoptic that = (ProjectSynoptic) o;
-        return pos == that.pos && project.equals(that.project) && synoptic.equals(that.synoptic);
+        return project.equals(that.project) && synoptic.equals(that.synoptic);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(project, synoptic, pos);
+        return Objects.hash(project, synoptic);
     }
 
     public static class ProjectSynopticId implements Serializable {

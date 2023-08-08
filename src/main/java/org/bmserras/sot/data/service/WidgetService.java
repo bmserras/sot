@@ -1,13 +1,15 @@
 package org.bmserras.sot.data.service;
 
+import org.bmserras.sot.data.entity.project.Project;
 import org.bmserras.sot.data.entity.widget.Widget;
 import org.bmserras.sot.data.repository.widget.WidgetRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class WidgetService {
+public class WidgetService implements AbstractService<Widget> {
 
     private final WidgetRepository widgetRepository;
 
@@ -15,35 +17,40 @@ public class WidgetService {
         this.widgetRepository = widgetRepository;
     }
 
-    public List<Widget> findAllWidgets(String stringFilter) {
-        //return new ArrayList<>(widgets.values());
+    @Override
+    public List<Widget> findAll() {
+        return findAll("");
+    }
 
-        if (stringFilter == null || stringFilter.isEmpty()) {
+    @Override
+    public List<Widget> findAll(String filter) {
+        if (filter == null || filter.isEmpty()) {
             return widgetRepository.findAll();
         } else {
-            return widgetRepository.search(stringFilter);
+            return widgetRepository.search(filter);
         }
     }
 
+    @Override
+    public Optional<Widget> findById(String id) {
+        return widgetRepository.findById(id);
+    }
 
-    public void saveWidget(Widget widget) {
-        if (widget == null) {
+    @Override
+    public Optional<Widget> findByName(String name) {
+        return Optional.ofNullable(widgetRepository.findByName(name));
+    }
+
+    @Override
+    public void save(Widget item) {
+        if (item == null) {
             return;
         }
-        widgetRepository.save(widget);
+        widgetRepository.save(item);
     }
 
-    public void deleteWidget(Widget widget) {
-        //widgets.remove(widget);
-
-        widgetRepository.delete(widget);
-    }
-
-    public List<Widget> findAllWidgets() {
-        return widgetRepository.findAll();
-    }
-
-    public Widget findWidgetByName(String name) {
-        return widgetRepository.findByName(name);
+    @Override
+    public void delete(Widget item) {
+        widgetRepository.delete(item);
     }
 }

@@ -123,13 +123,13 @@ public class RadarWidgetComponent extends WidgetComponent {
     }
 
     private void saveWidget(WidgetForm.SaveEvent event) {
-        widgetService.saveWidget(event.getWidget());
+        widgetService.save(event.getWidget());
         update(event.getWidget().getName());
         dialog.close();
     }
 
     private void update(String name) {
-        RadarWidget widgetByName = (RadarWidget) widgetService.findWidgetByName(name);
+        RadarWidget widgetByName = (RadarWidget) widgetService.findByName(name).get();
         setName(widgetByName.getName());
     }
 

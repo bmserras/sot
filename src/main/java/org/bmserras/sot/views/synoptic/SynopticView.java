@@ -26,6 +26,8 @@ import org.bmserras.sot.views.layout.MainLayout;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Optional;
+
 @PageTitle("Synoptic View")
 @Route(value = "synoptic", layout = MainLayout.class)
 @PermitAll
@@ -60,16 +62,16 @@ public class SynopticView extends VerticalLayout implements HasUrlParameter<Stri
     }
 
     private void populateCanvas() {
-        Synoptic synoptic = synopticService.findSynopticByName(synopticName.getValue());
-        synoptic.getWidgets().forEach(sw -> {
+        Optional<Synoptic> synoptic = synopticService.findByName(synopticName.getValue());
+        synoptic.get().getWidgets().forEach(sw -> {
             Widget widget = sw.getWidget();
             int pos = sw.getPos();
 
             if (widget instanceof RadarWidget) {
                 RadarWidgetComponent radarWidgetComponent = new RadarWidgetComponent(widgetService, (RadarWidget) widget);
                 radarWidgetComponent.addRemoveWidgetListener(event -> {
-                    synoptic.removeWidget(widget, pos);
-                    synopticService.saveSynoptic(synoptic);
+                    synoptic.get().removeWidget(widget, pos);
+                    synopticService.save(synoptic.get());
                     canvas.remove(radarWidgetComponent);
                 });
                 canvas.add(radarWidgetComponent, pos);
@@ -106,7 +108,7 @@ public class SynopticView extends VerticalLayout implements HasUrlParameter<Stri
 
         Select<Widget> selectWidget = new Select<>("Widget", click -> {});
         selectWidget.setItemLabelGenerator(Widget::getName);
-        selectWidget.setItems(widgetService.findAllWidgets());
+        selectWidget.setItems(widgetService.findAll(""));
 
         IntegerField position = new IntegerField("Position");
         Button addWidget = new Button("Add");
@@ -115,13 +117,13 @@ public class SynopticView extends VerticalLayout implements HasUrlParameter<Stri
 
         addWidget.addClickListener(click -> {
 
-            Synoptic synoptic = synopticService.findSynopticByName(synopticName.getValue());
-            Widget widget = widgetService.findWidgetByName(selectWidget.getValue().getName());
-            synoptic.addWidget(widget, position.getValue());
-            synopticService.saveSynoptic(synoptic);
+            Optional<Synoptic> synoptic = synopticService.findByName(synopticName.getValue());
+            Optional<Widget> widget = widgetService.findByName(selectWidget.getValue().getName());
+            synoptic.get().addWidget(widget.get(), position.getValue());
+            synopticService.save(synoptic.get());
 
-            if (widget instanceof RadarWidget) {
-                canvas.add(new RadarWidgetComponent(widgetService, (RadarWidget) widget), position.getValue());
+            if (widget.get() instanceof RadarWidget) {
+                canvas.add(new RadarWidgetComponent(widgetService, (RadarWidget) widget.get()), position.getValue());
             }
             else {
                 System.out.println("WHAT???");

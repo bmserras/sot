@@ -1,13 +1,15 @@
 package org.bmserras.sot.data.service;
 
+import org.bmserras.sot.data.entity.project.Project;
 import org.bmserras.sot.data.entity.widgettype.WidgetType;
 import org.bmserras.sot.data.repository.widgettype.WidgetTypeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class WidgetTypeService {
+public class WidgetTypeService implements AbstractService<WidgetType> {
 
     private final WidgetTypeRepository widgetTypeRepository;
 
@@ -15,26 +17,40 @@ public class WidgetTypeService {
         this.widgetTypeRepository = widgetTypeRepository;
     }
 
-    public List<WidgetType> findAllWidgetTypes(String stringFilter) {
-        if (stringFilter == null || stringFilter.isEmpty()) {
+    @Override
+    public List<WidgetType> findAll() {
+        return findAll("");
+    }
+
+    @Override
+    public List<WidgetType> findAll(String filter) {
+        if (filter == null || filter.isEmpty()) {
             return widgetTypeRepository.findAll();
         } else {
-            return widgetTypeRepository.search(stringFilter);
+            return widgetTypeRepository.search(filter);
         }
     }
 
-    public WidgetType findWidgetTypeByName(String name) {
-        return widgetTypeRepository.findByName(name);
+    @Override
+    public Optional<WidgetType> findById(String id) {
+        return widgetTypeRepository.findById(id);
     }
 
-    public void saveWidgetType(WidgetType widgetType) {
-        if (widgetType == null) {
+    @Override
+    public Optional<WidgetType> findByName(String name) {
+        return Optional.ofNullable(widgetTypeRepository.findByName(name));
+    }
+
+    @Override
+    public void save(WidgetType item) {
+        if (item == null) {
             return;
         }
-        widgetTypeRepository.save(widgetType);
+        widgetTypeRepository.save(item);
     }
 
-    public void deleteWidgetType(WidgetType widgetType) {
-        widgetTypeRepository.delete(widgetType);
+    @Override
+    public void delete(WidgetType item) {
+        widgetTypeRepository.delete(item);
     }
 }

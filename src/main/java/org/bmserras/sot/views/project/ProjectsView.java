@@ -4,7 +4,6 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -51,7 +50,7 @@ public class ProjectsView extends VerticalLayout {
             TextField name = new TextField("Project name", "Blank project");
             Button create = new Button("Create", createButtonClick -> {
                 Project project = new Project(name.getValue().equals("") ? "Blank project" : name.getValue());
-                service.saveProject(project);
+                service.save(project);
                 dialog.close();
                 mainButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate("project/" + project.getIdentifier()));
             });
@@ -96,7 +95,7 @@ public class ProjectsView extends VerticalLayout {
     }
 
     private void updateCards() {
-        List<Project> allProjects = service.findAllProjects("");
+        List<Project> allProjects = service.findAll("");
 
         int lines = ((allProjects.size()) / NUMBER_OF_CARDS_PER_ROW) + 1;
         for (int line = 0; line < lines; line++) {
@@ -120,7 +119,7 @@ public class ProjectsView extends VerticalLayout {
                         mainButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate("project/" + project.getIdentifier())));
                 existingCard.addOpenButtonClickListener(openButtonClick -> openButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate("project/" + project.getIdentifier())));
                 existingCard.addDeleteButtonClickListener(deleteButtonClick -> {
-                    service.deleteProject(project);
+                    service.delete(project);
                     horizontalLayout.remove(existingCard);
                 });
                 horizontalLayout.add(existingCard);

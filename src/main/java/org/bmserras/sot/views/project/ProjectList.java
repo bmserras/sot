@@ -90,7 +90,7 @@ public class ProjectList extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(projectService.findAllProjects(filterText.getValue()));
+        grid.setItems(projectService.findAll(filterText.getValue()));
     }
 
     public void editProject(Optional<Project> project) {
@@ -121,7 +121,7 @@ public class ProjectList extends VerticalLayout {
 
     private void removeProject(Optional<Project> project) {
         project.ifPresent(proj -> {
-            projectService.deleteProject(proj);
+            projectService.delete(proj);
             updateList();
             closeEditor();
         });
@@ -137,7 +137,7 @@ public class ProjectList extends VerticalLayout {
 
     private void saveProject(Optional<Project> project) {
         project.ifPresent(proj -> {
-            projectService.saveProject(proj);
+            projectService.save(proj);
             updateList();
             closeEditor();
         });
@@ -145,7 +145,7 @@ public class ProjectList extends VerticalLayout {
 
     private void deleteProject(Optional<Project> project) {
         project.ifPresent(proj -> {
-            projectService.deleteProject(proj);
+            projectService.delete(proj);
             updateList();
             closeEditor();
         });

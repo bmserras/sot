@@ -5,9 +5,7 @@ import org.bmserras.sot.data.entity.AbstractEntity;
 import org.bmserras.sot.data.entity.synoptic.Synoptic;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "project")
@@ -36,12 +34,12 @@ public class Project extends AbstractEntity {
         this.synoptics = synoptics;
     }
 
-    public void addSynoptic(Synoptic synoptic, int pos) {
-        synoptics.add(new ProjectSynoptic(this, synoptic, pos));
+    public void addSynoptic(Synoptic synoptic) {
+        synoptics.add(new ProjectSynoptic(this, synoptic));
     }
 
-    public void removeSynoptic(Synoptic synoptic, int pos) {
-        synoptics.remove(new ProjectSynoptic(this, synoptic, pos));
+    public void removeSynoptic(Synoptic synoptic) {
+        synoptics.remove(new ProjectSynoptic(this, synoptic));
     }
 
     @Override

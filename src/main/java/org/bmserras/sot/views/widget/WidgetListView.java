@@ -99,7 +99,7 @@ public class WidgetListView extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(service.findAllWidgets(filterText.getValue()));
+        grid.setItems(service.findAll(filterText.getValue()));
     }
 
     public void editWidget(Widget widget) {
@@ -179,7 +179,7 @@ public class WidgetListView extends VerticalLayout {
                             Integer.parseInt(props1.get("zabbix-item-id-voltage")),
                             Integer.parseInt(props1.get("zabbix-item-id-battery"))
                     ));
-                    service.saveWidget(radarWidget1);
+                    service.save(radarWidget1);
 
                     RadarWidget radarWidget2 = new RadarWidget(
                             service2.getName(),
@@ -194,7 +194,7 @@ public class WidgetListView extends VerticalLayout {
                             Integer.parseInt(props2.get("zabbix-item-id-voltage")),
                             Integer.parseInt(props2.get("zabbix-item-id-battery"))
                     ));
-                    service.saveWidget(radarWidget2);
+                    service.save(radarWidget2);
 
                     RadarWidget radarWidget3 = new RadarWidget(
                             service3.getName(), props3.get("ip"),
@@ -208,7 +208,7 @@ public class WidgetListView extends VerticalLayout {
                             Integer.parseInt(props3.get("zabbix-item-id-voltage")),
                             Integer.parseInt(props3.get("zabbix-item-id-battery"))
                     ));
-                    service.saveWidget(radarWidget3);
+                    service.save(radarWidget3);
                     updateList();
                     closeEditor();
                     dialog.close();
@@ -240,13 +240,13 @@ public class WidgetListView extends VerticalLayout {
     }
 
     private void saveWidget(WidgetForm.SaveEvent event) {
-        service.saveWidget(event.getWidget());
+        service.save(event.getWidget());
         updateList();
         closeEditor();
     }
 
     private void deleteWidget(WidgetForm.DeleteEvent event) {
-        service.deleteWidget(event.getWidget());
+        service.delete(event.getWidget());
         updateList();
         closeEditor();
     }

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProjectService {
+public class ProjectService implements AbstractService<Project> {
 
     private final ProjectRepository projectRepository;
 
@@ -16,30 +16,40 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
-    public List<Project> findAllProjects(String stringFilter) {
-        if (stringFilter == null || stringFilter.isEmpty()) {
+    @Override
+    public List<Project> findAll() {
+        return findAll("");
+    }
+
+    @Override
+    public List<Project> findAll(String filter) {
+        if (filter == null || filter.isEmpty()) {
             return projectRepository.findAll();
         } else {
-            return projectRepository.search(stringFilter);
+            return projectRepository.search(filter);
         }
     }
 
-    public Optional<Project> findProjectById(String id) {
+    @Override
+    public Optional<Project> findById(String id) {
         return projectRepository.findById(id);
     }
 
-    public Project findProjectByName(String name) {
-        return projectRepository.findByName(name);
+    @Override
+    public Optional<Project> findByName(String name) {
+        return Optional.ofNullable(projectRepository.findByName(name));
     }
 
-    public void saveProject(Project project) {
-        if (project == null) {
+    @Override
+    public void save(Project item) {
+        if (item == null) {
             return;
         }
-        projectRepository.save(project);
+        projectRepository.save(item);
     }
 
-    public void deleteProject(Project project) {
+    @Override
+    public void delete(Project project) {
         projectRepository.delete(project);
     }
 }
