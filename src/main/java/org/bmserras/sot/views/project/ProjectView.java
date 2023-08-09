@@ -14,8 +14,10 @@ import org.bmserras.sot.data.entity.project.Project;
 import org.bmserras.sot.data.entity.synoptic.Synoptic;
 import org.bmserras.sot.data.service.ProjectService;
 import org.bmserras.sot.data.service.SynopticService;
+import org.bmserras.sot.views.card.CardsLayout;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;
 import org.bmserras.sot.views.synoptic.SynopticCardView;
+import org.bmserras.sot.views.synoptic.SynopticCardViewNew;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.util.Optional;
@@ -32,6 +34,8 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Strin
 
     private TextField name;
 
+    private CardsLayout<Synoptic> cardsLayout;
+
     public ProjectView(ProjectService service, SynopticService synopticService) {
         this.service = service;
         this.synopticService = synopticService;
@@ -45,7 +49,21 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Strin
         HorizontalLayout horizontalLayout = new HorizontalLayout(back, name);
         horizontalLayout.setAlignItems(Alignment.CENTER);
 
-        add(horizontalLayout, new H2("Synoptics"), new SynopticCardView(synopticService), new H2("Widgets"));
+        //cardsLayout = new CardsLayout<>(synopticService);
+
+        /*cardsLayout.setNewCardText("New Synoptic");
+        cardsLayout.setNewCardTooltipText("Create new synoptic");*/
+
+        //cardsLayout.setExistingCardIcon(LineAwesomeIcon.CHART_PIE_SOLID);
+        //cardsLayout.setExistingCardTooltipText("Open synoptic");
+
+        //cardsLayout.init();
+
+        SynopticCardViewNew synopticCardViewNew = new SynopticCardViewNew(synopticService);
+
+        add(horizontalLayout/*, new H2("Synoptics")*/, synopticCardViewNew, /*cardsLayout, *//*new SynopticCardView
+        (synopticService), */new H2(
+                "Widgets"));
     }
 
     @Override

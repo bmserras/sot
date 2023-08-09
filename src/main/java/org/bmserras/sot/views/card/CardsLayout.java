@@ -21,8 +21,8 @@ public class CardsLayout<T extends AbstractEntity> extends VerticalLayout {
 
     private int numberOfCardsPerRow;
 
-    private LineAwesomeIcon existingCardIcon;
-    private String existingCardTooltipText;
+    private LineAwesomeIcon existingCardIcon = LineAwesomeIcon.ACCESSIBLE_ICON;
+    private String existingCardTooltipText = "Existing Card";
 
     public CardsLayout(AbstractService<T> service) {
         this(service, DEFAULT_NUMBER_OF_CARDS_PER_ROW);
