@@ -22,6 +22,7 @@ import org.bmserras.sot.data.entity.synoptic.Synoptic;
 import org.bmserras.sot.data.entity.widget.Widget;
 import org.bmserras.sot.data.service.SynopticService;
 import org.bmserras.sot.data.service.WidgetService;
+import org.bmserras.sot.views.layout.AppLayoutNavbar;
 import org.bmserras.sot.views.layout.MainLayout;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +30,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Optional;
 
 @PageTitle("Synoptic View")
-@Route(value = "synoptic", layout = MainLayout.class)
+@Route(value = "synoptic", layout = AppLayoutNavbar.class)
 @PermitAll
 public class SynopticView extends VerticalLayout implements HasUrlParameter<String> {
 
