@@ -24,3 +24,7 @@ vaadin-scroller[slot="drawer"] {
   width: inherit;
   height: inherit;
 }
+
+vaadin-accordion-panel {
+  background-color: #efefef;
+}

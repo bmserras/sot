@@ -1,7 +1,6 @@
 package org.bmserras.sot.views.layout;
 
 
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -12,27 +11,14 @@ import com.vaadin.flow.component.html.Header;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
-import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.RouteConfiguration;
-import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import org.bmserras.sot.components.appnav.AppNav;
 import org.bmserras.sot.components.appnav.AppNavItem;
 import org.bmserras.sot.security.SecurityService;
-import org.bmserras.sot.views.TestView;
-import org.bmserras.sot.views.example.cabingauge.CabinGauge;
-import org.bmserras.sot.views.example.cabingauge.CabinGaugeView;
-import org.bmserras.sot.views.example.cabinwidgetthread.CabinWidgetThreadView;
-import org.bmserras.sot.views.example.cabinwidget.CabinWidgetView;
-import org.bmserras.sot.views.example.map.MapView;
-import org.bmserras.sot.views.example.gauge.GaugeView;
-import org.bmserras.sot.views.example.gauge.SolidGaugeView;
 import org.bmserras.sot.views.synoptic.SynopticListView;
 import org.bmserras.sot.views.widget.WidgetListView;
 import org.vaadin.lineawesome.LineAwesomeIcon;
-
-import java.util.Optional;
 
 /**
  * The main view is a top-level placeholder for other views.

@@ -15,3 +15,16 @@ vaadin-context-menu-item[focused] {
 html {
     --lumo-font-family: "Roboto", sans-serif;
 }
+
+.v-dragged {
+    outline: 5px dotted hotpink;
+    opacity: 1;
+}
+
+.v-drag-over-target {
+    outline: 6px dotted blue;
+}
+
+.highlight {
+    outline: 6px dotted greenyellow;
+}

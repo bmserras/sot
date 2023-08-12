@@ -1,5 +1,7 @@
 package org.bmserras.sot.views.synoptic;
 
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import org.bmserras.sot.components.WidgetComponent;
 import org.bmserras.sot.views.layout.AbsoluteLayout;
 
@@ -7,12 +9,17 @@ public class SynopticCanvas extends AbsoluteLayout {
 
     public SynopticCanvas() {
 
-
+        UI.getCurrent().getPage().executeJs("let l=window.Vaadin.Flow.dndConnector.__ondropListener; " +
+                "window.Vaadin.Flow.dndConnector.__ondropListener=function(e){" +
+                "window.dragDropX=e.clientX;" +
+                "window.dragDropY=e.clientY;" +
+                "l(e); " +
+                "}");
 
 
     }
 
-    public void add(WidgetComponent widget, int position) {
+    public void add(Component widget, int position) {
         switch (position) {
             case 1 -> add(widget, 0, 0);
             case 2 -> add(widget, 300, 0);

@@ -1,4 +1,4 @@
-package org.bmserras.sot.views;
+package org.bmserras.sot.views.widgettype;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
