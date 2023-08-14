@@ -1,7 +1,7 @@
 package org.bmserras.sot.old.data;
 
 import jakarta.persistence.*;
-import org.bmserras.sot.data.entity.AbstractEntity;
+import org.bmserras.sot.data.db.AbstractEntity;
 
 @Entity
 @Table(name = "widget")

@@ -1,7 +1,7 @@
 package org.bmserras.sot.data;
 
-import org.bmserras.sot.data.entity.widgettype.Property;
-import org.bmserras.sot.data.entity.widgettype.WidgetType;
+import org.bmserras.sot.data.db.widgettype.Property;
+import org.bmserras.sot.data.db.widgettype.WidgetType;
 import org.bmserras.sot.data.repository.widgettype.PropertyRepository;
 import org.bmserras.sot.data.repository.widgettype.WidgetTypePropertyRepository;
 import org.bmserras.sot.data.repository.widgettype.WidgetTypeRepository;

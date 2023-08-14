@@ -4,7 +4,7 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.shared.Registration;
-import org.bmserras.sot.data.entity.project.Project;
+import org.bmserras.sot.data.db.project.Project;
 import org.bmserras.sot.events.project.ProjectOpenEvent;
 import org.bmserras.sot.events.project.ProjectRemoveEvent;
 import org.vaadin.lineawesome.LineAwesomeIcon;

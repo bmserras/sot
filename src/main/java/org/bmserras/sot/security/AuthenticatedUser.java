@@ -1,9 +1,7 @@
 package org.bmserras.sot.security;
 
 import com.vaadin.flow.spring.security.AuthenticationContext;
-import org.bmserras.sot.data.entity.user.User;
-import org.bmserras.sot.data.entity.user.UserRole;
-import org.bmserras.sot.data.repository.user.UserRepository;
+import org.bmserras.sot.data.db.user.User;
 import org.bmserras.sot.data.service.UserService;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.userdetails.UserDetails;

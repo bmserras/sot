@@ -1,7 +1,7 @@
-package org.bmserras.sot.data.entity.widgettype;
+package org.bmserras.sot.data.db.widgettype;
 
 import jakarta.persistence.*;
-import org.bmserras.sot.data.entity.AbstractEntity;
+import org.bmserras.sot.data.db.AbstractEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,6 @@ public class WidgetType extends AbstractEntity {
         super();
     }
 
-    @Override
     public String getPath() {
         return "widget-type/";
     }

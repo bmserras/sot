@@ -1,8 +1,8 @@
-package org.bmserras.sot.data.entity.project;
+package org.bmserras.sot.data.db.project;
 
 import jakarta.persistence.*;
-import org.bmserras.sot.data.entity.AbstractEntity;
-import org.bmserras.sot.data.entity.synoptic.Synoptic;
+import org.bmserras.sot.data.db.AbstractEntity;
+import org.bmserras.sot.data.db.synoptic.Synoptic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,6 @@ public class Project extends AbstractEntity {
         this.name = name;
     }
 
-    @Override
     public String getPath() {
         return "project/";
     }

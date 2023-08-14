@@ -1,6 +1,6 @@
 package org.bmserras.sot.data.repository.project;
 
-import org.bmserras.sot.data.entity.project.Project;
+import org.bmserras.sot.data.db.project.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -10,7 +10,7 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
-import org.bmserras.sot.data.entity.widgettype.WidgetType;
+import org.bmserras.sot.data.db.widgettype.WidgetType;
 
 public class WidgetTypeForm extends FormLayout {
 

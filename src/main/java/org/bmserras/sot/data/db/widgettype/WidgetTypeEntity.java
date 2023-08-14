@@ -1,4 +1,4 @@
-package org.bmserras.sot.data.entity.widgettype;
+package org.bmserras.sot.data.db.widgettype;
 
 import org.bmserras.sot.icon.CardIcon;
 

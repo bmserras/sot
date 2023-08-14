@@ -13,11 +13,9 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import org.bmserras.sot.data.entity.synoptic.Synoptic;
+import org.bmserras.sot.data.db.synoptic.Synoptic;
 import org.bmserras.sot.old.data.RadarWidget;
 import org.bmserras.sot.data.service.SynopticService;
-import org.bmserras.sot.views.synoptic.list.SynopticForm;
-import org.bmserras.sot.views.synoptic.list.SynopticToolbar;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.util.Optional;

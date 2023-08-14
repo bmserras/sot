@@ -6,7 +6,7 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import org.bmserras.sot.data.entity.synoptic.Synoptic;
+import org.bmserras.sot.data.db.synoptic.Synoptic;
 import org.bmserras.sot.data.service.SynopticService;
 import org.bmserras.sot.views.card.ExistingCard;
 import org.bmserras.sot.views.card.NewCard;

@@ -1,6 +1,6 @@
 package org.bmserras.sot.data.repository.widgettype;
 
-import org.bmserras.sot.data.entity.widgettype.Property;
+import org.bmserras.sot.data.db.widgettype.Property;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

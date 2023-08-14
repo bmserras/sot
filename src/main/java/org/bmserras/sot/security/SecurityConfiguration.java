@@ -1,7 +1,7 @@
 package org.bmserras.sot.security;
 
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
-import org.bmserras.sot.data.entity.user.User;
+import org.bmserras.sot.data.db.user.User;
 import org.bmserras.sot.data.repository.user.UserRepository;
 import org.bmserras.sot.views.auth.LoginView;
 import org.springframework.context.annotation.Bean;

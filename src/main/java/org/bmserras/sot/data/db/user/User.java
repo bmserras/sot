@@ -1,9 +1,9 @@
-package org.bmserras.sot.data.entity.user;
+package org.bmserras.sot.data.db.user;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import org.bmserras.sot.data.entity.AbstractEntity;
+import org.bmserras.sot.data.db.AbstractEntity;
 
 @Entity
 @Table(name = "user_account")
@@ -39,8 +39,4 @@ public class User extends AbstractEntity {
         this.passwordHash = passwordHash;
     }
 
-    @Override
-    public String getPath() {
-        return "user/";
-    }
 }

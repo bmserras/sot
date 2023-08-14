@@ -1,6 +1,6 @@
 package org.bmserras.sot.data.service;
 
-import org.bmserras.sot.data.entity.AbstractEntity;
+import org.bmserras.sot.data.db.AbstractEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

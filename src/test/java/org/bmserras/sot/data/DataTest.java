@@ -1,7 +1,7 @@
 package org.bmserras.sot.data;
 
-import org.bmserras.sot.data.entity.synoptic.Synoptic;
-import org.bmserras.sot.data.entity.synoptic.SynopticWidget;
+import org.bmserras.sot.data.db.synoptic.Synoptic;
+import org.bmserras.sot.data.db.synoptic.SynopticWidget;
 import org.bmserras.sot.old.data.Widget;
 import org.bmserras.sot.data.repository.synoptic.SynopticRepository;
 import org.bmserras.sot.data.repository.synoptic.SynopticWidgetRepository;

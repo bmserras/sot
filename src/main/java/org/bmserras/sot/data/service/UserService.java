@@ -1,6 +1,6 @@
 package org.bmserras.sot.data.service;
 
-import org.bmserras.sot.data.entity.user.User;
+import org.bmserras.sot.data.db.user.User;
 import org.bmserras.sot.data.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 

@@ -10,7 +10,7 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.shared.Registration;
-import org.bmserras.sot.data.entity.synoptic.Synoptic;
+import org.bmserras.sot.data.db.synoptic.Synoptic;
 import org.bmserras.sot.events.synoptic.SynopticCloseEvent;
 import org.bmserras.sot.events.synoptic.SynopticRemoveEvent;
 import org.bmserras.sot.events.synoptic.SynopticSaveEvent;

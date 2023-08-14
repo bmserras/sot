@@ -1,4 +1,4 @@
-package org.bmserras.sot.data.entity;
+package org.bmserras.sot.data.db;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
@@ -27,8 +27,6 @@ public abstract class AbstractEntity {
     public void setIdentifier(long identifier) {
         this.identifier = identifier;
     }
-
-    public abstract String getPath();
 
     @Override
     public String toString() {

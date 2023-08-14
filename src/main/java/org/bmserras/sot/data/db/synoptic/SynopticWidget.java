@@ -1,4 +1,4 @@
-package org.bmserras.sot.data.entity.synoptic;
+package org.bmserras.sot.data.db.synoptic;
 
 import jakarta.persistence.*;
 import org.bmserras.sot.old.data.Widget;

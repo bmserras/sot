@@ -1,10 +1,7 @@
-package org.bmserras.sot.data.entity.widgettype;
+package org.bmserras.sot.data.db.widgettype;
 
 import jakarta.persistence.*;
-import org.bmserras.sot.data.entity.AbstractEntity;
-
-import java.util.Date;
-import java.util.Objects;
+import org.bmserras.sot.data.db.AbstractEntity;
 
 @Entity
 @Table(name = "gauge")
@@ -25,7 +22,6 @@ public class Gauge extends AbstractEntity {
         super();
     }
 
-    @Override
     public String getPath() {
         return "gauge/";
     }

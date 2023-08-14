@@ -1,7 +1,6 @@
 package org.bmserras.sot.data.service;
 
-import org.bmserras.sot.data.entity.project.Project;
-import org.bmserras.sot.data.entity.synoptic.Synoptic;
+import org.bmserras.sot.data.db.synoptic.Synoptic;
 import org.bmserras.sot.data.repository.synoptic.SynopticRepository;
 import org.springframework.stereotype.Service;
 

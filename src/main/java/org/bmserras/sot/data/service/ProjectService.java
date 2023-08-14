@@ -1,6 +1,6 @@
 package org.bmserras.sot.data.service;
 
-import org.bmserras.sot.data.entity.project.Project;
+import org.bmserras.sot.data.db.project.Project;
 import org.bmserras.sot.data.repository.project.ProjectRepository;
 import org.springframework.stereotype.Service;
 

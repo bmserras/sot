@@ -4,7 +4,7 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.shared.Registration;
-import org.bmserras.sot.data.entity.synoptic.Synoptic;
+import org.bmserras.sot.data.db.synoptic.Synoptic;
 import org.bmserras.sot.events.synoptic.SynopticMapEvent;
 import org.bmserras.sot.events.synoptic.SynopticOpenEvent;
 import org.bmserras.sot.events.synoptic.SynopticRemoveEvent;

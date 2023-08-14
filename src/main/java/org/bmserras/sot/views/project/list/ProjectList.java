@@ -9,7 +9,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import org.bmserras.sot.data.entity.project.Project;
+import org.bmserras.sot.data.db.project.Project;
 import org.bmserras.sot.data.service.ProjectService;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 

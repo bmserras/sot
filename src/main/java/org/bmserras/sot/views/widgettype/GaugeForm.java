@@ -5,7 +5,7 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-import org.bmserras.sot.data.entity.widgettype.Gauge;
+import org.bmserras.sot.data.db.widgettype.Gauge;
 
 public class GaugeForm extends FormLayout {
 

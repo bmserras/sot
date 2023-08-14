@@ -24,7 +24,6 @@ public class RadarWidget extends Widget {
     public RadarWidget() {
     }
 
-    @Override
     public String getPath() {
         return "widget/";
     }

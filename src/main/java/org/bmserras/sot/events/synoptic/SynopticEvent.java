@@ -2,7 +2,7 @@ package org.bmserras.sot.events.synoptic;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
-import org.bmserras.sot.data.entity.synoptic.Synoptic;
+import org.bmserras.sot.data.db.synoptic.Synoptic;
 
 import java.util.Optional;
 

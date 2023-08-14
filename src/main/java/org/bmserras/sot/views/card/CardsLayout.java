@@ -5,7 +5,7 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import org.bmserras.sot.data.entity.AbstractEntity;
+import org.bmserras.sot.data.db.AbstractEntity;
 import org.bmserras.sot.data.service.AbstractService;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
@@ -80,8 +80,9 @@ public class CardsLayout<T extends AbstractEntity> extends VerticalLayout {
                 ExistingCard existingCard = new ExistingCard(existingCardIcon.create(), "name"/*t.getName()*/,
                 existingCardTooltipText);
                 existingCard.addMainButtonClickListener(mainButtonClick ->
-                        mainButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate(t.getPath() + t.getIdentifier())));
-                existingCard.addOpenButtonClickListener(openButtonClick -> openButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate(t.getPath() + t.getIdentifier())));
+                        mainButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate("path"/*t.getPath()
+                        */ + t.getIdentifier())));
+                existingCard.addOpenButtonClickListener(openButtonClick -> openButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate("path"/*t.getPath()*/ + t.getIdentifier())));
                 existingCard.addDeleteButtonClickListener(deleteButtonClick -> {
                     service.delete(t);
                     horizontalLayout.remove(existingCard);

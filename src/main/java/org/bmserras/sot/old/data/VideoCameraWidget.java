@@ -11,7 +11,6 @@ public class VideoCameraWidget extends Widget {
     public VideoCameraWidget() {
     }
 
-    @Override
     public String getPath() {
         return "widget/";
     }

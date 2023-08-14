@@ -10,7 +10,7 @@ import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
-import org.bmserras.sot.data.entity.project.Project;
+import org.bmserras.sot.data.db.project.Project;
 import org.bmserras.sot.data.service.ProjectService;
 import org.bmserras.sot.data.service.SynopticService;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;

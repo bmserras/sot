@@ -10,7 +10,7 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.shared.Registration;
-import org.bmserras.sot.data.entity.project.Project;
+import org.bmserras.sot.data.db.project.Project;
 import org.bmserras.sot.events.project.ProjectCloseEvent;
 import org.bmserras.sot.events.project.ProjectRemoveEvent;
 import org.bmserras.sot.events.project.ProjectSaveEvent;

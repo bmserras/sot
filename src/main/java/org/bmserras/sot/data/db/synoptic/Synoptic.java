@@ -1,7 +1,7 @@
-package org.bmserras.sot.data.entity.synoptic;
+package org.bmserras.sot.data.db.synoptic;
 
 import jakarta.persistence.*;
-import org.bmserras.sot.data.entity.AbstractEntity;
+import org.bmserras.sot.data.db.AbstractEntity;
 import org.bmserras.sot.old.data.Widget;
 
 import java.util.*;
@@ -36,7 +36,6 @@ public class Synoptic extends AbstractEntity {
         this.name = name;
     }
 
-    @Override
     public String getPath() {
         return "synoptic/";
     }

@@ -1,10 +1,10 @@
-package org.bmserras.sot.data.entity.widgettype;
+package org.bmserras.sot.data.db.widgettype;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
-import org.bmserras.sot.data.entity.AbstractEntity;
+import org.bmserras.sot.data.db.AbstractEntity;
 
 @Entity
 @Table(name = "property")
@@ -19,7 +19,6 @@ public class Property extends AbstractEntity {
         super();
     }
 
-    @Override
     public String getPath() {
         return "property/";
     }

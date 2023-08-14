@@ -2,7 +2,7 @@ package org.bmserras.sot.events.project;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
-import org.bmserras.sot.data.entity.project.Project;
+import org.bmserras.sot.data.db.project.Project;
 
 import java.util.Optional;
 
