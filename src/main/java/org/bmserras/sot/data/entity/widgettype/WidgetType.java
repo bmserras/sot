@@ -10,6 +10,8 @@ import java.util.List;
 @Table(name = "widget_type")
 public class WidgetType extends AbstractEntity {
 
+    private String name;
+
     private String image;
 
     @OneToMany(mappedBy = "widgetType", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
@@ -25,8 +27,16 @@ public class WidgetType extends AbstractEntity {
     }
 
     public WidgetType(String name, String image) {
-        super(name);
+        this.name = name;
         this.image = image;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getImage() {

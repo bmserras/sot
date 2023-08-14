@@ -18,7 +18,7 @@ public class User extends AbstractEntity {
     }
 
     public User(String username, String passwordHash) {
-        super("");
+        super();
         this.username = username;
         this.passwordHash = passwordHash;
     }

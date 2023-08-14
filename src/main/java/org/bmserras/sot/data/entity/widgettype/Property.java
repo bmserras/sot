@@ -11,6 +11,8 @@ import org.bmserras.sot.data.entity.AbstractEntity;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Property extends AbstractEntity {
 
+    private String name;
+
     private String type;
 
     public Property() {
@@ -23,7 +25,7 @@ public class Property extends AbstractEntity {
     }
 
     public Property(String name, String type) {
-        super(name);
+        this.name = name;
         this.type = type;
     }
 

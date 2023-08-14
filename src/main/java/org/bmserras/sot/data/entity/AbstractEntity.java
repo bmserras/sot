@@ -12,20 +12,12 @@ public abstract class AbstractEntity {
     @Id
     private long identifier;
 
-    private String name;
-
     public AbstractEntity() {
         this.identifier = new Date().getTime();
     }
 
-    public AbstractEntity(String name) {
-        this();
-        this.name = name;
-    }
-
-    public AbstractEntity(long identifier, String name) {
+    public AbstractEntity(long identifier) {
         this.identifier = identifier;
-        this.name = name;
     }
 
     public long getIdentifier() {
@@ -36,21 +28,12 @@ public abstract class AbstractEntity {
         this.identifier = identifier;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public abstract String getPath();
 
     @Override
     public String toString() {
-        return "CustomEntity{" +
+        return "AbstractEntity{" +
                 "identifier=" + identifier +
-                ", name='" + name + '\'' +
                 '}';
     }
 

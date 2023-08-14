@@ -11,6 +11,8 @@ import java.util.List;
 @Table(name = "project")
 public class Project extends AbstractEntity {
 
+    private String name;
+
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<ProjectSynoptic> synoptics = new ArrayList<>();
 
@@ -19,11 +21,20 @@ public class Project extends AbstractEntity {
     }
 
     public Project(String name) {
-        super(name);
+        this.name = name;
     }
 
     public Project(long identifier, String name) {
-        super(identifier, name);
+        super(identifier);
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

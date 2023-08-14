@@ -8,16 +8,27 @@ import org.bmserras.sot.data.entity.AbstractEntity;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Widget extends AbstractEntity {
 
+    private String name;
+
     public Widget() {
         super();
     }
 
     public Widget(int identifier, String name) {
-        super(identifier, name);
+        super(identifier);
+        this.name = name;
     }
 
     public Widget(String name) {
-        super(name);
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

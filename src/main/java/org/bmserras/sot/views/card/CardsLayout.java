@@ -77,7 +77,8 @@ public class CardsLayout<T extends AbstractEntity> extends VerticalLayout {
             while (row < numberOfCardsPerRow && index < all.size()) {
 
                 T t = all.get(index);
-                ExistingCard existingCard = new ExistingCard(existingCardIcon.create(), t.getName(), existingCardTooltipText);
+                ExistingCard existingCard = new ExistingCard(existingCardIcon.create(), "name"/*t.getName()*/,
+                existingCardTooltipText);
                 existingCard.addMainButtonClickListener(mainButtonClick ->
                         mainButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate(t.getPath() + t.getIdentifier())));
                 existingCard.addOpenButtonClickListener(openButtonClick -> openButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate(t.getPath() + t.getIdentifier())));

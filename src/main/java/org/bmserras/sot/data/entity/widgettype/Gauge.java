@@ -11,6 +11,8 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Gauge extends AbstractEntity {
 
+    private String name;
+
     private double minValue;
 
     private double maxValue;
@@ -29,11 +31,19 @@ public class Gauge extends AbstractEntity {
     }
 
     public Gauge(String name, double minValue, double maxValue, String color, String type) {
-        super(name);
+        this.name = name;
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.color = color;
         this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getMinValue() {

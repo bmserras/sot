@@ -10,6 +10,8 @@ import java.util.*;
 @Table(name = "synoptic")
 public class Synoptic extends AbstractEntity {
 
+    private String name;
+
     @OneToMany(mappedBy = "synoptic", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<SynopticWidget> widgets = new ArrayList<>();
 
@@ -18,11 +20,20 @@ public class Synoptic extends AbstractEntity {
     }
 
     public Synoptic(String name) {
-        super(name);
+        this.name = name;
     }
 
     public Synoptic(long identifier, String name) {
-        super(identifier, name);
+        super(identifier);
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

@@ -77,7 +77,7 @@ public class AppLayoutNavbar extends AppLayout {
 
     private MenuBar getAvatar() {
 
-        String u = authenticatedUser.get().get().getName();
+        String u = authenticatedUser.get().get().getUsername();
 
         Avatar avatar = new Avatar();
 
