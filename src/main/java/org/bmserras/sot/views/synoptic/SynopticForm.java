@@ -11,9 +11,9 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.shared.Registration;
 import org.bmserras.sot.data.entity.synoptic.Synoptic;
-import org.bmserras.sot.events.synoptic.CloseEvent;
-import org.bmserras.sot.events.synoptic.RemoveEvent;
-import org.bmserras.sot.events.synoptic.SaveEvent;
+import org.bmserras.sot.events.synoptic.SynopticCloseEvent;
+import org.bmserras.sot.events.synoptic.SynopticRemoveEvent;
+import org.bmserras.sot.events.synoptic.SynopticSaveEvent;
 
 import java.util.Optional;
 
@@ -44,8 +44,8 @@ public class SynopticForm extends FormLayout {
         close.addClickShortcut(Key.ESCAPE);
 
         save.addClickListener(event -> validateAndSave()); // <1>
-        delete.addClickListener(event -> fireEvent(new RemoveEvent(this, Optional.of(binder.getBean())))); // <2>
-        close.addClickListener(event -> fireEvent(new CloseEvent(this))); // <3>
+        delete.addClickListener(event -> fireEvent(new SynopticRemoveEvent(this, Optional.of(binder.getBean())))); // <2>
+        close.addClickListener(event -> fireEvent(new SynopticCloseEvent(this))); // <3>
 
         binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid())); // <4>
         return new HorizontalLayout(save, delete, close);
@@ -53,7 +53,7 @@ public class SynopticForm extends FormLayout {
 
     private void validateAndSave() {
         if (binder.isValid()) {
-            fireEvent(new SaveEvent(this, Optional.of(binder.getBean()))); // <6>
+            fireEvent(new SynopticSaveEvent(this, Optional.of(binder.getBean()))); // <6>
         }
     }
 
@@ -61,15 +61,15 @@ public class SynopticForm extends FormLayout {
         binder.setBean(synoptic);
     }
 
-    public Registration addDeleteListener(ComponentEventListener<RemoveEvent> listener) {
-        return addListener(RemoveEvent.class, listener);
+    public Registration addDeleteListener(ComponentEventListener<SynopticRemoveEvent> listener) {
+        return addListener(SynopticRemoveEvent.class, listener);
     }
 
-    public Registration addSaveListener(ComponentEventListener<SaveEvent> listener) {
-        return addListener(SaveEvent.class, listener);
+    public Registration addSaveListener(ComponentEventListener<SynopticSaveEvent> listener) {
+        return addListener(SynopticSaveEvent.class, listener);
     }
 
-    public Registration addCloseListener(ComponentEventListener<CloseEvent> listener) {
-        return addListener(CloseEvent.class, listener);
+    public Registration addCloseListener(ComponentEventListener<SynopticCloseEvent> listener) {
+        return addListener(SynopticCloseEvent.class, listener);
     }
 }

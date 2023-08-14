@@ -4,10 +4,10 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
-import org.bmserras.sot.views.layout.MainLayout;
+import org.bmserras.sot.views.layout.AppLayoutNavbar;
 
 @PageTitle("Widget Types")
-@Route(value = "widget-type-crud", layout = MainLayout.class)
+@Route(value = "widget-type-crud", layout = AppLayoutNavbar.class)
 @PermitAll
 public class WidgetTypeListView extends VerticalLayout {
 

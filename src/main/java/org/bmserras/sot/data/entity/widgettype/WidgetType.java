@@ -2,13 +2,9 @@ package org.bmserras.sot.data.entity.widgettype;
 
 import jakarta.persistence.*;
 import org.bmserras.sot.data.entity.AbstractEntity;
-import org.bmserras.sot.data.entity.synoptic.SynopticWidget;
-import org.bmserras.sot.data.entity.widget.Widget;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "widget_type")

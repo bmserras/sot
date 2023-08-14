@@ -5,9 +5,9 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.shared.Registration;
 import org.bmserras.sot.data.entity.synoptic.Synoptic;
-import org.bmserras.sot.events.synoptic.MapEvent;
-import org.bmserras.sot.events.synoptic.OpenEvent;
-import org.bmserras.sot.events.synoptic.RemoveEvent;
+import org.bmserras.sot.events.synoptic.SynopticMapEvent;
+import org.bmserras.sot.events.synoptic.SynopticOpenEvent;
+import org.bmserras.sot.events.synoptic.SynopticRemoveEvent;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.util.Optional;
@@ -26,9 +26,9 @@ public class SynopticToolbar extends HorizontalLayout {
 
     public SynopticToolbar() {
 
-        openButton.addClickListener(click -> fireEvent(new OpenEvent(this, synoptic)));
-        mapButton.addClickListener(click -> fireEvent(new MapEvent(this, synoptic)));
-        removeButton.addClickListener(click -> fireEvent(new RemoveEvent(this, synoptic)));
+        openButton.addClickListener(click -> fireEvent(new SynopticOpenEvent(this, synoptic)));
+        mapButton.addClickListener(click -> fireEvent(new SynopticMapEvent(this, synoptic)));
+        removeButton.addClickListener(click -> fireEvent(new SynopticRemoveEvent(this, synoptic)));
 
         add(openButton, mapButton, removeButton);
     }
@@ -37,15 +37,15 @@ public class SynopticToolbar extends HorizontalLayout {
         synoptic = Optional.ofNullable(s);
     }
 
-    public Registration addOpenListener(ComponentEventListener<OpenEvent> listener) {
-        return addListener(OpenEvent.class, listener);
+    public Registration addOpenListener(ComponentEventListener<SynopticOpenEvent> listener) {
+        return addListener(SynopticOpenEvent.class, listener);
     }
 
-    public Registration addMapListener(ComponentEventListener<MapEvent> listener) {
-        return addListener(MapEvent.class, listener);
+    public Registration addMapListener(ComponentEventListener<SynopticMapEvent> listener) {
+        return addListener(SynopticMapEvent.class, listener);
     }
 
-    public Registration addRemoveListener(ComponentEventListener<RemoveEvent> listener) {
-        return addListener(RemoveEvent.class, listener);
+    public Registration addRemoveListener(ComponentEventListener<SynopticRemoveEvent> listener) {
+        return addListener(SynopticRemoveEvent.class, listener);
     }
 }

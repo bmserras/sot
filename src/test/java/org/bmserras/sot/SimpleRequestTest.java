@@ -2,8 +2,7 @@ package org.bmserras.sot;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
-import org.asynchttpclient.Param;
-import org.bmserras.sot.api.*;
+import org.bmserras.sot.zabbix.api.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

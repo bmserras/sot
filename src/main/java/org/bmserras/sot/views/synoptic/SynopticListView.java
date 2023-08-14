@@ -17,15 +17,15 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 import org.bmserras.sot.data.entity.synoptic.Synoptic;
-import org.bmserras.sot.data.entity.widget.RadarWidget;
+import org.bmserras.sot.old.data.RadarWidget;
 import org.bmserras.sot.data.service.SynopticService;
-import org.bmserras.sot.views.layout.MainLayout;
+import org.bmserras.sot.views.layout.AppLayoutNavbar;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.util.Optional;
 
 @PageTitle("Synoptics")
-@Route(value = "synoptic-crud", layout = MainLayout.class)
+@Route(value = "synoptic-crud", layout = AppLayoutNavbar.class)
 @PermitAll
 public class SynopticListView extends VerticalLayout {
 

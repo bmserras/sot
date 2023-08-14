@@ -2,7 +2,7 @@ package org.bmserras.sot.data.entity.synoptic;
 
 import jakarta.persistence.*;
 import org.bmserras.sot.data.entity.AbstractEntity;
-import org.bmserras.sot.data.entity.widget.Widget;
+import org.bmserras.sot.old.data.Widget;
 
 import java.util.*;
 

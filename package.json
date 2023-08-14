@@ -3,7 +3,6 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@polymer/polymer": "3.5.1",
-    "@vaadin-component-factory/vcf-nav": "1.0.6",
     "@vaadin/a11y-base": "24.1.0",
     "@vaadin/accordion": "24.1.0",
     "@vaadin/app-layout": "24.1.0",
@@ -173,13 +172,11 @@
     "proj4": "$proj4",
     "@vaadin/vaadin-themable-mixin": "$@vaadin/vaadin-themable-mixin",
     "date-fns": "$date-fns",
-    "mobile-drag-drop": "$mobile-drag-drop",
-    "@vaadin-component-factory/vcf-nav": "$@vaadin-component-factory/vcf-nav"
+    "mobile-drag-drop": "$mobile-drag-drop"
   },
   "vaadin": {
     "dependencies": {
       "@polymer/polymer": "3.5.1",
-      "@vaadin-component-factory/vcf-nav": "1.0.6",
       "@vaadin/a11y-base": "24.1.0",
       "@vaadin/accordion": "24.1.0",
       "@vaadin/app-layout": "24.1.0",
@@ -273,6 +270,6 @@
       "workbox-core": "7.0.0",
       "workbox-precaching": "7.0.0"
     },
-    "hash": "5ece2624af9b760c1a3c8f10ef055fff2fc1fe9ae70dc2f5e41aee94bfb07c18"
+    "hash": "2e5b002dfea194d0021170f05797ae72085b5094e257f33185f59fcaa2febf4a"
   }
 }

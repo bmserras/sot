@@ -10,13 +10,13 @@ import org.bmserras.sot.data.entity.widgettype.WidgetType;
 import org.bmserras.sot.data.entity.widgettype.WidgetTypeInstance;
 import org.bmserras.sot.data.entity.widgettype.WidgetTypeProperty;
 import org.bmserras.sot.data.repository.widgettype.WidgetTypeRepository;
-import org.bmserras.sot.views.layout.MainLayout;
+import org.bmserras.sot.views.layout.AppLayoutNavbar;
 
 import java.util.HashMap;
 import java.util.List;
 
 @PageTitle("Widget Type View")
-@Route(value = "widget-type", layout = MainLayout.class)
+@Route(value = "widget-type", layout = AppLayoutNavbar.class)
 @PermitAll
 public class WidgetTypeView extends VerticalLayout {
 

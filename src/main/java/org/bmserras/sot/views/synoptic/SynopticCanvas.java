@@ -2,7 +2,6 @@ package org.bmserras.sot.views.synoptic;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
-import org.bmserras.sot.components.WidgetComponent;
 import org.bmserras.sot.views.layout.AbsoluteLayout;
 
 public class SynopticCanvas extends AbsoluteLayout {

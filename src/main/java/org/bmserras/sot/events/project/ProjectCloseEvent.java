@@ -1,7 +1,6 @@
 package org.bmserras.sot.events.project;
 
 import com.vaadin.flow.component.Component;
-import org.bmserras.sot.events.project.ProjectEvent;
 
 import java.util.Optional;
 

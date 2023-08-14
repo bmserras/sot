@@ -2,10 +2,10 @@ package org.bmserras.sot.data;
 
 import org.bmserras.sot.data.entity.synoptic.Synoptic;
 import org.bmserras.sot.data.entity.synoptic.SynopticWidget;
-import org.bmserras.sot.data.entity.widget.Widget;
+import org.bmserras.sot.old.data.Widget;
 import org.bmserras.sot.data.repository.synoptic.SynopticRepository;
 import org.bmserras.sot.data.repository.synoptic.SynopticWidgetRepository;
-import org.bmserras.sot.data.repository.widget.WidgetRepository;
+import org.bmserras.sot.old.repo.WidgetRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

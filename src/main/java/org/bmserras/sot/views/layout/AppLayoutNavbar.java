@@ -1,7 +1,6 @@
 package org.bmserras.sot.views.layout;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
@@ -18,7 +17,6 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.router.RouterLink;
 import org.bmserras.sot.security.AuthenticatedUser;
-import org.bmserras.sot.security.LoginView;
 import org.bmserras.sot.views.project.ProjectsView;
 import org.bmserras.sot.views.widgettype.WidgetsView;
 import org.vaadin.lineawesome.LineAwesomeIcon;
