@@ -1,9 +1,12 @@
 package org.bmserras.sot.data.service;
 
 import org.bmserras.sot.data.db.project.ProjectDB;
+import org.bmserras.sot.data.db.project.ProjectSynopticDB;
+import org.bmserras.sot.data.db.synoptic.SynopticDB;
 import org.bmserras.sot.data.db.user.UserDB;
 import org.bmserras.sot.data.db.user.UserProjectDB;
 import org.bmserras.sot.data.domain.Project;
+import org.bmserras.sot.data.domain.Synoptic;
 import org.bmserras.sot.data.domain.User;
 import org.bmserras.sot.data.repository.project.ProjectRepository;
 import org.bmserras.sot.data.repository.user.UserRepository;
@@ -33,7 +36,7 @@ public class UserService implements AbstractService<User> {
     public List<User> findAll(String filter) {
         List<User> users = new ArrayList<>();
         List<UserDB> usersDB = (filter == null || filter.isEmpty()) ? userRepository.findAll() : userRepository.search(filter);
-        usersDB.forEach(this::convertToUser);
+        usersDB.forEach(userDB -> users.add(convertToUser(userDB)));
         return users;
     }
 
@@ -73,8 +76,15 @@ public class UserService implements AbstractService<User> {
         List<UserProjectDB> projectsDB = userDB.getProjects();
         projectsDB.forEach(projectDB -> {
             ProjectDB project = projectDB.getProject();
-            projects.add(new Project(project.getIdentifier(), project.getName()));
+            List<Synoptic> synoptics = new ArrayList<>();
+            List<ProjectSynopticDB> synopticsDB = project.getSynoptics();
+            synopticsDB.forEach(synopticDB -> {
+                SynopticDB synoptic = synopticDB.getSynoptic();
+                synoptics.add(new Synoptic(synoptic.getIdentifier(), synoptic.getName()));
+            });
+            projects.add(new Project(project.getIdentifier(), project.getName(), synoptics));
         });
+
         return new User(userDB.getIdentifier(), userDB.getUsername(), userDB.getPasswordHash(), projects);
     }
 

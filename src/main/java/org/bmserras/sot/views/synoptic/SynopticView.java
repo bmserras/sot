@@ -25,9 +25,10 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.security.AuthenticationContext;
 import elemental.json.JsonObject;
 import jakarta.annotation.security.PermitAll;
+import org.bmserras.sot.data.db.synoptic.SynopticDB;
+import org.bmserras.sot.data.domain.Synoptic;
 import org.bmserras.sot.old.component.RadarWidgetComponent;
 import org.bmserras.sot.old.component.WidgetComponent;
-import org.bmserras.sot.data.db.synoptic.Synoptic;
 import org.bmserras.sot.old.data.RadarWidget;
 import org.bmserras.sot.old.data.Widget;
 import org.bmserras.sot.data.db.widgettype.WidgetType;
@@ -205,8 +206,9 @@ public class SynopticView extends HorizontalLayout implements HasUrlParameter<St
     }
 
     private void populateCanvas() {
-        Optional<Synoptic> synoptic = synopticService.findByName(synopticName.getValue());
-        synoptic.get().getWidgets().forEach(sw -> {
+        //Optional<Synoptic> synoptic = synopticService.findByName(synopticName.getValue());
+
+        /*synoptic.get().getWidgets().forEach(sw -> {
             Widget widget = sw.getWidget();
             int pos = sw.getPos();
 
@@ -223,7 +225,7 @@ public class SynopticView extends HorizontalLayout implements HasUrlParameter<St
                 System.out.println("WHAT???");
             }
 
-        });
+        });*/
     }
 
     private HorizontalLayout getToolbar() {
@@ -262,7 +264,7 @@ public class SynopticView extends HorizontalLayout implements HasUrlParameter<St
 
             Optional<Synoptic> synoptic = synopticService.findByName(synopticName.getValue());
             Optional<Widget> widget = widgetService.findByName(selectWidget.getValue().getName());
-            synoptic.get().addWidget(widget.get(), position.getValue());
+            //synoptic.get().addWidget(widget.get(), position.getValue());
             synopticService.save(synoptic.get());
 
             if (widget.get() instanceof RadarWidget) {

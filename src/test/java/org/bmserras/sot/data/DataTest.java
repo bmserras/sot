@@ -1,7 +1,9 @@
 package org.bmserras.sot.data;
 
-import org.bmserras.sot.data.db.synoptic.Synoptic;
+import org.bmserras.sot.data.db.synoptic.SynopticDB;
 import org.bmserras.sot.data.db.synoptic.SynopticWidget;
+import org.bmserras.sot.data.domain.Synoptic;
+import org.bmserras.sot.data.service.SynopticService;
 import org.bmserras.sot.old.data.Widget;
 import org.bmserras.sot.data.repository.synoptic.SynopticRepository;
 import org.bmserras.sot.data.repository.synoptic.SynopticWidgetRepository;
@@ -20,20 +22,20 @@ public class DataTest {
     WidgetRepository widgetRepository;
 
     @Autowired
-    SynopticRepository synopticRepository;
+    SynopticService service;
 
     @Autowired
     SynopticWidgetRepository synopticWidgetRepository;
 
     private void deleteAll() {
         widgetRepository.deleteAll();
-        synopticRepository.deleteAll();
+        //synopticRepository.deleteAll();
     }
 
     @Test
     public void populateDb() {
 
-        deleteAll();
+        //deleteAll();
 
         /*Widget r1 = new RadarWidget("radar1", "a", "b", "c");
         widgetRepository.save(r1);
@@ -52,6 +54,9 @@ public class DataTest {
         s1.addWidget(r2, 1);
 
         synopticRepository.save(s1);*/
+
+        List<Synoptic> all = service.findAll();
+        System.out.println(all);
     }
 
     /*@Test
@@ -74,12 +79,12 @@ public class DataTest {
     @Test
     public void synopticRepoTest() {
 
-        List<Synoptic> all = synopticRepository.findAll();
+        //List<SynopticDB> all = synopticRepository.findAll();
 
-        System.out.println(all);
+        //System.out.println(all);
 
-        Synoptic s1 = synopticRepository.findByName("s1");
-        Widget r1 = widgetRepository.findByName("r1");
+        /*SynopticDB s1 = synopticRepository.findByName("s1");
+        Widget r1 = widgetRepository.findByName("r1");/*
 
 
         SynopticWidget synopticWidget = new SynopticWidget(s1, r1, 1);
@@ -93,15 +98,15 @@ public class DataTest {
 
     @Test
     public void findByNameTest() {
-        Synoptic s1 = synopticRepository.findByName("s1");
-        System.out.println(s1);
+        /*SynopticDB s1 = synopticRepository.findByName("s1");
+        System.out.println(s1);*/
     }
 
     @Test
     public void addWidgetToSynoptic() {
 
-        Optional<Synoptic> byId = synopticRepository.findById("1687214745532");
-        System.out.println(byId.get().getName());
+        //Optional<SynopticDB> byId = synopticRepository.findById("1687214745532");
+        //System.out.println(byId.get().getName());
 
     }
 

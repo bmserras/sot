@@ -8,22 +8,22 @@ import java.util.*;
 
 @Entity
 @Table(name = "synoptic")
-public class Synoptic extends AbstractEntity {
+public class SynopticDB extends AbstractEntity {
 
     private String name;
 
     @OneToMany(mappedBy = "synoptic", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<SynopticWidget> widgets = new ArrayList<>();
 
-    public Synoptic() {
+    public SynopticDB() {
         super();
     }
 
-    public Synoptic(String name) {
+    public SynopticDB(String name) {
         this.name = name;
     }
 
-    public Synoptic(long identifier, String name) {
+    public SynopticDB(long identifier, String name) {
         super(identifier);
         this.name = name;
     }
@@ -58,8 +58,9 @@ public class Synoptic extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "Synoptic{" +
-                "widgets=" + widgets +
+        return "SynopticDB{" +
+                "name='" + name + '\'' +
+                ", widgets=" + widgets +
                 "} " + super.toString();
     }
 }

@@ -1,9 +1,11 @@
 package org.bmserras.sot.data.service;
 
-import org.bmserras.sot.data.db.synoptic.Synoptic;
+import org.bmserras.sot.data.db.synoptic.SynopticDB;
+import org.bmserras.sot.data.domain.Synoptic;
 import org.bmserras.sot.data.repository.synoptic.SynopticRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,33 +25,39 @@ public class SynopticService implements AbstractService<Synoptic> {
 
     @Override
     public List<Synoptic> findAll(String filter) {
-        if (filter == null || filter.isEmpty()) {
-            return synopticRepository.findAll();
-        } else {
-            return synopticRepository.search(filter);
-        }
+        List<Synoptic> synoptics = new ArrayList<>();
+        List<SynopticDB> synopticsDB = (filter == null || filter.isEmpty()) ? synopticRepository.findAll() :
+                synopticRepository.search(filter);
+        synopticsDB.forEach(synopticDB -> synoptics.add(convertToSynoptic(synopticDB)));
+        return synoptics;
     }
 
     @Override
     public Optional<Synoptic> findById(String id) {
-        return synopticRepository.findById(id);
+        Optional<SynopticDB> byId = synopticRepository.findById(id);
+        return byId.map(this::convertToSynoptic);
     }
 
     @Override
     public Optional<Synoptic> findByName(String name) {
-        return Optional.ofNullable(synopticRepository.findByName(name));
+        Optional<SynopticDB> byName = synopticRepository.findByName(name);
+        return byName.map(this::convertToSynoptic);
     }
 
     @Override
-    public void save(Synoptic item) {
-        if (item == null) {
-            return;
-        }
-        synopticRepository.save(item);
+    public void save(Synoptic synoptic) {
+        if (synoptic == null) return;
+        SynopticDB synopticDB = new SynopticDB(synoptic.getId(), synoptic.getName());
+        synopticRepository.save(synopticDB);
     }
 
     @Override
-    public void delete(Synoptic item) {
-        synopticRepository.delete(item);
+    public void delete(Synoptic synoptic) {
+        SynopticDB synopticDB = new SynopticDB(synoptic.getId(), synoptic.getName());
+        synopticRepository.delete(synopticDB);
+    }
+
+    private Synoptic convertToSynoptic(SynopticDB synopticDB) {
+        return new Synoptic(synopticDB.getIdentifier(), synopticDB.getName());
     }
 }

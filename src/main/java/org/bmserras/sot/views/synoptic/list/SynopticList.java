@@ -13,7 +13,8 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import org.bmserras.sot.data.db.synoptic.Synoptic;
+import org.bmserras.sot.data.db.synoptic.SynopticDB;
+import org.bmserras.sot.data.domain.Synoptic;
 import org.bmserras.sot.old.data.RadarWidget;
 import org.bmserras.sot.data.service.SynopticService;
 import org.vaadin.lineawesome.LineAwesomeIcon;
@@ -55,7 +56,7 @@ public class SynopticList extends VerticalLayout {
 
     private void configureGrid() {
         grid.setSizeFull();
-        grid.setColumns("identifier", "name");
+        grid.setColumns("id", "name");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
         grid.asSingleSelect().addValueChangeListener(event -> {
             selectedSynoptic = Optional.ofNullable(event.getValue());
@@ -108,7 +109,7 @@ public class SynopticList extends VerticalLayout {
             form.setVisible(true);
 
             toolbar.setSynoptic(synoptic.get());
-            toolbar.setVisible(!synoptic.get().equals(new Synoptic()));
+            toolbar.setVisible(!synoptic.get().equals(new SynopticDB()));
         }
     }
 
@@ -130,13 +131,13 @@ public class SynopticList extends VerticalLayout {
         map.setCenter(coordinate);
         map.setZoom(10);
 
-        synoptic.get().getWidgets().forEach(w -> {
+        /*synoptic.get().getWidgets().forEach(w -> {
             RadarWidget widget = (RadarWidget) w.getWidget();
 
             Coordinate coords = new Coordinate(widget.getLongitude(), widget.getLatitude());
             MarkerFeature marker = new MarkerFeature(coords);
             map.getFeatureLayer().addFeature(marker);
-        });
+        });*/
 
         Dialog dialog = new Dialog();
         dialog.setWidth("70%");

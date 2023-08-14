@@ -2,7 +2,7 @@ package org.bmserras.sot.data.db.project;
 
 import jakarta.persistence.*;
 import org.bmserras.sot.data.db.AbstractEntity;
-import org.bmserras.sot.data.db.synoptic.Synoptic;
+import org.bmserras.sot.data.db.synoptic.SynopticDB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class ProjectDB extends AbstractEntity {
     private String name;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    private List<ProjectSynoptic> synoptics = new ArrayList<>();
+    private List<ProjectSynopticDB> synoptics = new ArrayList<>();
 
     public ProjectDB() {
         super();
@@ -41,20 +41,20 @@ public class ProjectDB extends AbstractEntity {
         return "project/";
     }
 
-    public List<ProjectSynoptic> getSynoptics() {
+    public List<ProjectSynopticDB> getSynoptics() {
         return synoptics;
     }
 
-    public void setSynoptics(List<ProjectSynoptic> synoptics) {
+    public void setSynoptics(List<ProjectSynopticDB> synoptics) {
         this.synoptics = synoptics;
     }
 
-    public void addSynoptic(Synoptic synoptic) {
-        synoptics.add(new ProjectSynoptic(this, synoptic));
+    public void addSynoptic(SynopticDB synopticDB) {
+        synoptics.add(new ProjectSynopticDB(this, synopticDB));
     }
 
-    public void removeSynoptic(Synoptic synoptic) {
-        synoptics.remove(new ProjectSynoptic(this, synoptic));
+    public void removeSynoptic(SynopticDB synopticDB) {
+        synoptics.remove(new ProjectSynopticDB(this, synopticDB));
     }
 
     @Override

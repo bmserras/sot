@@ -10,7 +10,8 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.shared.Registration;
-import org.bmserras.sot.data.db.synoptic.Synoptic;
+import org.bmserras.sot.data.db.synoptic.SynopticDB;
+import org.bmserras.sot.data.domain.Synoptic;
 import org.bmserras.sot.events.synoptic.SynopticCloseEvent;
 import org.bmserras.sot.events.synoptic.SynopticRemoveEvent;
 import org.bmserras.sot.events.synoptic.SynopticSaveEvent;
@@ -29,7 +30,7 @@ public class SynopticForm extends FormLayout {
     private final Binder<Synoptic> binder = new Binder<>(Synoptic.class);
 
     public SynopticForm() {
-        binder.bind(identifier, synoptic -> (double) synoptic.getIdentifier(), null);
+        binder.bind(identifier, synoptic -> (double) synoptic.getId(), null);
         binder.bind(name, Synoptic::getName, Synoptic::setName);
 
         add(identifier, name, createButtonsLayout());

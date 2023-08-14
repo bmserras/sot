@@ -11,8 +11,11 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 import org.bmserras.sot.data.domain.Project;
+import org.bmserras.sot.data.domain.User;
 import org.bmserras.sot.data.service.ProjectService;
 import org.bmserras.sot.data.service.SynopticService;
+import org.bmserras.sot.data.service.UserService;
+import org.bmserras.sot.security.AuthenticatedUser;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;
 import org.bmserras.sot.views.synoptic.card.SynopticCards;
 import org.vaadin.lineawesome.LineAwesomeIcon;
@@ -31,6 +34,8 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Strin
 
     private TextField name;
 
+    private SynopticCards synopticCards;
+
     public ProjectView(ProjectService projectService, SynopticService synopticService) {
         this.projectService = projectService;
         this.synopticService = synopticService;
@@ -44,14 +49,17 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Strin
         HorizontalLayout horizontalLayout = new HorizontalLayout(back, name);
         horizontalLayout.setAlignItems(Alignment.CENTER);
 
-        SynopticCards synopticCards = new SynopticCards(synopticService);
+        synopticCards = new SynopticCards(projectService, synopticService);
 
         add(horizontalLayout, new H2("Synoptics"), synopticCards, new H2("Widgets"));
     }
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, String parameter) {
-        projectService.findById(parameter).ifPresent(project -> name.setValue(project.getName()));
+        projectService.findById(parameter).ifPresent(project -> {
+            name.setValue(project.getName());
+            synopticCards.init(projectService, project);
+        });
 
         name.addValueChangeListener(valueChangeEvent -> {
             //Optional<ProjectDB> project = service.findByName(valueChangeEvent.getOldValue());
@@ -61,5 +69,7 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Strin
                 projectService.save(project.get());
             });
         });
+
+
     }
 }
