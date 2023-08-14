@@ -1,11 +1,9 @@
 @import "theme-editor.css";
-@import url('./main-layout.css');
 @import url('./widgets.css');
 @import url('/card.css');
-
-vaadin-context-menu-item[focused] {
-    box-shadow: none;
-}
+@import url('/login.css');
+@import url('/register.css');
+@import url('/synoptic.css');
 
 @font-face {
     font-family: "Roboto";
@@ -16,30 +14,6 @@ html {
     --lumo-font-family: "Roboto", sans-serif;
 }
 
-.v-dragged {
-    outline: 5px dotted hotpink;
-    opacity: 1;
-}
-
-.v-drag-over-target {
-    outline: 6px dotted blue;
-}
-
-.highlight {
-    outline: 6px dotted greenyellow;
-}
-
-.login-form {
-    width: 90%;
-}
-
-.register-form {
-    padding: 24px;
-}
-.register-title {
-    margin-top: 12px;
-}
-.register-button {
-    margin-top: 24px;
-    margin-bottom: 8px;
+vaadin-context-menu-item[focused] {
+    box-shadow: none;
 }

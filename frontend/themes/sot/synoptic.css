@@ -1,0 +1,16 @@
+.v-dragged {
+    outline: 5px dotted hotpink;
+    opacity: 1;
+}
+
+.v-drag-over-target {
+    outline: 6px dotted blue;
+}
+
+.highlight {
+    outline: 6px dotted greenyellow;
+}
+
+vaadin-accordion-panel {
+    background-color: #efefef;
+}
