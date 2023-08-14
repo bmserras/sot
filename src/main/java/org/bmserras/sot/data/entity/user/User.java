@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 import org.bmserras.sot.data.entity.AbstractEntity;
 
 @Entity
-@Table(name = "userr")
+@Table(name = "user_account")
 public class User extends AbstractEntity {
 
     @Column(unique = true)
