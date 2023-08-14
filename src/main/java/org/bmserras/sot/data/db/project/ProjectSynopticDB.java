@@ -1,15 +1,15 @@
 package org.bmserras.sot.data.db.project;
 
 import jakarta.persistence.*;
-import org.bmserras.sot.data.db.synoptic.Synoptic;
+import org.bmserras.sot.data.db.synoptic.SynopticDB;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "project_synoptic")
-@IdClass(ProjectSynoptic.ProjectSynopticId.class)
-public class ProjectSynoptic implements Serializable {
+@IdClass(ProjectSynopticDB.ProjectSynopticId.class)
+public class ProjectSynopticDB implements Serializable {
 
     @Id
     @ManyToOne
@@ -19,12 +19,12 @@ public class ProjectSynoptic implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(name = "synoptic_identifier", referencedColumnName = "identifier")
-    private Synoptic synoptic;
+    private SynopticDB synoptic;
 
-    public ProjectSynoptic() {
+    public ProjectSynopticDB() {
     }
 
-    public ProjectSynoptic(ProjectDB project, Synoptic synoptic) {
+    public ProjectSynopticDB(ProjectDB project, SynopticDB synoptic) {
         this.project = project;
         this.synoptic = synoptic;
     }
@@ -37,12 +37,12 @@ public class ProjectSynoptic implements Serializable {
         this.project = projectDB;
     }
 
-    public Synoptic getSynoptic() {
+    public SynopticDB getSynoptic() {
         return synoptic;
     }
 
-    public void setSynoptic(Synoptic synoptic) {
-        this.synoptic = synoptic;
+    public void setSynoptic(SynopticDB synopticDB) {
+        this.synoptic = synopticDB;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ProjectSynoptic implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProjectSynoptic that = (ProjectSynoptic) o;
+        ProjectSynopticDB that = (ProjectSynopticDB) o;
         return project.equals(that.project) && synoptic.equals(that.synoptic);
     }
 

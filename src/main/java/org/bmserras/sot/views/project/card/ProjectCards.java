@@ -43,7 +43,7 @@ public class ProjectCards extends VerticalLayout {
                 Project p = new Project(new Date().getTime(), name.getValue().equals("") ? "Blank project" : name.getValue());
                 user.addProject(p);
                 userService.save(user);
-                projectService.save(p);
+                //projectService.save(p);
                 dialog.close();
                 mainButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate("project/" + p.getId()));
             });

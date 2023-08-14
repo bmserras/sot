@@ -14,7 +14,7 @@ public class SynopticWidget implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(name = "synoptic_identifier", referencedColumnName = "identifier")
-    private Synoptic synoptic;
+    private SynopticDB synoptic;
 
     @Id
     @ManyToOne
@@ -26,18 +26,18 @@ public class SynopticWidget implements Serializable {
     public SynopticWidget() {
     }
 
-    public SynopticWidget(Synoptic synoptic, Widget widget, int pos) {
+    public SynopticWidget(SynopticDB synoptic, Widget widget, int pos) {
         this.synoptic = synoptic;
         this.widget = widget;
         this.pos = pos;
     }
 
-    public Synoptic getSynoptic() {
+    public SynopticDB getSynoptic() {
         return synoptic;
     }
 
-    public void setSynoptic(Synoptic synoptic) {
-        this.synoptic = synoptic;
+    public void setSynoptic(SynopticDB synopticDB) {
+        this.synoptic = synopticDB;
     }
 
     public Widget getWidget() {

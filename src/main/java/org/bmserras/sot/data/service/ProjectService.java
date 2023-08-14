@@ -1,10 +1,11 @@
 package org.bmserras.sot.data.service;
 
 import org.bmserras.sot.data.db.project.ProjectDB;
+import org.bmserras.sot.data.db.project.ProjectSynopticDB;
+import org.bmserras.sot.data.db.synoptic.SynopticDB;
 import org.bmserras.sot.data.db.user.UserDB;
-import org.bmserras.sot.data.db.user.UserProjectDB;
 import org.bmserras.sot.data.domain.Project;
-import org.bmserras.sot.data.domain.User;
+import org.bmserras.sot.data.domain.Synoptic;
 import org.bmserras.sot.data.repository.project.ProjectRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +17,11 @@ import java.util.Optional;
 public class ProjectService implements AbstractService<Project> {
 
     private final ProjectRepository projectRepository;
+    private final SynopticService synopticService;
 
-    public ProjectService(ProjectRepository projectRepository) {
+    public ProjectService(ProjectRepository projectRepository, SynopticService synopticService) {
         this.projectRepository = projectRepository;
+        this.synopticService = synopticService;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class ProjectService implements AbstractService<Project> {
         List<Project> projects = new ArrayList<>();
         List<ProjectDB> projectsDB = (filter == null || filter.isEmpty()) ? projectRepository.findAll() :
                 projectRepository.search(filter);
-        projectsDB.forEach(this::convertToProject);
+        projectsDB.forEach(projectDB -> projects.add(convertToProject(projectDB)));
         return projects;
     }
 
@@ -51,6 +54,12 @@ public class ProjectService implements AbstractService<Project> {
     public void save(Project project) {
         if (project == null) return;
         ProjectDB projectDB = new ProjectDB(project.getId(), project.getName());
+        List<Synoptic> synoptics = project.getSynoptics();
+        synoptics.forEach(synoptic -> {
+            SynopticDB synopticDB = new SynopticDB(synoptic.getId(), synoptic.getName());
+            synopticService.save(synoptic);
+            projectDB.addSynoptic(synopticDB);
+        });
         projectRepository.save(projectDB);
     }
 
@@ -58,9 +67,16 @@ public class ProjectService implements AbstractService<Project> {
     public void delete(Project project) {
         ProjectDB projectDB = new ProjectDB(project.getId(), project.getName());
         projectRepository.delete(projectDB);
+        project.getSynoptics().forEach(synopticService::delete);
     }
 
     private Project convertToProject(ProjectDB projectDB) {
-        return new Project(projectDB.getIdentifier(), projectDB.getName());
+        List<Synoptic> synoptics = new ArrayList<>();
+        List<ProjectSynopticDB> synopticsDB = projectDB.getSynoptics();
+        synopticsDB.forEach(synopticDB -> {
+            SynopticDB synoptic = synopticDB.getSynoptic();
+            synoptics.add(new Synoptic(synoptic.getIdentifier(), synoptic.getName()));
+        });
+        return new Project(projectDB.getIdentifier(), projectDB.getName(), synoptics);
     }
 }
