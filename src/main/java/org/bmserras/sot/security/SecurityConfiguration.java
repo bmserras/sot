@@ -66,7 +66,7 @@ public class SecurityConfiguration extends VaadinWebSecurity {
 
             private static List<GrantedAuthority> getAuthorities(User user) {
                 List<GrantedAuthority> list = new ArrayList<>();
-                list.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
+                list.add(new SimpleGrantedAuthority("ROLE_USER"));
                 return list;
             }
         };

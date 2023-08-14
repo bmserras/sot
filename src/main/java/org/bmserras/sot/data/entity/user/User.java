@@ -12,17 +12,15 @@ public class User extends AbstractEntity {
     @Column(unique = true)
     private String username;
     private String passwordHash;
-    private UserRole role;
 
     public User() {
 
     }
 
-    public User(String username, String passwordHash, UserRole role) {
+    public User(String username, String passwordHash) {
         super("");
         this.username = username;
         this.passwordHash = passwordHash;
-        this.role = role;
     }
 
     public String getUsername() {
@@ -39,14 +37,6 @@ public class User extends AbstractEntity {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
     }
 
     @Override

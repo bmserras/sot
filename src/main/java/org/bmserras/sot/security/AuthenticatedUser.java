@@ -38,7 +38,7 @@ public class AuthenticatedUser {
 
     public void register(String username, String password) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        User user = new User(username, bCryptPasswordEncoder.encode(password), UserRole.USER);
+        User user = new User(username, bCryptPasswordEncoder.encode(password));
         userService.save(user);
     }
 
