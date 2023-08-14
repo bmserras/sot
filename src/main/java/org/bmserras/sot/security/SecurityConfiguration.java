@@ -1,8 +1,10 @@
 package org.bmserras.sot.security;
 
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
-import org.bmserras.sot.data.db.user.User;
+import org.bmserras.sot.data.db.user.UserDB;
+import org.bmserras.sot.data.domain.User;
 import org.bmserras.sot.data.repository.user.UserRepository;
+import org.bmserras.sot.data.service.UserService;
 import org.bmserras.sot.views.auth.LoginView;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,15 +21,16 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfiguration extends VaadinWebSecurity {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public SecurityConfiguration(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public SecurityConfiguration(UserService userService) {
+        this.userService = userService;
     }
 
     @Bean
@@ -55,16 +58,17 @@ public class SecurityConfiguration extends VaadinWebSecurity {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                User user = userRepository.findByName(username);
-                if (user == null) {
+                Optional<User> byName = userService.findByName(username);
+                if (byName.isEmpty()) {
                     throw new UsernameNotFoundException("No user present with username: " + username);
                 } else {
-                    return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPasswordHash(),
-                            getAuthorities(user));
+                    return new org.springframework.security.core.userdetails.User(byName.get().getUsername(),
+                            byName.get().getPasswordHash(),
+                            getAuthorities());
                 }
             }
 
-            private static List<GrantedAuthority> getAuthorities(User user) {
+            private static List<GrantedAuthority> getAuthorities() {
                 List<GrantedAuthority> list = new ArrayList<>();
                 list.add(new SimpleGrantedAuthority("ROLE_USER"));
                 return list;

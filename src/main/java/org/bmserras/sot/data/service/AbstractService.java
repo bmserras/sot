@@ -1,13 +1,12 @@
 package org.bmserras.sot.data.service;
 
-import org.bmserras.sot.data.db.AbstractEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public interface AbstractService<T extends AbstractEntity> {
+public interface AbstractService<T> {
 
     List<T> findAll();
 

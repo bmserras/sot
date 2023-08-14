@@ -45,7 +45,7 @@ public class SynopticCards extends VerticalLayout {
         horizontalLayout.setWidthFull();
         horizontalLayout.setHeight("40%");
 
-        add(new H2("Synoptics"), horizontalLayout);
+        add(horizontalLayout);
 
         updateList();
     }

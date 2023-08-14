@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @SpringBootTest
-public class ARepositoryTest
+public class ARepoTest
 {
     @Autowired
     ARepository aRepository;

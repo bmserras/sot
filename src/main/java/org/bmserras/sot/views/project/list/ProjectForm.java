@@ -10,7 +10,8 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.shared.Registration;
-import org.bmserras.sot.data.db.project.Project;
+import org.bmserras.sot.data.db.project.ProjectDB;
+import org.bmserras.sot.data.domain.Project;
 import org.bmserras.sot.events.project.ProjectCloseEvent;
 import org.bmserras.sot.events.project.ProjectRemoveEvent;
 import org.bmserras.sot.events.project.ProjectSaveEvent;
@@ -29,7 +30,7 @@ public class ProjectForm extends FormLayout {
     private final Binder<Project> binder = new Binder<>(Project.class);
 
     public ProjectForm() {
-        binder.bind(identifier, project -> (double) project.getIdentifier(), null);
+        binder.bind(identifier, project -> (double) project.getId(), null);
         binder.bind(name, Project::getName, Project::setName);
 
         add(identifier, name, createButtonsLayout());

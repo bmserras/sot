@@ -13,7 +13,7 @@ public abstract class AbstractEntity {
     private long identifier;
 
     public AbstractEntity() {
-        this.identifier = new Date().getTime();
+        super();
     }
 
     public AbstractEntity(long identifier) {

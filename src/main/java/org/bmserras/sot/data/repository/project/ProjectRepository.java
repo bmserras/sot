@@ -1,19 +1,17 @@
 package org.bmserras.sot.data.repository.project;
 
-import org.bmserras.sot.data.db.project.Project;
+import org.bmserras.sot.data.db.project.ProjectDB;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
-/*@Repository
-public class ProjectRepository extends SimpleJpaRepository<Project, String> implements AbstractRepository<Project,
-String> {*/
-public interface ProjectRepository extends JpaRepository<Project, String> {
+public interface ProjectRepository extends JpaRepository<ProjectDB, String> {
 
-    @Query("select p from Project p where lower(p.name) like lower(concat('%', :searchTerm, '%'))")
-    List<Project> search(String searchTerm);
+    @Query("select p from ProjectDB p where lower(p.name) like lower(concat('%', :searchTerm, '%'))")
+    List<ProjectDB> search(String searchTerm);
 
-    @Query("select p from Project p where p.name = :name")
-    Project findByName(String name);
+    @Query("select p from ProjectDB p where p.name = :name")
+    Optional<ProjectDB> findByName(String name);
 }

@@ -9,7 +9,10 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import jakarta.annotation.security.PermitAll;
+import org.bmserras.sot.data.domain.User;
 import org.bmserras.sot.data.service.ProjectService;
+import org.bmserras.sot.data.service.UserService;
+import org.bmserras.sot.security.AuthenticatedUser;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;
 import org.bmserras.sot.views.project.card.ProjectCards;
 import org.bmserras.sot.views.project.list.ProjectList;
@@ -21,7 +24,10 @@ import org.vaadin.lineawesome.LineAwesomeIcon;
 @PermitAll
 public class ProjectsView extends VerticalLayout {
 
-    private ProjectService service;
+    private AuthenticatedUser authenticatedUser;
+
+    private UserService userService;
+    private ProjectService projectService;
 
     private final Button changeView;
     private final Button info;
@@ -33,12 +39,16 @@ public class ProjectsView extends VerticalLayout {
 
     private boolean initInCardView = true;
 
-    public ProjectsView(ProjectService service) {
-        this.service = service;
+    public ProjectsView(AuthenticatedUser authenticatedUser, UserService userService, ProjectService projectService) {
+        this.authenticatedUser = authenticatedUser;
+        this.userService = userService;
+        this.projectService = projectService;
         setSizeFull();
 
-        projectCards = new ProjectCards(service);
-        projectList = new ProjectList(service);
+        User user = authenticatedUser.get().get();
+
+        projectCards = new ProjectCards(userService, projectService, user);
+        projectList = new ProjectList(projectService);
 
         changeView = new Button(getIcon(initInCardView));
         info = new Button(LineAwesomeIcon.INFO_CIRCLE_SOLID.create());

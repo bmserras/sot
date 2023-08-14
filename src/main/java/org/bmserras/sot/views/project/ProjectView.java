@@ -10,7 +10,7 @@ import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
-import org.bmserras.sot.data.db.project.Project;
+import org.bmserras.sot.data.domain.Project;
 import org.bmserras.sot.data.service.ProjectService;
 import org.bmserras.sot.data.service.SynopticService;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;
@@ -24,15 +24,15 @@ import java.util.Optional;
 @PermitAll
 public class ProjectView extends VerticalLayout implements HasUrlParameter<String> {
 
-    private ProjectService service;
+    private ProjectService projectService;
     private SynopticService synopticService;
 
     private Button back;
 
     private TextField name;
 
-    public ProjectView(ProjectService service, SynopticService synopticService) {
-        this.service = service;
+    public ProjectView(ProjectService projectService, SynopticService synopticService) {
+        this.projectService = projectService;
         this.synopticService = synopticService;
 
         back = new Button(LineAwesomeIcon.ARROW_LEFT_SOLID.create(), click ->
@@ -46,17 +46,20 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Strin
 
         SynopticCards synopticCards = new SynopticCards(synopticService);
 
-        add(horizontalLayout, synopticCards, new H2("Widgets"));
+        add(horizontalLayout, new H2("Synoptics"), synopticCards, new H2("Widgets"));
     }
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, String parameter) {
-        service.findById(parameter).ifPresent(project -> name.setValue(project.getName()));
+        projectService.findById(parameter).ifPresent(project -> name.setValue(project.getName()));
 
         name.addValueChangeListener(valueChangeEvent -> {
-            Optional<Project> project = service.findByName(valueChangeEvent.getOldValue());
-            project.get().setName(valueChangeEvent.getValue());
-            service.save(project.get());
+            //Optional<ProjectDB> project = service.findByName(valueChangeEvent.getOldValue());
+            Optional<Project> project = projectService.findById(parameter);
+            project.ifPresent(p -> {
+                p.setName(valueChangeEvent.getValue());
+                projectService.save(project.get());
+            });
         });
     }
 }

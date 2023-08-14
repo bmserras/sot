@@ -9,7 +9,8 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import org.bmserras.sot.data.db.project.Project;
+import org.bmserras.sot.data.db.project.ProjectDB;
+import org.bmserras.sot.data.domain.Project;
 import org.bmserras.sot.data.service.ProjectService;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
@@ -50,7 +51,7 @@ public class ProjectList extends VerticalLayout {
 
     private void configureGrid() {
         grid.setSizeFull();
-        grid.setColumns("identifier", "name");
+        grid.setColumns("id", "name");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
         grid.asSingleSelect().addValueChangeListener(event -> {
             selectedProject = Optional.ofNullable(event.getValue());
@@ -112,7 +113,7 @@ public class ProjectList extends VerticalLayout {
     }
 
     private void openProject(Optional<Project> project) {
-        project.ifPresent(proj -> getUI().ifPresent(ui -> ui.navigate("project/" + proj.getIdentifier())));
+        project.ifPresent(proj -> getUI().ifPresent(ui -> ui.navigate("project/" + proj.getId())));
     }
 
     private void openMap(Optional<Project> project) {

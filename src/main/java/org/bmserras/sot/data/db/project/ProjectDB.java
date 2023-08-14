@@ -9,22 +9,22 @@ import java.util.List;
 
 @Entity
 @Table(name = "project")
-public class Project extends AbstractEntity {
+public class ProjectDB extends AbstractEntity {
 
     private String name;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<ProjectSynoptic> synoptics = new ArrayList<>();
 
-    public Project() {
+    public ProjectDB() {
         super();
     }
 
-    public Project(String name) {
+    public ProjectDB(String name) {
         this.name = name;
     }
 
-    public Project(long identifier, String name) {
+    public ProjectDB(long identifier, String name) {
         super(identifier);
         this.name = name;
     }

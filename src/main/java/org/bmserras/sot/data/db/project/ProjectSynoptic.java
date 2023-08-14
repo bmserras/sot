@@ -14,7 +14,7 @@ public class ProjectSynoptic implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(name = "project_identifier", referencedColumnName = "identifier")
-    private Project project;
+    private ProjectDB project;
 
     @Id
     @ManyToOne
@@ -24,17 +24,17 @@ public class ProjectSynoptic implements Serializable {
     public ProjectSynoptic() {
     }
 
-    public ProjectSynoptic(Project project, Synoptic synoptic) {
+    public ProjectSynoptic(ProjectDB project, Synoptic synoptic) {
         this.project = project;
         this.synoptic = synoptic;
     }
 
-    public Project getProject() {
+    public ProjectDB getProject() {
         return project;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setProject(ProjectDB projectDB) {
+        this.project = projectDB;
     }
 
     public Synoptic getSynoptic() {
