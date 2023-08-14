@@ -1,4 +1,4 @@
-package org.bmserras.sot.views.widgettype;
+package org.bmserras.sot.old.type;
 
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
@@ -10,8 +10,6 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
-import com.vaadin.flow.data.renderer.LitRenderer;
-import com.vaadin.flow.data.renderer.Renderer;
 import org.bmserras.sot.data.entity.widgettype.WidgetType;
 
 public class WidgetTypeForm extends FormLayout {

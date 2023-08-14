@@ -1,4 +1,4 @@
-package org.bmserras.sot.views.synoptic;
+package org.bmserras.sot.views.synoptic.list;
 
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;

@@ -1,4 +1,4 @@
-package org.bmserras.sot.views.widgettype;
+package org.bmserras.sot.old.type;
 
 import com.vaadin.flow.component.html.Image;
 

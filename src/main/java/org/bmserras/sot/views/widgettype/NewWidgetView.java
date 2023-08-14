@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @PageTitle("New Widget")
-@Route(value = "new-widget", layout = AppLayoutNavbar.class)
+@Route(value = "widgets/new", layout = AppLayoutNavbar.class)
 @PermitAll
 public class NewWidgetView extends VerticalLayout {
 

@@ -1,4 +1,4 @@
-package org.bmserras.sot.views.synoptic;
+package org.bmserras.sot.views.synoptic.card;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -14,14 +14,14 @@ import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.util.List;
 
-public class SynopticCardViewNew extends VerticalLayout {
+public class SynopticCards extends VerticalLayout {
 
     private SynopticService service;
 
     private final HorizontalLayout horizontalLayout;
     private final NewCard newSynoptic;
 
-    public SynopticCardViewNew(SynopticService service) {
+    public SynopticCards(SynopticService service) {
         this.service = service;
         setSizeFull();
 
@@ -52,22 +52,6 @@ public class SynopticCardViewNew extends VerticalLayout {
 
     private void updateList() {
         List<Synoptic> allSynoptics = service.findAll("");
-
-        /*int lines = ((allSynoptics.size()) / 5) + 1;
-        int c = 0;
-        for (int i = 0; i < lines; i++) {
-            HorizontalLayout horizontalLayout = new HorizontalLayout();
-            horizontalLayout.setWidthFull();
-            horizontalLayout.setHeight("40%");
-            add(horizontalLayout);
-            if (i == 0) {
-                horizontalLayout.add(newSynoptic);
-            }
-            ++c;
-            for (int j = c*(i+1); j < 5 && j < allSynoptics.size(); j++) {
-                horizontalLayout.add(new ExistingCard(LineAwesomeIcon.FOLDER_OPEN.create(), allSynoptics.get(j).getName()));
-            }
-        }*/
 
         for (Synoptic synoptic : allSynoptics) {
             ExistingCard existingCard = new ExistingCard(LineAwesomeIcon.FOLDER_OPEN.create(), synoptic.getName(),

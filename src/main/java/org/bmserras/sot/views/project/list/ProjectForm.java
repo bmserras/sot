@@ -1,4 +1,4 @@
-package org.bmserras.sot.views.synoptic;
+package org.bmserras.sot.views.project.list;
 
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
@@ -10,14 +10,14 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.shared.Registration;
-import org.bmserras.sot.data.entity.synoptic.Synoptic;
-import org.bmserras.sot.events.synoptic.SynopticCloseEvent;
-import org.bmserras.sot.events.synoptic.SynopticRemoveEvent;
-import org.bmserras.sot.events.synoptic.SynopticSaveEvent;
+import org.bmserras.sot.data.entity.project.Project;
+import org.bmserras.sot.events.project.ProjectCloseEvent;
+import org.bmserras.sot.events.project.ProjectRemoveEvent;
+import org.bmserras.sot.events.project.ProjectSaveEvent;
 
 import java.util.Optional;
 
-public class SynopticForm extends FormLayout {
+public class ProjectForm extends FormLayout {
 
     private final NumberField identifier = new NumberField("Identifier");
     private final TextField name = new TextField("Name");
@@ -26,11 +26,11 @@ public class SynopticForm extends FormLayout {
     private final Button delete = new Button("Delete");
     private final Button close = new Button("Cancel");
 
-    private final Binder<Synoptic> binder = new Binder<>(Synoptic.class);
+    private final Binder<Project> binder = new Binder<>(Project.class);
 
-    public SynopticForm() {
-        binder.bind(identifier, synoptic -> (double) synoptic.getIdentifier(), null);
-        binder.bind(name, Synoptic::getName, Synoptic::setName);
+    public ProjectForm() {
+        binder.bind(identifier, project -> (double) project.getIdentifier(), null);
+        binder.bind(name, Project::getName, Project::setName);
 
         add(identifier, name, createButtonsLayout());
     }
@@ -44,8 +44,8 @@ public class SynopticForm extends FormLayout {
         close.addClickShortcut(Key.ESCAPE);
 
         save.addClickListener(event -> validateAndSave()); // <1>
-        delete.addClickListener(event -> fireEvent(new SynopticRemoveEvent(this, Optional.of(binder.getBean())))); // <2>
-        close.addClickListener(event -> fireEvent(new SynopticCloseEvent(this))); // <3>
+        delete.addClickListener(event -> fireEvent(new ProjectRemoveEvent(this, Optional.of(binder.getBean())))); // <2>
+        close.addClickListener(event -> fireEvent(new ProjectCloseEvent(this))); // <3>
 
         binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid())); // <4>
         return new HorizontalLayout(save, delete, close);
@@ -53,23 +53,23 @@ public class SynopticForm extends FormLayout {
 
     private void validateAndSave() {
         if (binder.isValid()) {
-            fireEvent(new SynopticSaveEvent(this, Optional.of(binder.getBean()))); // <6>
+            fireEvent(new ProjectSaveEvent(this, Optional.of(binder.getBean()))); // <6>
         }
     }
 
-    public void setSynoptic(Synoptic synoptic) {
-        binder.setBean(synoptic);
+    public void setProject(Project project) {
+        binder.setBean(project);
     }
 
-    public Registration addDeleteListener(ComponentEventListener<SynopticRemoveEvent> listener) {
-        return addListener(SynopticRemoveEvent.class, listener);
+    public Registration addDeleteListener(ComponentEventListener<ProjectRemoveEvent> listener) {
+        return addListener(ProjectRemoveEvent.class, listener);
     }
 
-    public Registration addSaveListener(ComponentEventListener<SynopticSaveEvent> listener) {
-        return addListener(SynopticSaveEvent.class, listener);
+    public Registration addSaveListener(ComponentEventListener<ProjectSaveEvent> listener) {
+        return addListener(ProjectSaveEvent.class, listener);
     }
 
-    public Registration addCloseListener(ComponentEventListener<SynopticCloseEvent> listener) {
-        return addListener(SynopticCloseEvent.class, listener);
+    public Registration addCloseListener(ComponentEventListener<ProjectCloseEvent> listener) {
+        return addListener(ProjectCloseEvent.class, listener);
     }
 }

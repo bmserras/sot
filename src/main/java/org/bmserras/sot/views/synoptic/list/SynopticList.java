@@ -1,4 +1,4 @@
-package org.bmserras.sot.views.synoptic;
+package org.bmserras.sot.views.synoptic.list;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -13,21 +13,16 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
-import jakarta.annotation.security.PermitAll;
 import org.bmserras.sot.data.entity.synoptic.Synoptic;
 import org.bmserras.sot.old.data.RadarWidget;
 import org.bmserras.sot.data.service.SynopticService;
-import org.bmserras.sot.views.layout.AppLayoutNavbar;
+import org.bmserras.sot.views.synoptic.list.SynopticForm;
+import org.bmserras.sot.views.synoptic.list.SynopticToolbar;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.util.Optional;
 
-@PageTitle("Synoptics")
-@Route(value = "synoptic-crud", layout = AppLayoutNavbar.class)
-@PermitAll
-public class SynopticListView extends VerticalLayout {
+public class SynopticList extends VerticalLayout {
 
     LineAwesomeIcon addIcon = LineAwesomeIcon.PLUS_CIRCLE_SOLID;
     LineAwesomeIcon openIcon = LineAwesomeIcon.EXTERNAL_LINK_ALT_SOLID;
@@ -45,8 +40,11 @@ public class SynopticListView extends VerticalLayout {
     SynopticToolbar toolbar;
     SynopticService synopticService;
 
-    public SynopticListView(SynopticService synopticService) {
+    public SynopticList(SynopticService synopticService) {
         this.synopticService = synopticService;
+
+        setMargin(false);
+        setPadding(false);
 
         setSizeFull();
         configureGrid();
