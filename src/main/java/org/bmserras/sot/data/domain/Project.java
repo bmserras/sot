@@ -1,6 +1,7 @@
 package org.bmserras.sot.data.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class Project {
     private List<Synoptic> synoptics;
 
     public Project() {
-        this.id = new Date().getTime();
+        this(new Date().getTime(), "");
     }
 
     public Project(long id, String name) {
@@ -52,6 +53,10 @@ public class Project {
         this.synoptics.add(synoptic);
     }
 
+    public void addSynoptics(Synoptic... synoptics) {
+        this.synoptics.addAll(Arrays.asList(synoptics));
+    }
+
     public void removeSynoptic(Synoptic synoptic) {
         this.synoptics.remove(synoptic);
     }
@@ -61,6 +66,7 @@ public class Project {
         return "Project{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", synoptics=" + synoptics +
                 '}';
     }
 }

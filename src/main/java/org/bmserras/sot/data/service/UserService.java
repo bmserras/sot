@@ -1,22 +1,21 @@
 package org.bmserras.sot.data.service;
 
-import org.bmserras.sot.data.db.project.ProjectDB;
-import org.bmserras.sot.data.db.project.ProjectSynopticDB;
-import org.bmserras.sot.data.db.synoptic.SynopticDB;
 import org.bmserras.sot.data.db.user.UserDB;
-import org.bmserras.sot.data.db.user.UserProjectDB;
-import org.bmserras.sot.data.domain.Project;
-import org.bmserras.sot.data.domain.Synoptic;
 import org.bmserras.sot.data.domain.User;
-import org.bmserras.sot.data.repository.project.ProjectRepository;
+import org.bmserras.sot.data.domain.Utils;
 import org.bmserras.sot.data.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.bmserras.sot.data.domain.Utils.toUser;
+import static org.bmserras.sot.data.domain.Utils.toUserDB;
+
 @Service
+@Transactional
 public class UserService implements AbstractService<User> {
 
     private final UserRepository userRepository;
@@ -36,56 +35,38 @@ public class UserService implements AbstractService<User> {
     public List<User> findAll(String filter) {
         List<User> users = new ArrayList<>();
         List<UserDB> usersDB = (filter == null || filter.isEmpty()) ? userRepository.findAll() : userRepository.search(filter);
-        usersDB.forEach(userDB -> users.add(convertToUser(userDB)));
+        usersDB.forEach(userDB -> users.add(toUser(userDB)));
         return users;
     }
 
     @Override
     public Optional<User> findById(String id) {
         Optional<UserDB> byId = userRepository.findById(id);
-        return byId.map(this::convertToUser);
+        return byId.map(Utils::toUser);
     }
 
     @Override
     public Optional<User> findByName(String name) {
         Optional<UserDB> byName = userRepository.findByName(name);
-        return byName.map(this::convertToUser);
+        return byName.map(Utils::toUser);
     }
 
     @Override
     public void save(User user) {
         if (user == null) return;
-        UserDB userDB = new UserDB(user.getId(), user.getUsername(), user.getPasswordHash());
-        List<Project> projects = user.getProjects();
-        projects.forEach(project -> {
-            ProjectDB projectDB = new ProjectDB(project.getId(), project.getName());
-            projectService.save(project);
-            userDB.addProject(projectDB);
-        });
+        UserDB userDB = toUserDB(user);
+        user.getProjects().forEach(projectService::save);
         userRepository.save(userDB);
     }
 
     @Override
     public void delete(User user) {
-        UserDB userDB = new UserDB(user.getId());
+        UserDB userDB = toUserDB(user);
         userRepository.delete(userDB);
+        user.getProjects().forEach(projectService::delete);
     }
 
-    private User convertToUser(UserDB userDB) {
-        List<Project> projects = new ArrayList<>();
-        List<UserProjectDB> projectsDB = userDB.getProjects();
-        projectsDB.forEach(projectDB -> {
-            ProjectDB project = projectDB.getProject();
-            List<Synoptic> synoptics = new ArrayList<>();
-            List<ProjectSynopticDB> synopticsDB = project.getSynoptics();
-            synopticsDB.forEach(synopticDB -> {
-                SynopticDB synoptic = synopticDB.getSynoptic();
-                synoptics.add(new Synoptic(synoptic.getIdentifier(), synoptic.getName()));
-            });
-            projects.add(new Project(project.getIdentifier(), project.getName(), synoptics));
-        });
-
-        return new User(userDB.getIdentifier(), userDB.getUsername(), userDB.getPasswordHash(), projects);
+    public void deleteAll() {
+        userRepository.deleteAll();
     }
-
 }

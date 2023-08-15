@@ -3,8 +3,10 @@ package org.bmserras.sot.data.db.project;
 import jakarta.persistence.*;
 import org.bmserras.sot.data.db.AbstractEntity;
 import org.bmserras.sot.data.db.synoptic.SynopticDB;
+import org.bmserras.sot.data.db.user.UserDB;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -51,6 +53,10 @@ public class ProjectDB extends AbstractEntity {
 
     public void addSynoptic(SynopticDB synopticDB) {
         synoptics.add(new ProjectSynopticDB(this, synopticDB));
+    }
+
+    public void addSynoptics(SynopticDB... synopticsDB) {
+        for (SynopticDB synopticDB : synopticsDB) addSynoptic(synopticDB);
     }
 
     public void removeSynoptic(SynopticDB synopticDB) {

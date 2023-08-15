@@ -1,6 +1,7 @@
 package org.bmserras.sot.data.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -60,6 +61,10 @@ public class User {
 
     public void addProject(Project project) {
         this.projects.add(project);
+    }
+
+    public void addProjects(Project... projects) {
+        this.projects.addAll(Arrays.asList(projects));
     }
 
     public void removeProject(Project project) {

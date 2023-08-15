@@ -79,4 +79,8 @@ public class ProjectService implements AbstractService<Project> {
         });
         return new Project(projectDB.getIdentifier(), projectDB.getName(), synoptics);
     }
+
+    public void deleteAll() {
+        projectRepository.deleteAll();
+    }
 }

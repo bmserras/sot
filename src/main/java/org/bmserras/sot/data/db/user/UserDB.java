@@ -3,8 +3,11 @@ package org.bmserras.sot.data.db.user;
 import jakarta.persistence.*;
 import org.bmserras.sot.data.db.AbstractEntity;
 import org.bmserras.sot.data.db.project.ProjectDB;
+import org.bmserras.sot.data.db.synoptic.SynopticDB;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -16,7 +19,7 @@ public class UserDB extends AbstractEntity {
 
     private String passwordHash;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<UserProjectDB> projects;
 
     public UserDB() {
@@ -25,6 +28,10 @@ public class UserDB extends AbstractEntity {
 
     public UserDB(long identifier) {
         this(identifier, "default name", "default pass");
+    }
+
+    public UserDB(String username, String passwordHash) {
+        this(new Date().getTime(), username, passwordHash);
     }
 
     public UserDB(long identifier, String username, String passwordHash) {
@@ -62,6 +69,14 @@ public class UserDB extends AbstractEntity {
         this.projects = projects;
     }
 
+    public void addProject(ProjectDB projectDB) {
+        projects.add(new UserProjectDB(this, projectDB));
+    }
+
+    public void addProjects(ProjectDB... projectsDB) {
+        for (ProjectDB projectDB : projectsDB) addProject(projectDB);
+    }
+
     @Override
     public String toString() {
         return "UserDB{" +
@@ -69,9 +84,5 @@ public class UserDB extends AbstractEntity {
                 ", passwordHash='" + passwordHash + '\'' +
                 ", projects=" + projects +
                 "} " + super.toString();
-    }
-
-    public void addProject(ProjectDB projectDB) {
-        projects.add(new UserProjectDB(this, projectDB));
     }
 }

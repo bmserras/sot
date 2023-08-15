@@ -54,6 +54,8 @@ public class ProjectsView extends VerticalLayout {
         info = new Button(LineAwesomeIcon.INFO_CIRCLE_SOLID.create());
 
         content = new VerticalLayout(projectCards, projectList);
+        content.setMargin(false);
+        content.setPadding(false);
         content.setSizeFull();
 
         changeView.addClickListener(click -> {

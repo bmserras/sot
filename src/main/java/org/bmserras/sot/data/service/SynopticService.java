@@ -60,4 +60,8 @@ public class SynopticService implements AbstractService<Synoptic> {
     private Synoptic convertToSynoptic(SynopticDB synopticDB) {
         return new Synoptic(synopticDB.getIdentifier(), synopticDB.getName());
     }
+
+    public void deleteAll() {
+        synopticRepository.deleteAll();
+    }
 }

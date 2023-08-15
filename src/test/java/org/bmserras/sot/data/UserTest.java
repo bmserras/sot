@@ -13,11 +13,13 @@ import org.bmserras.sot.data.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class UserTest {
 
     @Autowired
@@ -40,11 +42,13 @@ public class UserTest {
 
         User user = bruno.get();
 
-        user.getProjects().add(new Project(2, "Proj"));
+        System.out.println(user.getProjects());
+
+        /*user.getProjects().add(new Project(2, "Proj"));
         userService.save(user);
 
         Optional<User> bruno2 = userService.findByName("bruno");
-        System.out.println(bruno2);
+        System.out.println(bruno2);*/
 
         /*Optional<UserDB> n = userRepository.findByName("bru");
         System.out.println(n);*/
