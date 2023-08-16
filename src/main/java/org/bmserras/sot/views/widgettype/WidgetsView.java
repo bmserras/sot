@@ -10,8 +10,7 @@ import jakarta.annotation.security.PermitAll;
 import org.bmserras.sot.data.service.WidgetTypeService;
 import org.bmserras.sot.icon.IsosIcon;
 import org.bmserras.sot.icon.LaIcon;
-import org.bmserras.sot.views.card.ExistingCard;
-import org.bmserras.sot.views.card.NewCard;
+import org.bmserras.sot.views.project.card.ProjectNewCard;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
@@ -30,8 +29,8 @@ public class WidgetsView extends VerticalLayout {
         horizontalLayout.setWidthFull();
         horizontalLayout.setHeight("40%");
 
-        NewCard newWidgetType = new NewCard(LineAwesomeIcon.PLUS_CIRCLE_SOLID.create(), "New Widget", "Create new widget");
-        newWidgetType.addMainButtonClickListener(mainButtonClick -> {
+        ProjectNewCard newWidgetType = new ProjectNewCard(LineAwesomeIcon.PLUS_CIRCLE_SOLID.create(), "New Widget", "Create new widget");
+        newWidgetType.addMainListener(mainButtonClick -> {
             mainButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate("widgets/new"));
         });
 
@@ -44,8 +43,8 @@ public class WidgetsView extends VerticalLayout {
                 default -> new Span();
             };
 
-            ExistingCard ec = new ExistingCard(icon, wt.getName(), "Open widget");
-            horizontalLayout.add(ec);
+            /*ExistingCard ec = new ExistingCard(icon, wt.getName(), "Open widget");
+            horizontalLayout.add(ec);*/
         });
 
         add(new H2("My Widgets"), horizontalLayout);

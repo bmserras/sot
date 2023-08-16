@@ -1,26 +1,22 @@
 package org.bmserras.sot.views.project;
 
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
 import jakarta.annotation.security.PermitAll;
+import org.bmserras.sot.data.domain.Project;
 import org.bmserras.sot.data.domain.User;
 import org.bmserras.sot.data.service.ProjectService;
 import org.bmserras.sot.data.service.UserService;
 import org.bmserras.sot.security.AuthenticatedUser;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;
-import org.bmserras.sot.views.project.card.ProjectCards;
-import org.bmserras.sot.views.project.list.ProjectList;
-import org.vaadin.lineawesome.LineAwesomeIcon;
+
+import java.util.List;
+import java.util.Optional;
 
 @PageTitle("Projects")
-@Route(value = "projects", layout = AppLayoutNavbar.class)
-@RouteAlias(value = "", layout = AppLayoutNavbar.class)
+@Route(value = "projects-test", layout = AppLayoutNavbar.class)
 @PermitAll
 public class ProjectsView extends VerticalLayout {
 
@@ -29,15 +25,7 @@ public class ProjectsView extends VerticalLayout {
     private UserService userService;
     private ProjectService projectService;
 
-    private final Button changeView;
-    private final Button info;
-
-    private final VerticalLayout content;
-
-    private ProjectCards projectCards;
-    private ProjectList projectList;
-
-    private boolean initInCardView = true;
+    private ProjectLayout layout;
 
     public ProjectsView(AuthenticatedUser authenticatedUser, UserService userService, ProjectService projectService) {
         this.authenticatedUser = authenticatedUser;
@@ -45,37 +33,40 @@ public class ProjectsView extends VerticalLayout {
         this.projectService = projectService;
         setSizeFull();
 
-        User user = authenticatedUser.get().get();
+        Optional<User> userOp = authenticatedUser.get();
+        if (userOp.isEmpty()) return;
+        User user = userOp.get();
+        List<Project> projects = user.getProjects();
 
-        projectCards = new ProjectCards(userService, projectService, user);
-        projectList = new ProjectList(projectService);
+        layout = new ProjectLayout();
+        layout.setItems(projects);
 
-        changeView = new Button(getIcon(initInCardView));
-        info = new Button(LineAwesomeIcon.INFO_CIRCLE_SOLID.create());
-
-        content = new VerticalLayout(projectCards, projectList);
-        content.setMargin(false);
-        content.setPadding(false);
-        content.setSizeFull();
-
-        changeView.addClickListener(click -> {
-            initInCardView = !initInCardView;
-            changeView.setIcon(getIcon(initInCardView));
-
-            updateContent();
+        layout.addOpenListener(click -> {
+            Optional<Project> project = click.getProject();
+            project.ifPresent(p -> UI.getCurrent().navigate("project-test/" + p.getId()));
+        });
+        layout.addSaveListener(click -> {
+            Optional<Project> project = click.getProject();
+            project.ifPresent(p -> {
+                if (p.getName().equals("")) p.setName("Blank Project");
+                if (!user.getProjects().contains(p)) {
+                    user.addProjects(p);
+                    userService.save(user);
+                }
+                else projectService.save(p);
+                layout.setItems(user.getProjects());
+            });
+        });
+        layout.addDeleteListener(click -> {
+            Optional<Project> project = click.getProject();
+            project.ifPresent(p -> {
+                user.removeProject(p);
+                userService.save(user);
+                projectService.delete(p);
+                layout.setItems(user.getProjects());
+            });
         });
 
-        updateContent();
-
-        add(new HorizontalLayout(new H2("My Projects"), changeView, info), content);
-    }
-
-    private void updateContent() {
-        projectCards.setVisible(initInCardView);
-        projectList.setVisible(!initInCardView);
-    }
-
-    private Component getIcon(boolean isCardView) {
-        return isCardView ? LineAwesomeIcon.LIST_SOLID.create() : LineAwesomeIcon.TH_SOLID.create();
+        add(layout);
     }
 }

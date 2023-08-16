@@ -1,27 +1,30 @@
-package org.bmserras.sot.views.card;
+package org.bmserras.sot.views.synoptic.card;
 
-import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import org.bmserras.sot.events.synoptic.SynopticAddEvent;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
-public abstract class Card extends VerticalLayout {
+public class SynopticNewCard extends VerticalLayout {
 
     private final Button mainButton;
     private final HorizontalLayout container;
     private final Span title;
     private final Button optionsButton;
 
-    public Card(Component icon, String title, String tooltipText) {
+
+    public SynopticNewCard(Component icon, String title, String tooltipText) {
         addClassName("card");
+        addClassName("new-card");
 
         this.mainButton = new Button(icon);
         this.mainButton.addClassName("main-button");
         this.mainButton.setTooltipText(tooltipText);
+        this.mainButton.addClickListener(click -> fireEvent(new SynopticAddEvent(this)));
 
         this.title = new Span(title);
         this.title.addClassName("title");
@@ -33,27 +36,10 @@ public abstract class Card extends VerticalLayout {
         this.container = new HorizontalLayout(this.title, optionsButton);
         this.container.addClassName("container");
 
-        createContextMenu(this, false);
-        createContextMenu(optionsButton, true);
-
         add(mainButton, container);
     }
 
-    protected abstract void createContextMenu(Component target, boolean openOnClick);
-
-    public void addMainButtonClickListener(ComponentEventListener<ClickEvent<Button>> listener) {
-        mainButton.addClickListener(listener);
-    }
-
-    public void setMainButtonIcon(Component icon) {
-        this.mainButton.setIcon(icon);
-    }
-
-    public void setTitle(String title) {
-        this.title.setText(title);
-    }
-
-    public void setTooltipText(String tooltipText) {
-        this.mainButton.setTooltipText(tooltipText);
+    public void addMainListener(ComponentEventListener<SynopticAddEvent> listener) {
+        addListener(SynopticAddEvent.class, listener);
     }
 }

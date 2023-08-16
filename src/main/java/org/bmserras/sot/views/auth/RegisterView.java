@@ -15,7 +15,6 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import org.bmserras.sot.security.AuthenticatedUser;
-import org.bmserras.sot.views.project.ProjectsView;
 
 @Route("register")
 @PageTitle("Register")
@@ -100,7 +99,7 @@ public class RegisterView extends VerticalLayout {
             confirmDialog.addConfirmListener(confirmEvent -> {
                 try {
                     authenticatedUser.register(username, password1);
-                    UI.getCurrent().navigate(ProjectsView.class);
+                    UI.getCurrent().navigate(LoginView.class);
                 }
                 catch (Exception e) {
                     ConfirmDialog errorDialog = new ConfirmDialog();

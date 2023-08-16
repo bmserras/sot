@@ -1,19 +1,18 @@
-package org.bmserras.sot.views.project.list;
+package org.bmserras.sot.views.project.components;
 
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.shared.Registration;
-import org.bmserras.sot.data.db.project.ProjectDB;
 import org.bmserras.sot.data.domain.Project;
 import org.bmserras.sot.events.project.ProjectCloseEvent;
-import org.bmserras.sot.events.project.ProjectRemoveEvent;
+import org.bmserras.sot.events.project.ProjectDeleteEvent;
 import org.bmserras.sot.events.project.ProjectSaveEvent;
 
 import java.util.Optional;
@@ -30,6 +29,8 @@ public class ProjectForm extends FormLayout {
     private final Binder<Project> binder = new Binder<>(Project.class);
 
     public ProjectForm() {
+        name.setPlaceholder("Blank project");
+
         binder.bind(identifier, project -> (double) project.getId(), null);
         binder.bind(name, Project::getName, Project::setName);
 
@@ -42,35 +43,50 @@ public class ProjectForm extends FormLayout {
         close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
         save.addClickShortcut(Key.ENTER);
+        delete.addClickShortcut(Key.DELETE);
         close.addClickShortcut(Key.ESCAPE);
 
-        save.addClickListener(event -> validateAndSave()); // <1>
-        delete.addClickListener(event -> fireEvent(new ProjectRemoveEvent(this, Optional.of(binder.getBean())))); // <2>
-        close.addClickListener(event -> fireEvent(new ProjectCloseEvent(this))); // <3>
+        save.addClickListener(event -> validateAndSave());
+        delete.addClickListener(event -> {
 
-        binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid())); // <4>
-        return new HorizontalLayout(save, delete, close);
+            ConfirmDialog confirmDialog = new ConfirmDialog();
+            confirmDialog.setHeader("Delete project");
+            confirmDialog.setText("Are you sure you want to delete this project?");
+
+            confirmDialog.setCancelable(true);
+            confirmDialog.setConfirmText("Yes");
+            confirmDialog.addConfirmListener(confirm -> fireEvent(new ProjectDeleteEvent(this, Optional.of(binder.getBean()))));
+
+            confirmDialog.open();
+        });
+        close.addClickListener(event -> fireEvent(new ProjectCloseEvent(this)));
+
+        binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));
+        HorizontalLayout horizontalLayout = new HorizontalLayout(save, delete, close);
+        horizontalLayout.expand(save, delete, close);
+        return horizontalLayout;
     }
 
     private void validateAndSave() {
         if (binder.isValid()) {
-            fireEvent(new ProjectSaveEvent(this, Optional.of(binder.getBean()))); // <6>
+            fireEvent(new ProjectSaveEvent(this, Optional.of(binder.getBean())));
         }
     }
 
     public void setProject(Project project) {
         binder.setBean(project);
+        this.setVisible(project != null);
     }
 
-    public Registration addDeleteListener(ComponentEventListener<ProjectRemoveEvent> listener) {
-        return addListener(ProjectRemoveEvent.class, listener);
+    public void addSaveListener(ComponentEventListener<ProjectSaveEvent> listener) {
+        addListener(ProjectSaveEvent.class, listener);
     }
 
-    public Registration addSaveListener(ComponentEventListener<ProjectSaveEvent> listener) {
-        return addListener(ProjectSaveEvent.class, listener);
+    public void addDeleteListener(ComponentEventListener<ProjectDeleteEvent> listener) {
+        addListener(ProjectDeleteEvent.class, listener);
     }
 
-    public Registration addCloseListener(ComponentEventListener<ProjectCloseEvent> listener) {
-        return addListener(ProjectCloseEvent.class, listener);
+    public void addCloseListener(ComponentEventListener<ProjectCloseEvent> listener) {
+        addListener(ProjectCloseEvent.class, listener);
     }
 }
