@@ -22,7 +22,7 @@ import org.vaadin.lineawesome.LineAwesomeIcon;
 import java.util.Optional;
 
 @PageTitle("Project")
-@Route(value = "project-test", layout = AppLayoutNavbar.class)
+@Route(value = "project", layout = AppLayoutNavbar.class)
 @PermitAll
 public class ProjectView extends VerticalLayout implements HasUrlParameter<String> {
 

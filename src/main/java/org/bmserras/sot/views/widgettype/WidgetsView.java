@@ -31,7 +31,7 @@ public class WidgetsView extends VerticalLayout {
 
         ProjectNewCard newWidgetType = new ProjectNewCard(LineAwesomeIcon.PLUS_CIRCLE_SOLID.create(), "New Widget", "Create new widget");
         newWidgetType.addMainListener(mainButtonClick -> {
-            mainButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate("widgets/new"));
+            mainButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate(NewWidgetView.class));
         });
 
         horizontalLayout.add(newWidgetType);

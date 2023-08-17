@@ -4,6 +4,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteAlias;
 import jakarta.annotation.security.PermitAll;
 import org.bmserras.sot.data.domain.Project;
 import org.bmserras.sot.data.domain.User;
@@ -16,7 +17,8 @@ import java.util.List;
 import java.util.Optional;
 
 @PageTitle("Projects")
-@Route(value = "projects-test", layout = AppLayoutNavbar.class)
+@Route(value = "projects", layout = AppLayoutNavbar.class)
+@RouteAlias(value = "", layout = AppLayoutNavbar.class)
 @PermitAll
 public class ProjectsView extends VerticalLayout {
 
@@ -43,7 +45,7 @@ public class ProjectsView extends VerticalLayout {
 
         layout.addOpenListener(click -> {
             Optional<Project> project = click.getProject();
-            project.ifPresent(p -> UI.getCurrent().navigate("project-test/" + p.getId()));
+            project.ifPresent(p -> UI.getCurrent().navigate("project/" + p.getId()));
         });
         layout.addSaveListener(click -> {
             Optional<Project> project = click.getProject();

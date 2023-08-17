@@ -93,7 +93,7 @@ public class NewWidgetView extends VerticalLayout {
 
             WidgetType widgetType = new WidgetType(bean.getName(), prefix + bean.getIcon().getName());
             service.save(widgetType);
-            click.getSource().getUI().ifPresent(ui -> ui.navigate("widgets"));
+            click.getSource().getUI().ifPresent(ui -> ui.navigate(WidgetsView.class));
         });
 
         properties = new ArrayList<>();
