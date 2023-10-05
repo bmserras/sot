@@ -9,7 +9,7 @@ import com.vaadin.flow.router.*;
 import jakarta.annotation.security.PermitAll;
 import org.bmserras.sot.zabbix.api.Event;
 import org.bmserras.sot.zabbix.api.Service;
-import org.bmserras.sot.test.cabingauge.SolidGaugeWidget;
+import org.bmserras.sot.views.widget.SolidGaugeWidget;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;
 
 import java.util.HashMap;
@@ -43,9 +43,9 @@ public class CabinView extends VerticalLayout implements HasUrlParameter<String>
         //expand(gaugesLayout);
 
 
-        batteryGauge = new SolidGaugeWidget("Battery", 0, 0, 100);
-        voltageGauge = new SolidGaugeWidget("Voltage", 0, 0, 500);
-        temperatureGauge = new SolidGaugeWidget("Temperature", 0, 0, 100);
+        batteryGauge = new SolidGaugeWidget("Battery", 0, 0, 100, 300, 300);
+        voltageGauge = new SolidGaugeWidget("Voltage", 0, 0, 500, 300, 300);
+        temperatureGauge = new SolidGaugeWidget("Temperature", 0, 0, 100, 300, 300);
         gaugesLayout.add(batteryGauge, voltageGauge, temperatureGauge);
 
         HorizontalLayout actuatorsLayouts = new HorizontalLayout();

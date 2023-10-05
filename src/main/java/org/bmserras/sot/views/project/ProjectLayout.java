@@ -36,7 +36,7 @@ public class ProjectLayout extends VerticalLayout {
     private final Dialog infoDialog;
 
     // true = card, false = list
-    private boolean view = true;
+    private boolean view = false;
 
     public ProjectLayout() {
         setSizeFull();

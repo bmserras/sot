@@ -1,6 +1,7 @@
 package org.bmserras.sot.test.cabingauge;
 
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import org.bmserras.sot.views.widget.SolidGaugeWidget;
 import org.bmserras.sot.zabbix.api.Event;
 import org.bmserras.sot.zabbix.api.Service;
 
@@ -15,7 +16,7 @@ public class CabinGauge extends HorizontalLayout {
     private final SolidGaugeWidget solidGaugeWidget;
 
     public CabinGauge() {
-        solidGaugeWidget = new SolidGaugeWidget("Battery", 100, 0, 100);
+        solidGaugeWidget = new SolidGaugeWidget("Battery", 100, 0, 100, 300, 300);
 
         add(solidGaugeWidget);
     }

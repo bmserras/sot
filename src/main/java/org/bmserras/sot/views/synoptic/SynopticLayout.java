@@ -36,7 +36,7 @@ public class SynopticLayout extends VerticalLayout {
     private final Dialog infoDialog;
 
     // true = card, false = list
-    private boolean view = true;
+    private boolean view = false;
 
     public SynopticLayout() {
         setSizeFull();

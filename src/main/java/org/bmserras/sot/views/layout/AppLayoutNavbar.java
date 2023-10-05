@@ -18,7 +18,7 @@ import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.router.RouterLink;
 import org.bmserras.sot.security.AuthenticatedUser;
 import org.bmserras.sot.views.project.ProjectsView;
-import org.bmserras.sot.views.widgettype.WidgetsView;
+import org.bmserras.sot.views.widget.WidgetsView;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.util.Optional;

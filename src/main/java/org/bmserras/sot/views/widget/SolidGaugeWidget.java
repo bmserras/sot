@@ -1,10 +1,12 @@
-package org.bmserras.sot.test.cabingauge;
+package org.bmserras.sot.views.widget;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.*;
 import com.vaadin.flow.component.html.Div;
+import org.bmserras.sot.views.widget.IReader;
 
-public class SolidGaugeWidget extends Div {
+public class SolidGaugeWidget extends Div implements IReader {
 
     private final Chart solidGauge = new Chart(ChartType.SOLIDGAUGE);
 
@@ -52,5 +54,37 @@ public class SolidGaugeWidget extends Div {
     public void setValue(int newValue) {
         item.setY(newValue);
         series.update(item);
+    }
+
+    @Override
+    public Component getComponent() {
+        return this;
+    }
+
+    public String getName() {
+        return solidGauge.getConfiguration().getTitle().getText();
+    }
+
+    public void setName(String title) {
+        solidGauge.getConfiguration().setTitle(title);
+        solidGauge.drawChart();
+    }
+
+    public int getMin() {
+        return solidGauge.getConfiguration().getyAxis().getMin().intValue();
+    }
+
+    public void setMin(int min) {
+        solidGauge.getConfiguration().getyAxis().setMin(min);
+        solidGauge.drawChart();
+    }
+
+    public int getMax() {
+        return solidGauge.getConfiguration().getyAxis().getMax().intValue();
+    }
+
+    public void setMax(int max) {
+        solidGauge.getConfiguration().getyAxis().setMax(max);
+        solidGauge.drawChart();
     }
 }

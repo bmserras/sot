@@ -17,7 +17,7 @@ import org.bmserras.sot.zabbix.api.Event;
 import org.bmserras.sot.zabbix.api.Service;
 import org.bmserras.sot.old.data.RadarWidget;
 import org.bmserras.sot.old.events.WidgetRemoveEvent;
-import org.bmserras.sot.test.cabingauge.SolidGaugeWidget;
+import org.bmserras.sot.views.widget.SolidGaugeWidget;
 
 import java.util.Optional;
 import java.util.concurrent.Executors;
@@ -62,9 +62,9 @@ public class RadarWidgetComponent extends WidgetComponent {
         gaugesLayout.setHeight("200px");
         //expand(gaugesLayout);
 
-        batteryGauge = new SolidGaugeWidget("Battery", 0, 0, 100);
-        voltageGauge = new SolidGaugeWidget("Voltage", 0, 0, 500);
-        temperatureGauge = new SolidGaugeWidget("Temperature", 0, 0, 100);
+        batteryGauge = new SolidGaugeWidget("Battery", 0, 0, 100, 300, 300);
+        voltageGauge = new SolidGaugeWidget("Voltage", 0, 0, 500, 300, 300);
+        temperatureGauge = new SolidGaugeWidget("Temperature", 0, 0, 100, 300, 300);
         gaugesLayout.add(batteryGauge, voltageGauge, temperatureGauge);
 
         Dialog dialogCabin = new Dialog();

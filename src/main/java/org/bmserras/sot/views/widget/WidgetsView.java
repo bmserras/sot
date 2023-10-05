@@ -1,6 +1,5 @@
-package org.bmserras.sot.views.widgettype;
+package org.bmserras.sot.views.widget;
 
-import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -13,7 +12,6 @@ import org.bmserras.sot.icon.IsosIcon;
 import org.bmserras.sot.icon.LaIcon;
 import org.bmserras.sot.views.project.card.ProjectNewCard;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;
-import org.bmserras.sot.views.widget.WidgetForm;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 @PageTitle("Widgets")
