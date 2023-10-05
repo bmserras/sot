@@ -1,5 +1,6 @@
 package org.bmserras.sot.views.widgettype;
 
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -12,6 +13,7 @@ import org.bmserras.sot.icon.IsosIcon;
 import org.bmserras.sot.icon.LaIcon;
 import org.bmserras.sot.views.project.card.ProjectNewCard;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;
+import org.bmserras.sot.views.widget.WidgetForm;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 @PageTitle("Widgets")
@@ -31,7 +33,8 @@ public class WidgetsView extends VerticalLayout {
 
         ProjectNewCard newWidgetType = new ProjectNewCard(LineAwesomeIcon.PLUS_CIRCLE_SOLID.create(), "New Widget", "Create new widget");
         newWidgetType.addMainListener(mainButtonClick -> {
-            mainButtonClick.getSource().getUI().ifPresent(ui -> ui.navigate(NewWidgetView.class));
+            NewWidgetDialog dialog = new NewWidgetDialog();
+            dialog.open();
         });
 
         horizontalLayout.add(newWidgetType);

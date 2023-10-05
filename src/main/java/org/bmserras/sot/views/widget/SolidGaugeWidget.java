@@ -1,6 +1,5 @@
 package org.bmserras.sot.test.cabingauge;
 
-import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.*;
 import com.vaadin.flow.component.html.Div;
@@ -12,20 +11,15 @@ public class SolidGaugeWidget extends Div {
     DataSeries series = new DataSeries("Speed");
     DataSeriesItem item = new DataSeriesItem();
 
-    public SolidGaugeWidget(String title, int initialValue, int minValue, int maxValue, int width, int height, Unit unit) {
-        this(title, initialValue, minValue, maxValue);
-        this.setWidth(width, unit);
-        this.setHeight(height, unit);
-    }
-
-    public SolidGaugeWidget(String title, int initialValue, int minValue, int maxValue) {
+    public SolidGaugeWidget(String title, int initialValue, int minValue, int maxValue, int width, int height) {
         this.setWidth("350px");
         this.setHeight("100px");
 
         Configuration configuration = solidGauge.getConfiguration();
+        configuration.getChart().setWidth(width);
+        configuration.getChart().setHeight(String.valueOf(height));
 
         Pane pane = configuration.getPane();
-        pane.setCenter("50%", "50%");
         pane.setStartAngle(-90);
         pane.setEndAngle(90);
 
