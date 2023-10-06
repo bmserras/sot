@@ -18,10 +18,14 @@ public class SolidGaugeComponent extends Div {
         this.solidGauge = solidGauge;
 
         Configuration configuration = solidGaugeChart.getConfiguration();
+        configuration.setTitle(solidGauge.getName());
+
         configuration.getChart().setWidth(300);
         configuration.getChart().setHeight(String.valueOf(300));
 
         Pane pane = configuration.getPane();
+        pane.setSize("125%");           // For positioning tick labels
+        pane.setCenter("50%", "70%"); // Move center lower
         pane.setStartAngle(-90);
         pane.setEndAngle(90);
 
@@ -30,16 +34,44 @@ public class SolidGaugeComponent extends Div {
         paneBackground.setOuterRadius("100%");
         paneBackground.setShape(BackgroundShape.ARC);
         pane.setBackground(paneBackground);
-        paneBackground.setBackgroundColor(SolidColor.RED);
 
-        YAxis yAxis = configuration.getyAxis();
+        YAxis yaxis = configuration.getyAxis();
+        yaxis.setTitle(solidGauge.getName());
+        yaxis.getTitle().setY(-80); // Move 80 px upwards from center
+
+        yaxis.setStartOnTick(true);
+        yaxis.setEndOnTick(true);
+
+        yaxis.setTickAmount(99);
+
+        // The limits are mandatory
+        yaxis.setMin(solidGauge.getMin());
+        yaxis.setMax(solidGauge.getMax());
+
+        //yaxis.setTickAmount(null);
+        yaxis.setTickInterval(null);
+        yaxis.setTickLength(20);
+        yaxis.setTickColor(SolidColor.RED);
+
+        //yaxis.getLabels().setY(16);
+
+        yaxis.setMinorTickPosition(TickPosition.OUTSIDE);
+        yaxis.setMinorTickInterval(null);
+        yaxis.setMinorTickColor(SolidColor.GREEN);
+
+        // Configure ticks and labels
+        //yaxis.setTickInterval(100);  // At 0, 100, and 200
+        //yaxis.getLabels().setY(16); // Move 16 px upwards
+        //yaxis.setGridLineWidth(0); // Disable grid
+
+        /*YAxis yAxis = configuration.getyAxis();
         yAxis.setTickAmount(2);
         yAxis.setTitle(solidGauge.getName());
         yAxis.setMinorTickInterval("null");
         yAxis.getTitle().setY(50);
         yAxis.getLabels().setY(16);
         yAxis.setMin(solidGauge.getMin());
-        yAxis.setMax(solidGauge.getMax());
+        yAxis.setMax(solidGauge.getMax());*/
 
         item.setY(getRandomNumber(solidGauge.getMin(), solidGauge.getMax()));
         DataLabels dataLabelsSeries = new DataLabels();
@@ -52,8 +84,9 @@ public class SolidGaugeComponent extends Div {
         add(solidGaugeChart);
     }
 
-    public void refreshValue() {
-        item.setY(getRandomNumber(solidGauge.getMin(), solidGauge.getMax()));
+    private void refreshValue() {
+        item.setY(getRandomNumber(solidGaugeChart.getConfiguration().getyAxis().getMin().intValue(),
+                solidGaugeChart.getConfiguration().getyAxis().getMax().intValue()));
         series.update(item);
     }
 

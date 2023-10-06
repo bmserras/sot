@@ -1,9 +1,10 @@
 package org.bmserras.sot.views.widget.readers.solidgauge;
 
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import org.bmserras.sot.data.domain.readers.SolidGauge;
+import org.bmserras.sot.data.domain.readers.ValueReader;
+import org.bmserras.sot.views.widget.readers.ValueReaderLayout;
 
-public class SolidGaugeLayout extends HorizontalLayout {
+public class SolidGaugeLayout extends ValueReaderLayout {
 
     private SolidGaugeForm solidGaugeForm = new SolidGaugeForm();
     private SolidGaugePreview solidGaugePreview;
@@ -31,4 +32,8 @@ public class SolidGaugeLayout extends HorizontalLayout {
         add(solidGaugeForm, solidGaugePreview);
     }
 
+    @Override
+    public ValueReader getValueReader() {
+        return solidGaugeForm.getSolidGauge();
+    }
 }

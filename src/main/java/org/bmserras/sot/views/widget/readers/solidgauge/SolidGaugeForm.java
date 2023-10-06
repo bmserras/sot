@@ -8,6 +8,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import org.bmserras.sot.data.domain.readers.Gauge;
 import org.bmserras.sot.data.domain.readers.SolidGauge;
+import org.bmserras.sot.data.domain.readers.ValueReader;
 import org.bmserras.sot.events.widget.gauge.GaugeMaxEvent;
 import org.bmserras.sot.events.widget.gauge.GaugeMinEvent;
 import org.bmserras.sot.events.widget.gauge.GaugeNameEvent;
@@ -59,6 +60,10 @@ public class SolidGaugeForm extends VerticalLayout {
 
     public void setSolidGauge(SolidGauge solidGauge) {
         binder.setBean(solidGauge);
+    }
+
+    public SolidGauge getSolidGauge() {
+        return binder.getBean();
     }
 
     public void addSolidGaugeNameListener(ComponentEventListener<SolidGaugeNameEvent> listener) {

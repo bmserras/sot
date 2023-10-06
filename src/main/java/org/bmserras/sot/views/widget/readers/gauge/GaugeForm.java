@@ -53,6 +53,10 @@ public class GaugeForm extends VerticalLayout {
         binder.setBean(gauge);
     }
 
+    public Gauge getGauge() {
+        return binder.getBean();
+    }
+
     public void addGaugeNameListener(ComponentEventListener<GaugeNameEvent> listener) {
         addListener(GaugeNameEvent.class, listener);
     }

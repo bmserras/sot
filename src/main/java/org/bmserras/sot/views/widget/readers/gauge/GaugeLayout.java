@@ -2,8 +2,10 @@ package org.bmserras.sot.views.widget.readers.gauge;
 
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import org.bmserras.sot.data.domain.readers.Gauge;
+import org.bmserras.sot.data.domain.readers.ValueReader;
+import org.bmserras.sot.views.widget.readers.ValueReaderLayout;
 
-public class GaugeLayout extends HorizontalLayout {
+public class GaugeLayout extends ValueReaderLayout {
 
     private GaugeForm gaugeForm = new GaugeForm();
     private GaugePreview gaugePreview;
@@ -26,5 +28,10 @@ public class GaugeLayout extends HorizontalLayout {
         });
 
         add(gaugeForm, gaugePreview);
+    }
+
+    @Override
+    public ValueReader getValueReader() {
+        return gaugeForm.getGauge();
     }
 }
