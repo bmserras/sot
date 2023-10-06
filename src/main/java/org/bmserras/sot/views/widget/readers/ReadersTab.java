@@ -3,7 +3,7 @@ package org.bmserras.sot.views.widget.readers;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.bmserras.sot.data.domain.readers.ValueReader;
-import org.bmserras.sot.events.widget.ReaderSaveEvent;
+import org.bmserras.sot.events.widget.reader.ReaderSaveEvent;
 import org.bmserras.sot.views.widget.readers.card.ReaderCardLayout;
 
 import java.util.ArrayList;

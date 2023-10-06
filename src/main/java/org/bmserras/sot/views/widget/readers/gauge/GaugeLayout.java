@@ -11,7 +11,6 @@ public class GaugeLayout extends ValueReaderLayout {
     private GaugePreview gaugePreview;
 
     public GaugeLayout() {
-
         Gauge gauge = new Gauge();
         gaugeForm.setGauge(gauge);
 

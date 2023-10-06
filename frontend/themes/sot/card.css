@@ -61,3 +61,23 @@
 .new-card .container .options-button {
     color: darkgrey;
 }
+
+
+
+.reader-card {
+    max-width: 25%;
+
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+}
+
+.reader-card:hover {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.reader-card .main-button::part(prefix) {
+    scale: 1.5;
+}
+
+.reader-card .container .title {
+    font-size: 75%;
+}

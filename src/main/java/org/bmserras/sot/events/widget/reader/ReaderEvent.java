@@ -1,4 +1,4 @@
-package org.bmserras.sot.events.widget;
+package org.bmserras.sot.events.widget.reader;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;

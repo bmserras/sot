@@ -16,7 +16,6 @@ public class ProjectNewCard extends VerticalLayout {
     private final Span title;
     private final Button optionsButton;
 
-
     public ProjectNewCard(Component icon, String title, String tooltipText) {
         addClassName("card");
         addClassName("new-card");

@@ -39,10 +39,6 @@ public class ProjectDB extends AbstractEntity {
         this.name = name;
     }
 
-    public String getPath() {
-        return "project/";
-    }
-
     public List<ProjectSynopticDB> getSynoptics() {
         return synoptics;
     }

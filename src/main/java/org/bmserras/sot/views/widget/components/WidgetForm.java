@@ -1,4 +1,4 @@
-package org.bmserras.sot.views.widget;
+package org.bmserras.sot.views.widget.components;
 
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;

@@ -1,4 +1,4 @@
-package org.bmserras.sot.views.widget.component;
+package org.bmserras.sot.views.widget.readers.gauge;
 
 import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.*;

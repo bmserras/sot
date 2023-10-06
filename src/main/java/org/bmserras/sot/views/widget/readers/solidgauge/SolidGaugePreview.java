@@ -1,10 +1,7 @@
 package org.bmserras.sot.views.widget.readers.solidgauge;
 
 import com.vaadin.flow.component.html.Div;
-import org.bmserras.sot.data.domain.readers.Gauge;
 import org.bmserras.sot.data.domain.readers.SolidGauge;
-import org.bmserras.sot.views.widget.component.GaugeComponent;
-import org.bmserras.sot.views.widget.component.SolidGaugeComponent;
 
 public class SolidGaugePreview extends Div {
 

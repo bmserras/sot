@@ -1,21 +1,12 @@
 package org.bmserras.sot.data;
 
-import org.bmserras.sot.data.db.user.UserDB;
-import org.bmserras.sot.data.db.widgettype.Property;
-import org.bmserras.sot.data.db.widgettype.WidgetType;
-import org.bmserras.sot.data.domain.Project;
 import org.bmserras.sot.data.domain.User;
-import org.bmserras.sot.data.repository.user.UserRepository;
-import org.bmserras.sot.data.repository.widgettype.PropertyRepository;
-import org.bmserras.sot.data.repository.widgettype.WidgetTypePropertyRepository;
-import org.bmserras.sot.data.repository.widgettype.WidgetTypeRepository;
 import org.bmserras.sot.data.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest

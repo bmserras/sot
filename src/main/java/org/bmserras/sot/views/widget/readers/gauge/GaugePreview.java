@@ -2,7 +2,6 @@ package org.bmserras.sot.views.widget.readers.gauge;
 
 import com.vaadin.flow.component.html.Div;
 import org.bmserras.sot.data.domain.readers.Gauge;
-import org.bmserras.sot.views.widget.component.GaugeComponent;
 
 public class GaugePreview extends Div {
 

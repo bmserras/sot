@@ -5,6 +5,7 @@ import org.bmserras.sot.data.db.project.ProjectSynopticDB;
 import org.bmserras.sot.data.db.synoptic.SynopticDB;
 import org.bmserras.sot.data.db.user.UserDB;
 import org.bmserras.sot.data.db.user.UserProjectDB;
+import org.bmserras.sot.data.db.widget.WidgetDB;
 
 import java.util.List;
 
@@ -53,5 +54,13 @@ public class Utils {
 
     public static SynopticDB toSynopticDB(Synoptic synoptic) {
         return new SynopticDB(synoptic.getId(), synoptic.getName());
+    }
+
+    public static Widget toWidget(WidgetDB widgetDB) {
+        return new Widget(widgetDB.getIdentifier(), widgetDB.getName());
+    }
+
+    public static WidgetDB toWidgetDB(Widget widget) {
+        return new WidgetDB(widget.getId(), widget.getName());
     }
 }

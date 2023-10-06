@@ -32,7 +32,7 @@ public class SynopticCardLayout extends VerticalLayout {
         configureDialogForm();
 
         newCard = new SynopticNewCard(
-                LineAwesomeIcon.FOLDER_PLUS_SOLID.create(),
+                LineAwesomeIcon.PLUS_CIRCLE_SOLID.create(),
                 "New Synoptic",
                 "Create new synoptic"
         );
@@ -67,7 +67,8 @@ public class SynopticCardLayout extends VerticalLayout {
         cards.removeAll();
         cards.add(newCard);
         for (Synoptic synoptic : synoptics) {
-            SynopticExistingCard existingCard = new SynopticExistingCard(LineAwesomeIcon.FOLDER_OPEN.create(), synoptic.getName(), "Open synoptic", synoptic);
+            SynopticExistingCard existingCard = new SynopticExistingCard(LineAwesomeIcon.CHART_PIE_SOLID.create(),
+                    synoptic.getName(), "Open synoptic", synoptic);
             existingCards.add(existingCard);
             cards.add(existingCard);
             openListeners.forEach(existingCard::addMainListener);

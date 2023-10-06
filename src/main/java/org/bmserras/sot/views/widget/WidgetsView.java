@@ -1,53 +1,49 @@
 package org.bmserras.sot.views.widget;
 
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
-import org.bmserras.sot.data.service.WidgetTypeService;
-import org.bmserras.sot.icon.IsosIcon;
-import org.bmserras.sot.icon.LaIcon;
-import org.bmserras.sot.views.project.card.ProjectNewCard;
+import org.bmserras.sot.data.domain.Widget;
+import org.bmserras.sot.security.AuthenticatedUser;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;
-import org.vaadin.lineawesome.LineAwesomeIcon;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @PageTitle("Widgets")
 @Route(value = "widgets", layout = AppLayoutNavbar.class)
 @PermitAll
 public class WidgetsView extends VerticalLayout {
 
-    private final WidgetTypeService service;
+    private AuthenticatedUser authenticatedUser;
 
-    public WidgetsView(WidgetTypeService service) {
-        this.service = service;
+    private WidgetLayout layout;
+
+    public WidgetsView(AuthenticatedUser authenticatedUser) {
+        this.authenticatedUser = authenticatedUser;
         setSizeFull();
 
-        HorizontalLayout horizontalLayout = new HorizontalLayout();
-        horizontalLayout.setWidthFull();
-        horizontalLayout.setHeight("40%");
+        List<Widget> widgets = new ArrayList<>();
 
-        ProjectNewCard newWidgetType = new ProjectNewCard(LineAwesomeIcon.PLUS_CIRCLE_SOLID.create(), "New Widget", "Create new widget");
-        newWidgetType.addMainListener(mainButtonClick -> {
-            NewWidgetDialog dialog = new NewWidgetDialog();
-            dialog.open();
+        layout = new WidgetLayout();
+        layout.setItems(widgets);
+
+        layout.addOpenListener(click -> {
+
         });
-
-        horizontalLayout.add(newWidgetType);
-        service.findAll().forEach(wt -> {
-
-            Span icon = switch (wt.getImage().split("\\.")[0]) {
-                case "la" -> LaIcon.valueOf(wt.getImage().split("\\.")[1]).create();
-                case "isos" -> IsosIcon.valueOf(wt.getImage().split("\\.")[1]).create();
-                default -> new Span();
-            };
-
-            /*ExistingCard ec = new ExistingCard(icon, wt.getName(), "Open widget");
-            horizontalLayout.add(ec);*/
+        layout.addSaveListener(click -> {
+            click.getWidget().ifPresent(widget -> {
+                widgets.add(widget);
+                layout.setItems(widgets);
+            });
         });
-
-        add(new H2("My Widgets"), horizontalLayout);
+        layout.addDeleteListener(click -> {
+            click.getWidget().ifPresent(widget -> {
+                widgets.add(widget);
+                layout.setItems(widgets);
+            });
+        });
+        add(layout);
     }
 }

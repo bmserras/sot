@@ -5,9 +5,9 @@ import org.bmserras.sot.data.domain.readers.ValueReader;
 
 import java.util.Optional;
 
-public class ReaderNameEvent extends ReaderEvent {
+public class ReaderDeleteEvent extends ReaderEvent {
 
-    public ReaderNameEvent(Component source, Optional<ValueReader> reader) {
+    public ReaderDeleteEvent(Component source, Optional<ValueReader> reader) {
         super(source, reader);
     }
 }

@@ -13,12 +13,16 @@ import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 import org.bmserras.sot.data.domain.Project;
 import org.bmserras.sot.data.domain.Synoptic;
+import org.bmserras.sot.data.domain.Widget;
 import org.bmserras.sot.data.service.ProjectService;
 import org.bmserras.sot.data.service.SynopticService;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;
 import org.bmserras.sot.views.synoptic.SynopticLayout;
+import org.bmserras.sot.views.widget.WidgetLayout;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @PageTitle("Project")
@@ -32,7 +36,8 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Strin
     private ProjectService projectService;
     private SynopticService synopticService;
 
-    private SynopticLayout layout;
+    private SynopticLayout synopticLayout;
+    private WidgetLayout widgetLayout;
 
     private Project project;
 
@@ -49,13 +54,13 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Strin
         HorizontalLayout horizontalLayout = new HorizontalLayout(back, name);
         horizontalLayout.setAlignItems(Alignment.CENTER);
 
-        layout = new SynopticLayout();
+        synopticLayout = new SynopticLayout();
 
-        layout.addOpenListener(click -> {
+        synopticLayout.addOpenListener(click -> {
             Optional<Synoptic> synoptic = click.getSynoptic();
             synoptic.ifPresent(p -> UI.getCurrent().navigate("synoptic/" + p.getId()));
         });
-        layout.addSaveListener(click -> {
+        synopticLayout.addSaveListener(click -> {
             Optional<Synoptic> synoptic = click.getSynoptic();
             synoptic.ifPresent(s -> {
                 if (!project.getSynoptics().contains(s)) {
@@ -63,27 +68,49 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Strin
                     projectService.save(project);
                 }
                 else synopticService.save(s);
-                layout.setItems(project.getSynoptics());
+                synopticLayout.setItems(project.getSynoptics());
             });
         });
-        layout.addDeleteListener(click -> {
+        synopticLayout.addDeleteListener(click -> {
             Optional<Synoptic> synoptic = click.getSynoptic();
             synoptic.ifPresent(s -> {
                 project.removeSynoptic(s);
                 projectService.save(project);
                 synopticService.delete(s);
-                layout.setItems(project.getSynoptics());
+                synopticLayout.setItems(project.getSynoptics());
             });
         });
 
-        add(horizontalLayout, layout, new H2("Widgets"));
+        widgetLayout = new WidgetLayout();
+        List<Widget> widgets = new ArrayList<>();
+
+        widgetLayout = new WidgetLayout();
+        widgetLayout.setItems(widgets);
+
+        widgetLayout.addOpenListener(click -> {
+
+        });
+        widgetLayout.addSaveListener(click -> {
+            click.getWidget().ifPresent(widget -> {
+                widgets.add(widget);
+                widgetLayout.setItems(widgets);
+            });
+        });
+        widgetLayout.addDeleteListener(click -> {
+            click.getWidget().ifPresent(widget -> {
+                widgets.add(widget);
+                widgetLayout.setItems(widgets);
+            });
+        });
+
+        add(horizontalLayout, synopticLayout, widgetLayout);
     }
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, String parameter) {
         projectService.findById(parameter).ifPresent(project -> {
             name.setValue(project.getName());
-            layout.setItems(project.getSynoptics());
+            synopticLayout.setItems(project.getSynoptics());
             this.project = project;
         });
 

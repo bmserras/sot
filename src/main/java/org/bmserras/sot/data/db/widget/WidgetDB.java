@@ -1,23 +1,24 @@
-package org.bmserras.sot.data.db.synoptic;
+package org.bmserras.sot.data.db.widget;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import org.bmserras.sot.data.db.AbstractEntity;
 
 @Entity
-@Table(name = "synoptic")
-public class SynopticDB extends AbstractEntity {
+@Table(name = "widget")
+public class WidgetDB extends AbstractEntity {
 
     private String name;
 
-    public SynopticDB() {
+    public WidgetDB() {
         super();
     }
 
-    public SynopticDB(String name) {
+    public WidgetDB(String name) {
         this.name = name;
     }
 
-    public SynopticDB(long identifier, String name) {
+    public WidgetDB(long identifier, String name) {
         super(identifier);
         this.name = name;
     }
@@ -32,7 +33,7 @@ public class SynopticDB extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "SynopticDB{" +
+        return "WidgetDB{" +
                 "name='" + name + '\'' +
                 "} " + super.toString();
     }

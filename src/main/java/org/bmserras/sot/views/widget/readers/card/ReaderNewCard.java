@@ -1,4 +1,4 @@
-package org.bmserras.sot.views.synoptic.card;
+package org.bmserras.sot.views.widget.readers.card;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -6,24 +6,28 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import org.bmserras.sot.events.synoptic.SynopticAddEvent;
+import org.bmserras.sot.events.widget.reader.ReaderAddEvent;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
-public class SynopticNewCard extends VerticalLayout {
+public class ReaderNewCard extends VerticalLayout {
 
     private final Button mainButton;
     private final HorizontalLayout container;
     private final Span title;
     private final Button optionsButton;
 
-    public SynopticNewCard(Component icon, String title, String tooltipText) {
+
+    public ReaderNewCard(Component icon, String title, String tooltipText) {
+        setHeightFull();
+
         addClassName("card");
         addClassName("new-card");
+        addClassName("reader-card");
 
         this.mainButton = new Button(icon);
         this.mainButton.addClassName("main-button");
         this.mainButton.setTooltipText(tooltipText);
-        this.mainButton.addClickListener(click -> fireEvent(new SynopticAddEvent(this)));
+        this.mainButton.addClickListener(click -> fireEvent(new ReaderAddEvent(this)));
 
         this.title = new Span(title);
         this.title.addClassName("title");
@@ -38,7 +42,7 @@ public class SynopticNewCard extends VerticalLayout {
         add(mainButton, container);
     }
 
-    public void addMainListener(ComponentEventListener<SynopticAddEvent> listener) {
-        addListener(SynopticAddEvent.class, listener);
+    public void addMainListener(ComponentEventListener<ReaderAddEvent> listener) {
+        addListener(ReaderAddEvent.class, listener);
     }
 }
