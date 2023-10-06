@@ -17,7 +17,7 @@ import org.bmserras.sot.zabbix.api.Event;
 import org.bmserras.sot.zabbix.api.Service;
 import org.bmserras.sot.old.data.RadarWidget;
 import org.bmserras.sot.old.events.WidgetRemoveEvent;
-import org.bmserras.sot.views.widget.SolidGaugeWidget;
+import org.bmserras.sot.views.widget.component.SolidGaugeComponent;
 
 import java.util.Optional;
 import java.util.concurrent.Executors;
@@ -47,9 +47,9 @@ public class RadarWidgetComponent extends WidgetComponent {
 
     private final RadarWidget radarWidget;
 
-    private final SolidGaugeWidget batteryGauge;
-    private final SolidGaugeWidget voltageGauge;
-    private final SolidGaugeWidget temperatureGauge;
+    /*private final SolidGaugeComponent batteryGauge;
+    private final SolidGaugeComponent voltageGauge;
+    private final SolidGaugeComponent temperatureGauge;*/
 
     public RadarWidgetComponent(WidgetService widgetService, RadarWidget radarWidget) {
         super(widgetService, radarWidget);
@@ -62,10 +62,10 @@ public class RadarWidgetComponent extends WidgetComponent {
         gaugesLayout.setHeight("200px");
         //expand(gaugesLayout);
 
-        batteryGauge = new SolidGaugeWidget("Battery", 0, 0, 100, 300, 300);
-        voltageGauge = new SolidGaugeWidget("Voltage", 0, 0, 500, 300, 300);
-        temperatureGauge = new SolidGaugeWidget("Temperature", 0, 0, 100, 300, 300);
-        gaugesLayout.add(batteryGauge, voltageGauge, temperatureGauge);
+        /*batteryGauge = new SolidGaugeComponent("Battery", 0, 0, 100, 300, 300);
+        voltageGauge = new SolidGaugeComponent("Voltage", 0, 0, 500, 300, 300);
+        temperatureGauge = new SolidGaugeComponent("Temperature", 0, 0, 100, 300, 300);
+        gaugesLayout.add(batteryGauge, voltageGauge, temperatureGauge);*/
 
         Dialog dialogCabin = new Dialog();
         dialogCabin.setWidth("80%");
@@ -182,9 +182,9 @@ public class RadarWidgetComponent extends WidgetComponent {
                         setWarning(1);
                     }
 
-                    batteryGauge.setValue(battery);
+                    /*batteryGauge.setValue(battery);
                     voltageGauge.setValue(voltage);
-                    temperatureGauge.setValue(temperature);
+                    temperatureGauge.setValue(temperature);*/
                 }));
             } catch (Exception e) {
                 //e.printStackTrace();

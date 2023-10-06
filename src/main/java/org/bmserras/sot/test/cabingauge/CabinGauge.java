@@ -1,7 +1,7 @@
 package org.bmserras.sot.test.cabingauge;
 
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import org.bmserras.sot.views.widget.SolidGaugeWidget;
+import org.bmserras.sot.views.widget.component.SolidGaugeComponent;
 import org.bmserras.sot.zabbix.api.Event;
 import org.bmserras.sot.zabbix.api.Service;
 
@@ -13,12 +13,12 @@ import java.util.concurrent.TimeUnit;
 public class CabinGauge extends HorizontalLayout {
 
     private final Service service = new Service();
-    private final SolidGaugeWidget solidGaugeWidget;
+    //private final SolidGaugeComponent solidGaugeComponent;
 
     public CabinGauge() {
-        solidGaugeWidget = new SolidGaugeWidget("Battery", 100, 0, 100, 300, 300);
+        //solidGaugeComponent = new SolidGaugeComponent("Battery", 100, 0, 100, 300, 300);
 
-        add(solidGaugeWidget);
+        //add(solidGaugeComponent);
     }
 
     public void start() {
@@ -32,7 +32,7 @@ public class CabinGauge extends HorizontalLayout {
                 Event latestData = service.getLatestData(10558);
                 this.getUI().ifPresent(ui -> ui.access(() -> {
                     int latestValue = Integer.parseInt(latestData.getResult().get(0).getValue());
-                    solidGaugeWidget.setValue(latestValue);
+                    //solidGaugeComponent.setValue(latestValue);
                 }));
             } catch (IOException e) {
                 throw new RuntimeException(e);

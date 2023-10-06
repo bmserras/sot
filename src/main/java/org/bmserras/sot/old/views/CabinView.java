@@ -9,7 +9,7 @@ import com.vaadin.flow.router.*;
 import jakarta.annotation.security.PermitAll;
 import org.bmserras.sot.zabbix.api.Event;
 import org.bmserras.sot.zabbix.api.Service;
-import org.bmserras.sot.views.widget.SolidGaugeWidget;
+import org.bmserras.sot.views.widget.component.SolidGaugeComponent;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;
 
 import java.util.HashMap;
@@ -22,9 +22,9 @@ import java.util.concurrent.TimeUnit;
 @PermitAll
 public class CabinView extends VerticalLayout implements HasUrlParameter<String> {
 
-    private final SolidGaugeWidget batteryGauge;
-    private final SolidGaugeWidget voltageGauge;
-    private final SolidGaugeWidget temperatureGauge;
+    /*private final SolidGaugeComponent batteryGauge;
+    private final SolidGaugeComponent voltageGauge;
+    private final SolidGaugeComponent temperatureGauge;*/
 
     private final Service service;
 
@@ -43,10 +43,10 @@ public class CabinView extends VerticalLayout implements HasUrlParameter<String>
         //expand(gaugesLayout);
 
 
-        batteryGauge = new SolidGaugeWidget("Battery", 0, 0, 100, 300, 300);
-        voltageGauge = new SolidGaugeWidget("Voltage", 0, 0, 500, 300, 300);
-        temperatureGauge = new SolidGaugeWidget("Temperature", 0, 0, 100, 300, 300);
-        gaugesLayout.add(batteryGauge, voltageGauge, temperatureGauge);
+        /*batteryGauge = new SolidGaugeComponent("Battery", 0, 0, 100, 300, 300);
+        voltageGauge = new SolidGaugeComponent("Voltage", 0, 0, 500, 300, 300);
+        temperatureGauge = new SolidGaugeComponent("Temperature", 0, 0, 100, 300, 300);*/
+        /*gaugesLayout.add(batteryGauge, voltageGauge, temperatureGauge);*/
 
         HorizontalLayout actuatorsLayouts = new HorizontalLayout();
         actuatorsLayouts.setWidth(200, Unit.PIXELS);
@@ -79,9 +79,9 @@ public class CabinView extends VerticalLayout implements HasUrlParameter<String>
                     int temperature = service.getValueFromLatestData(latestData,
                             temperatureId);
 
-                    batteryGauge.setValue(battery);
+                    /*batteryGauge.setValue(battery);
                     voltageGauge.setValue(voltage);
-                    temperatureGauge.setValue(temperature);
+                    temperatureGauge.setValue(temperature);*/
                 }));
             } catch (Exception e) {
                 //e.printStackTrace();

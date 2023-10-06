@@ -1,9 +1,7 @@
 package org.bmserras.sot.events.widget;
 
 import com.vaadin.flow.component.Component;
-import org.bmserras.sot.data.domain.Project;
-import org.bmserras.sot.data.domain.ValueReader;
-import org.bmserras.sot.events.project.ProjectEvent;
+import org.bmserras.sot.data.domain.readers.ValueReader;
 
 import java.util.Optional;
 

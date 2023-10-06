@@ -1,4 +1,4 @@
-package org.bmserras.sot.data.domain;
+package org.bmserras.sot.data.domain.readers;
 
 public enum ValueReaderType {
     GAUGE("Gauge"),

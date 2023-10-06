@@ -3,6 +3,9 @@ package org.bmserras.sot.views.widget;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.component.tabs.TabSheetVariant;
+import org.bmserras.sot.views.widget.properties.PropertiesForm;
+import org.bmserras.sot.views.widget.readers.ReadersTab;
+import org.bmserras.sot.views.widget.writers.WritersForm;
 
 public class WidgetForm extends VerticalLayout {
 
