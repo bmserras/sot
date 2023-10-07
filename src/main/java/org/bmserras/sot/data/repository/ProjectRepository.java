@@ -1,4 +1,4 @@
-package org.bmserras.sot.data.repository.project;
+package org.bmserras.sot.data.repository;
 
 import org.bmserras.sot.data.db.project.ProjectDB;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -52,7 +52,7 @@ public class ProjectsView extends VerticalLayout {
             project.ifPresent(p -> {
                 if (p.getName().equals("")) p.setName("Blank Project");
                 if (!user.getProjects().contains(p)) {
-                    user.addProjects(p);
+                    user.addProject(p);
                     userService.save(user);
                 }
                 else projectService.save(p);

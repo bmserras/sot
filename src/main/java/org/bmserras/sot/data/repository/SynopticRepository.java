@@ -1,4 +1,4 @@
-package org.bmserras.sot.data.repository.synoptic;
+package org.bmserras.sot.data.repository;
 
 import org.bmserras.sot.data.db.synoptic.SynopticDB;
 import org.springframework.data.jpa.repository.JpaRepository;

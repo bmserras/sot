@@ -19,7 +19,7 @@ public class ProjectListLayout extends VerticalLayout {
 
     private final Grid<Project> grid = new Grid<>(Project.class);
 
-    private final ProjectForm form = new ProjectForm();
+    private final ProjectForm form = new ProjectForm(true);
     private final ProjectContextMenu contextMenu = new ProjectContextMenu(grid);
     private final ProjectToolbar toolbar = new ProjectToolbar();
 

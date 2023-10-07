@@ -14,6 +14,7 @@ import org.bmserras.sot.data.domain.Project;
 import org.bmserras.sot.events.project.ProjectCloseEvent;
 import org.bmserras.sot.events.project.ProjectDeleteEvent;
 import org.bmserras.sot.events.project.ProjectSaveEvent;
+import org.bmserras.sot.views.components.CustomConfirmDialog;
 
 import java.util.Optional;
 
@@ -28,13 +29,14 @@ public class ProjectForm extends FormLayout {
 
     private final Binder<Project> binder = new Binder<>(Project.class);
 
-    public ProjectForm() {
+    public ProjectForm(boolean withButtons) {
         name.setPlaceholder("Blank project");
 
         binder.bind(identifier, project -> (double) project.getId(), null);
         binder.bind(name, Project::getName, Project::setName);
 
-        add(identifier, name, createButtonsLayout());
+        add(identifier, name);
+        if (withButtons) add(createButtonsLayout());
     }
 
     private HorizontalLayout createButtonsLayout() {
@@ -49,12 +51,12 @@ public class ProjectForm extends FormLayout {
         save.addClickListener(event -> validateAndSave());
         delete.addClickListener(event -> {
 
-            ConfirmDialog confirmDialog = new ConfirmDialog();
-            confirmDialog.setHeader("Delete project");
-            confirmDialog.setText("Are you sure you want to delete this project?");
-
-            confirmDialog.setCancelable(true);
-            confirmDialog.setConfirmText("Yes");
+            CustomConfirmDialog confirmDialog = new CustomConfirmDialog(
+                    "Delete project",
+                    "Are you sure you want to delete this project?",
+                    "Yes",
+                    true
+            );
             confirmDialog.addConfirmListener(confirm -> fireEvent(new ProjectDeleteEvent(this, Optional.of(binder.getBean()))));
 
             confirmDialog.open();
@@ -71,6 +73,10 @@ public class ProjectForm extends FormLayout {
         if (binder.isValid()) {
             fireEvent(new ProjectSaveEvent(this, Optional.of(binder.getBean())));
         }
+    }
+
+    public Project getProject() {
+        return binder.getBean();
     }
 
     public void setProject(Project project) {

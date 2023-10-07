@@ -22,7 +22,7 @@ public class CustomDialog extends Dialog {
         setHeaderTitle(title);
         setWidth(widthAsPercentage, Unit.PERCENTAGE);
         setHeight(heightAsPercentage, Unit.PERCENTAGE);
-
+        addClassName("dialog");
         addToHeader(configureCloseButton());
 
         addToFooter(
@@ -77,11 +77,11 @@ public class CustomDialog extends Dialog {
         getFooter().add(components);
     }
 
-    public void addSaveClickListener(ComponentEventListener<ClickEvent<Button>> listener) {
+    protected void addSaveClickListener(ComponentEventListener<ClickEvent<Button>> listener) {
         save.addClickListener(listener);
     }
 
-    public void addDeleteClickListener(ComponentEventListener<ClickEvent<Button>> listener) {
+    protected void addDeleteClickListener(ComponentEventListener<ClickEvent<Button>> listener) {
         delete.addClickListener(listener);
     }
 

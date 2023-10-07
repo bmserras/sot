@@ -11,20 +11,22 @@ public class User {
     private String username;
     private String passwordHash;
     private List<Project> projects;
+    private List<Widget> widgets;
 
     public User(String username, String passwordHash) {
-        this(new Date().getTime(), username, passwordHash, new ArrayList<>());
+        this(new Date().getTime(), username, passwordHash, new ArrayList<>(), new ArrayList<>());
     }
 
     public User(long id, String username, String passwordHash) {
-        this(id, username, passwordHash, new ArrayList<>());
+        this(id, username, passwordHash, new ArrayList<>(), new ArrayList<>());
     }
 
-    public User(long id, String username, String passwordHash, List<Project> projects) {
+    public User(long id, String username, String passwordHash, List<Project> projects, List<Widget> widgets) {
         this.id = id;
         this.username = username;
         this.passwordHash = passwordHash;
         this.projects = projects;
+        this.widgets = widgets;
     }
 
     public long getId() {
@@ -70,6 +72,26 @@ public class User {
     public void removeProject(Project project) {
         this.projects.remove(project);
     }
+    
+    public List<Widget> getWidgets() {
+        return widgets;
+    }
+
+    public void setWidgets(List<Widget> widgets) {
+        this.widgets = widgets;
+    }
+
+    public void addWidget(Widget widget) {
+        this.widgets.add(widget);
+    }
+
+    public void addWidgets(Widget... widgets) {
+        this.widgets.addAll(Arrays.asList(widgets));
+    }
+
+    public void removeWidget(Widget widget) {
+        this.widgets.remove(widget);
+    }
 
     @Override
     public String toString() {
@@ -78,6 +100,7 @@ public class User {
                 ", username='" + username + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
                 ", projects=" + projects +
+                ", widgets=" + widgets +
                 '}';
     }
 }

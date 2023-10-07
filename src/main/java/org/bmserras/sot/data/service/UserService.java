@@ -3,7 +3,7 @@ package org.bmserras.sot.data.service;
 import org.bmserras.sot.data.db.user.UserDB;
 import org.bmserras.sot.data.domain.User;
 import org.bmserras.sot.data.domain.Utils;
-import org.bmserras.sot.data.repository.user.UserRepository;
+import org.bmserras.sot.data.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,10 +20,12 @@ public class UserService implements AbstractService<User> {
 
     private final UserRepository userRepository;
     private final ProjectService projectService;
+    private final WidgetService widgetService;
 
-    public UserService(UserRepository userRepository, ProjectService projectService) {
+    public UserService(UserRepository userRepository, ProjectService projectService, WidgetService widgetService) {
         this.userRepository = userRepository;
         this.projectService = projectService;
+        this.widgetService = widgetService;
     }
 
     @Override
@@ -56,6 +58,7 @@ public class UserService implements AbstractService<User> {
         if (user == null) return;
         UserDB userDB = toUserDB(user);
         user.getProjects().forEach(projectService::save);
+        user.getWidgets().forEach(widgetService::save);
         userRepository.save(userDB);
     }
 
@@ -64,6 +67,7 @@ public class UserService implements AbstractService<User> {
         UserDB userDB = toUserDB(user);
         userRepository.delete(userDB);
         user.getProjects().forEach(projectService::delete);
+        user.getWidgets().forEach(widgetService::delete);
     }
 
     public void deleteAll() {

@@ -1,13 +1,13 @@
 package org.bmserras.sot.views.project.card;
 
 import com.vaadin.flow.component.ComponentEventListener;
-import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.bmserras.sot.data.domain.Project;
 import org.bmserras.sot.events.project.ProjectDeleteEvent;
 import org.bmserras.sot.events.project.ProjectOpenEvent;
 import org.bmserras.sot.events.project.ProjectSaveEvent;
+import org.bmserras.sot.views.project.components.ProjectDialog;
 import org.bmserras.sot.views.project.components.ProjectForm;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
@@ -23,11 +23,12 @@ public class ProjectCardLayout extends VerticalLayout {
     private final HorizontalLayout cards;
     private final ProjectNewCard newCard;
 
-    private Dialog dialogForm;
+    private ProjectDialog dialog;
     private ProjectForm form;
 
     public ProjectCardLayout() {
         setSizeFull();
+        setPadding(false);
 
         configureDialogForm();
 
@@ -38,7 +39,8 @@ public class ProjectCardLayout extends VerticalLayout {
         );
         newCard.addMainListener(click -> {
             form.setProject(new Project());
-            dialogForm.open();
+            dialog.setDeleteButtonVisible(false);
+            dialog.open();
         });
 
         existingCards = new ArrayList<>();
@@ -53,13 +55,13 @@ public class ProjectCardLayout extends VerticalLayout {
     }
 
     private void configureDialogForm() {
-        form = new ProjectForm();
+        form = new ProjectForm(false);
         form.setWidth("25em");
-        dialogForm = new Dialog(form);
+        dialog = new ProjectDialog(form, "Create project", 50, 50);
+        //dialog.addToContent(form);
 
-        form.addSaveListener(click -> dialogForm.close());
-        form.addCloseListener(click -> dialogForm.close());
-        form.addDeleteListener(click -> dialogForm.close());
+        dialog.addSaveListener(click -> dialog.close());
+        dialog.addDeleteListener(click -> dialog.close());
     }
 
     public void setItems(List<Project> projects) {
@@ -76,7 +78,8 @@ public class ProjectCardLayout extends VerticalLayout {
 
             existingCard.addEditListener(event -> {
                 form.setProject(project);
-                dialogForm.open();
+                dialog.setDeleteButtonVisible(true);
+                dialog.open();
             });
         }
     }
@@ -88,12 +91,12 @@ public class ProjectCardLayout extends VerticalLayout {
     }
 
     public void addSaveListener(ComponentEventListener<ProjectSaveEvent> listener) {
-        form.addSaveListener(listener);
+        dialog.addSaveListener(listener);
     }
 
     public void addDeleteListener(ComponentEventListener<ProjectDeleteEvent> listener) {
         existingCards.forEach(card -> card.addDeleteListener(listener));
-        form.addDeleteListener(listener);
+        dialog.addDeleteListener(listener);
         deleteListeners.add(listener);
     }
 }

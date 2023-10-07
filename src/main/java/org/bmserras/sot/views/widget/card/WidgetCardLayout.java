@@ -1,6 +1,7 @@
 package org.bmserras.sot.views.widget.card;
 
 import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.bmserras.sot.data.domain.Widget;
@@ -24,8 +25,9 @@ public class WidgetCardLayout extends VerticalLayout {
 
     private WidgetForm form;
 
-    public WidgetCardLayout() {
+    public WidgetCardLayout(int cardHeightAsPercentage) {
         setSizeFull();
+        setPadding(false);
 
         configureDialogForm();
 
@@ -35,14 +37,14 @@ public class WidgetCardLayout extends VerticalLayout {
                 "Create new widget"
         );
         newCard.addMainListener(click -> {
-            //form.setWidget(new Widget());
+            form.setWidget(new Widget());
             form.open();
         });
 
         existingCards = new ArrayList<>();
         cards = new HorizontalLayout();
         cards.setWidthFull();
-        cards.setHeight("40%");
+        cards.setHeight(cardHeightAsPercentage, Unit.PERCENTAGE);
 
         openListeners = new ArrayList<>();
         deleteListeners = new ArrayList<>();
@@ -72,7 +74,7 @@ public class WidgetCardLayout extends VerticalLayout {
             deleteListeners.forEach(existingCard::addDeleteListener);
 
             existingCard.addEditListener(event -> {
-                //form.setWidget(widget);
+                form.setWidget(widget);
                 form.open();
             });
         }

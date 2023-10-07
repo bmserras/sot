@@ -5,6 +5,7 @@ import org.bmserras.sot.data.db.project.ProjectSynopticDB;
 import org.bmserras.sot.data.db.synoptic.SynopticDB;
 import org.bmserras.sot.data.db.user.UserDB;
 import org.bmserras.sot.data.db.user.UserProjectDB;
+import org.bmserras.sot.data.db.user.UserWidgetDB;
 import org.bmserras.sot.data.db.widget.WidgetDB;
 
 import java.util.List;
@@ -13,10 +14,15 @@ public class Utils {
 
     public static User toUser(UserDB userDB) {
         User user = new User(userDB.getIdentifier(), userDB.getUsername(), userDB.getPasswordHash());
-        List<UserProjectDB> joins = userDB.getProjects();
-        joins.forEach(join -> {
-            ProjectDB projectDB = join.getProject();
+        List<UserProjectDB> projects = userDB.getProjects();
+        projects.forEach(project -> {
+            ProjectDB projectDB = project.getProject();
             user.addProject(toProject(projectDB));
+        });
+        List<UserWidgetDB> widgets = userDB.getWidgets();
+        widgets.forEach(widget -> {
+            WidgetDB widgetDB = widget.getWidget();
+            user.addWidget(toWidget(widgetDB));
         });
         return user;
     }
@@ -27,6 +33,11 @@ public class Utils {
         projects.forEach(project -> {
             ProjectDB projectDB = toProjectDB(project);
             userDB.addProject(projectDB);
+        });
+        List<Widget> widgets = user.getWidgets();
+        widgets.forEach(widget -> {
+            WidgetDB widgetDB = toWidgetDB(widget);
+            userDB.addWidget(widgetDB);
         });
         return userDB;
     }

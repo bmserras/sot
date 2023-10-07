@@ -3,10 +3,9 @@ package org.bmserras.sot.data.service;
 import org.bmserras.sot.data.db.project.ProjectDB;
 import org.bmserras.sot.data.db.project.ProjectSynopticDB;
 import org.bmserras.sot.data.db.synoptic.SynopticDB;
-import org.bmserras.sot.data.db.user.UserDB;
 import org.bmserras.sot.data.domain.Project;
 import org.bmserras.sot.data.domain.Synoptic;
-import org.bmserras.sot.data.repository.project.ProjectRepository;
+import org.bmserras.sot.data.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

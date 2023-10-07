@@ -2,7 +2,7 @@ package org.bmserras.sot.data.service;
 
 import org.bmserras.sot.data.db.synoptic.SynopticDB;
 import org.bmserras.sot.data.domain.Synoptic;
-import org.bmserras.sot.data.repository.synoptic.SynopticRepository;
+import org.bmserras.sot.data.repository.SynopticRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

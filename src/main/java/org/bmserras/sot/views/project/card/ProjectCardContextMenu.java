@@ -10,6 +10,7 @@ import org.bmserras.sot.data.domain.Project;
 import org.bmserras.sot.events.project.ProjectDeleteEvent;
 import org.bmserras.sot.events.project.ProjectEditEvent;
 import org.bmserras.sot.events.project.ProjectOpenEvent;
+import org.bmserras.sot.views.components.CustomConfirmDialog;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.util.Optional;
@@ -32,7 +33,17 @@ public class ProjectCardContextMenu extends ContextMenu {
         edit = addItem(new HorizontalLayout(editIcon, new Span("Edit")),
                 click -> fireEvent(new ProjectEditEvent(this, Optional.of(project))));
         delete = addItem(new HorizontalLayout(deleteIcon, new Span("Delete")),
-                click -> fireEvent(new ProjectDeleteEvent(this, Optional.of(project))));
+                click -> {
+                    CustomConfirmDialog confirmDialog = new CustomConfirmDialog(
+                            "Delete project",
+                            "Are you sure you want to delete this project?",
+                            "Yes",
+                            true
+                    );
+                    confirmDialog.addConfirmListener(confirm -> fireEvent(new ProjectDeleteEvent(this,
+                            Optional.of(project))));
+                    confirmDialog.open();
+                });
     }
 
     public void addOpenListener(ComponentEventListener<ProjectOpenEvent> listener) {

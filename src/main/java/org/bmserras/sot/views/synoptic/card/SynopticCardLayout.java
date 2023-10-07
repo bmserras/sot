@@ -28,6 +28,7 @@ public class SynopticCardLayout extends VerticalLayout {
 
     public SynopticCardLayout() {
         setSizeFull();
+        setPadding(false);
 
         configureDialogForm();
 
@@ -44,7 +45,7 @@ public class SynopticCardLayout extends VerticalLayout {
         existingCards = new ArrayList<>();
         cards = new HorizontalLayout();
         cards.setWidthFull();
-        cards.setHeight("40%");
+        cards.setHeight("100%");
 
         openListeners = new ArrayList<>();
         deleteListeners = new ArrayList<>();

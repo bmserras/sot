@@ -4,6 +4,7 @@
 @import url('/login.css');
 @import url('/register.css');
 @import url('/synoptic.css');
+@import url('/dialog.css');
 
 @font-face {
     font-family: "Roboto";
@@ -12,6 +13,8 @@
 
 html {
     --lumo-font-family: "Roboto", sans-serif;
+    --lumo-primary-color: #3ce5b9;
+    --lumo-primary-text-color:#3ce5b9;
 }
 
 vaadin-context-menu-item[focused] {

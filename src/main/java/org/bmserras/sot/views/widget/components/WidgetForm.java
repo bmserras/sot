@@ -7,49 +7,46 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.component.tabs.TabSheetVariant;
 import com.vaadin.flow.theme.lumo.LumoIcon;
+import org.bmserras.sot.data.domain.Widget;
 import org.bmserras.sot.events.widget.WidgetCloseEvent;
 import org.bmserras.sot.events.widget.WidgetSaveEvent;
+import org.bmserras.sot.views.components.CustomDialog;
 import org.bmserras.sot.views.widget.general.GeneralForm;
 import org.bmserras.sot.views.widget.properties.PropertiesForm;
 import org.bmserras.sot.views.widget.readers.ReadersTab;
 import org.bmserras.sot.views.widget.writers.WritersForm;
 
-public class WidgetForm extends Dialog {
+import java.util.Optional;
+
+public class WidgetForm extends CustomDialog {
 
     private final TabSheet tabSheet = new TabSheet();
 
-    private final Button closeButton;
-    private final Button saveButton;
-    private final Button cancelButton;
+    private final GeneralForm generalForm = new GeneralForm();
+    private final ReadersTab readersTab = new ReadersTab();
+    private final WritersForm writersForm = new WritersForm();
+    private final PropertiesForm propertiesForm = new PropertiesForm();
+    private final PropertiesForm widgetsForm = new PropertiesForm();
 
     public WidgetForm() {
-        setWidth("55%");
-        setHeight("85%");
-
-        setHeaderTitle("Configure widget");
-
-        closeButton = new Button(LumoIcon.CROSS.create(), click -> close());
-        closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-        getHeader().add(closeButton);
+        super("Configure widget", 55, 85);
 
         tabSheet.setSizeFull();
         tabSheet.addThemeVariants(TabSheetVariant.LUMO_TABS_CENTERED);
         tabSheet.addThemeVariants(TabSheetVariant.LUMO_TABS_EQUAL_WIDTH_TABS);
 
-        tabSheet.add("General", new GeneralForm());
-        tabSheet.add("Readers", new ReadersTab());
-        tabSheet.add("Writers", new WritersForm());
-        tabSheet.add("Properties", new PropertiesForm());
-        tabSheet.add("Widgets", new PropertiesForm());
+        tabSheet.add("General", generalForm);
+        tabSheet.add("Readers", readersTab);
+        tabSheet.add("Writers", writersForm);
+        tabSheet.add("Properties", propertiesForm);
+        tabSheet.add("Widgets", widgetsForm);
 
         add(tabSheet);
 
-        saveButton = new Button("Save");
-        saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        addSaveClickListener(click -> fireEvent(new WidgetSaveEvent(this,
+                Optional.of(generalForm.getWidget()))));
 
-        cancelButton = new Button("Cancel", click -> close());
-
-        getFooter().add(saveButton, cancelButton);
+        setDeleteButtonVisible(false);
     }
 
     public void addSaveListener(ComponentEventListener<WidgetSaveEvent> listener) {
@@ -58,5 +55,9 @@ public class WidgetForm extends Dialog {
 
     public void addCloseListener(ComponentEventListener<WidgetCloseEvent> listener) {
         addListener(WidgetCloseEvent.class, listener);
+    }
+
+    public void setWidget(Widget widget) {
+        generalForm.setWidget(widget);
     }
 }

@@ -3,6 +3,7 @@ package org.bmserras.sot.views.project;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -45,13 +46,14 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Strin
         this.projectService = projectService;
         this.synopticService = synopticService;
         setSizeFull();
+        setSpacing(false);
 
         back = new Button(LineAwesomeIcon.ARROW_LEFT_SOLID.create(), click ->
                 click.getSource().getUI().ifPresent(ui -> ui.navigate(ProjectsView.class))
         );
         name = new TextField();
 
-        HorizontalLayout horizontalLayout = new HorizontalLayout(back, name);
+        HorizontalLayout horizontalLayout = new HorizontalLayout(back, new Span("Project"), name);
         horizontalLayout.setAlignItems(Alignment.CENTER);
 
         synopticLayout = new SynopticLayout();
@@ -81,10 +83,8 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Strin
             });
         });
 
-        widgetLayout = new WidgetLayout();
+        widgetLayout = new WidgetLayout("Widgets", 100);
         List<Widget> widgets = new ArrayList<>();
-
-        widgetLayout = new WidgetLayout();
         widgetLayout.setItems(widgets);
 
         widgetLayout.addOpenListener(click -> {

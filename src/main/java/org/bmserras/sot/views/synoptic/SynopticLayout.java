@@ -41,7 +41,7 @@ public class SynopticLayout extends VerticalLayout {
     public SynopticLayout() {
         setSizeFull();
 
-        title = new H2("My Synoptics");
+        title = new H2("Synoptics");
         toolbar = new Toolbar();
         header = new HorizontalLayout(title, toolbar);
         header.setWidthFull();
