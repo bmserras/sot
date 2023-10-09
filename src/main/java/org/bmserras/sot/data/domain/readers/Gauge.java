@@ -5,6 +5,10 @@ public class Gauge extends IntValueReader {
     public Gauge() {
     }
 
+    public Gauge(long identifier, String name, int min, int max) {
+        super(identifier, name, min, max);
+    }
+
     public Gauge(int min, int max) {
         super(min, max);
     }

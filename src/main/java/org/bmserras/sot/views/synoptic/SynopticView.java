@@ -3,6 +3,7 @@ package org.bmserras.sot.views.synoptic;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.accordion.AccordionPanel;
+import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.details.DetailsVariant;
 import com.vaadin.flow.component.dnd.DragSource;
 import com.vaadin.flow.component.dnd.DropTarget;
@@ -19,10 +20,14 @@ import com.vaadin.flow.router.Route;
 import elemental.json.JsonObject;
 import jakarta.annotation.security.PermitAll;
 import org.bmserras.sot.data.domain.Widget;
+import org.bmserras.sot.data.domain.readers.Gauge;
+import org.bmserras.sot.data.domain.readers.SolidGauge;
 import org.bmserras.sot.data.service.SynopticService;
 import org.bmserras.sot.data.service.WidgetService;
 import org.bmserras.sot.events.synoptic.WidgetDropEvent;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;
+import org.bmserras.sot.views.widget.readers.gauge.GaugeComponent;
+import org.bmserras.sot.views.widget.readers.solidgauge.SolidGaugeComponent;
 
 import java.util.Optional;
 
@@ -99,7 +104,19 @@ public class SynopticView extends HorizontalLayout implements HasUrlParameter<St
             System.out.println("X = " + x + ", Y = " + y);
             event.getDragData().ifPresent(data -> {
                 Optional<Widget> byId = widgetService.findById(data.toString());
-                canvas.add(new Span(byId.get().getName()), (int) x, (int) y);
+                Widget widget = byId.get();
+                System.out.println(widget);
+                Span span = new Span(byId.get().getName());
+                ContextMenu contextMenu = new ContextMenu(span);
+                widget.getReaders().forEach(reader -> {
+                    if (reader instanceof SolidGauge solidGauge) {
+                        contextMenu.add(new SolidGaugeComponent(solidGauge));
+                    }
+                    else if (reader instanceof Gauge gauge) {
+                        contextMenu.add(new GaugeComponent(gauge));
+                    }
+                });
+                canvas.add(span, (int) x, (int) y);
             });
         });
     }

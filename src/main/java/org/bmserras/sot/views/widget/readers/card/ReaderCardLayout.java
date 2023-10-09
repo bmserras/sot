@@ -58,6 +58,10 @@ public class ReaderCardLayout extends VerticalLayout {
         setItems(readers);
     }
 
+    public List<ValueReader> getItems() {
+        return readers;
+    }
+
     public void setItems(List<ValueReader> readers) {
         existingCards.clear();
         cards.removeAll();

@@ -6,7 +6,13 @@ import org.bmserras.sot.data.db.synoptic.SynopticDB;
 import org.bmserras.sot.data.db.user.UserDB;
 import org.bmserras.sot.data.db.user.UserProjectDB;
 import org.bmserras.sot.data.db.user.UserWidgetDB;
+import org.bmserras.sot.data.db.widget.GaugeDB;
+import org.bmserras.sot.data.db.widget.SolidGaugeDB;
+import org.bmserras.sot.data.db.widget.ValueReaderDB;
 import org.bmserras.sot.data.db.widget.WidgetDB;
+import org.bmserras.sot.data.domain.readers.Gauge;
+import org.bmserras.sot.data.domain.readers.SolidGauge;
+import org.bmserras.sot.data.domain.readers.ValueReader;
 
 import java.util.List;
 
@@ -68,10 +74,39 @@ public class Utils {
     }
 
     public static Widget toWidget(WidgetDB widgetDB) {
-        return new Widget(widgetDB.getIdentifier(), widgetDB.getName());
+        Widget widget =  new Widget(widgetDB.getIdentifier(), widgetDB.getName());
+        List<ValueReaderDB> readersDB = widgetDB.getReaders();
+        readersDB.forEach(readerDB -> {
+            widget.addReaders(toReader(readerDB));
+        });
+        return widget;
     }
 
     public static WidgetDB toWidgetDB(Widget widget) {
-        return new WidgetDB(widget.getId(), widget.getName());
+        WidgetDB widgetDB = new WidgetDB(widget.getId(), widget.getName());
+        List<ValueReader> readers = widget.getReaders();
+        readers.forEach(reader -> widgetDB.addReader(toReaderDB(reader)));
+        return widgetDB;
+    }
+
+    public static ValueReader toReader(ValueReaderDB readerDB) {
+        if (readerDB instanceof GaugeDB gaugeDB) {
+            return new Gauge(gaugeDB.getIdentifier(), gaugeDB.getName(), gaugeDB.getMin(), gaugeDB.getMax());
+        }
+        else if (readerDB instanceof SolidGaugeDB solidGaugeDB) {
+            return new SolidGauge(solidGaugeDB.getIdentifier(), solidGaugeDB.getName(), solidGaugeDB.getMin(),
+                    solidGaugeDB.getMax(), solidGaugeDB.getColor());
+        }
+        return null;
+    }
+
+    public static ValueReaderDB toReaderDB(ValueReader reader) {
+        if (reader instanceof Gauge gauge) {
+            return new GaugeDB(gauge.getId(), gauge.getName(), null, gauge.getMax(), gauge.getMin());
+        } else if (reader instanceof SolidGauge solidGauge) {
+            return new SolidGaugeDB(solidGauge.getId(), solidGauge.getName(), null, solidGauge.getMin(),
+                    solidGauge.getMax(), solidGauge.getColor());
+        }
+        return null;
     }
 }

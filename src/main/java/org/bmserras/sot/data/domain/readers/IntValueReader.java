@@ -14,6 +14,12 @@ public abstract class IntValueReader extends ValueReader {
         this.max = max;
     }
 
+    public IntValueReader(long identifier, String name, int min, int max) {
+        super(identifier, name);
+        this.min = min;
+        this.max = max;
+    }
+
     public int getMin() {
         return min;
     }

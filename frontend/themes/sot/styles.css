@@ -14,7 +14,8 @@
 html {
     --lumo-font-family: "Roboto", sans-serif;
     --lumo-primary-color: #3ce5b9;
-    --lumo-primary-text-color:#3ce5b9;
+    --lumo-primary-text-color: #3ce5b9;
+    --lumo-border-radius-m: 1em
 }
 
 vaadin-context-menu-item[focused] {

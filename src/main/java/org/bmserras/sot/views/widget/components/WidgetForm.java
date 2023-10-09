@@ -8,6 +8,7 @@ import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.component.tabs.TabSheetVariant;
 import com.vaadin.flow.theme.lumo.LumoIcon;
 import org.bmserras.sot.data.domain.Widget;
+import org.bmserras.sot.data.domain.readers.ValueReader;
 import org.bmserras.sot.events.widget.WidgetCloseEvent;
 import org.bmserras.sot.events.widget.WidgetSaveEvent;
 import org.bmserras.sot.views.components.CustomDialog;
@@ -16,6 +17,7 @@ import org.bmserras.sot.views.widget.properties.PropertiesForm;
 import org.bmserras.sot.views.widget.readers.ReadersTab;
 import org.bmserras.sot.views.widget.writers.WritersForm;
 
+import java.util.List;
 import java.util.Optional;
 
 public class WidgetForm extends CustomDialog {
@@ -43,8 +45,18 @@ public class WidgetForm extends CustomDialog {
 
         add(tabSheet);
 
-        addSaveClickListener(click -> fireEvent(new WidgetSaveEvent(this,
-                Optional.of(generalForm.getWidget()))));
+        addSaveClickListener(click -> {
+            List<ValueReader> items = readersTab.getItems();
+            System.out.println(items);
+            Widget widget = new Widget(
+                    generalForm.getWidget().getId(),
+                    generalForm.getWidget().getName(),
+                    readersTab.getItems(),
+                    null,
+                    null
+            );
+            fireEvent(new WidgetSaveEvent(this, Optional.of(widget)));
+        });
 
         setDeleteButtonVisible(false);
     }

@@ -1,10 +1,7 @@
 package org.bmserras.sot.data.service;
 
-import org.bmserras.sot.data.db.user.UserDB;
 import org.bmserras.sot.data.domain.Project;
-import org.bmserras.sot.data.domain.Synoptic;
 import org.bmserras.sot.data.domain.User;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

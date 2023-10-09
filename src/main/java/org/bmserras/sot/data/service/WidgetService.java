@@ -1,6 +1,7 @@
 package org.bmserras.sot.data.service;
 
 import org.bmserras.sot.data.db.widget.WidgetDB;
+import org.bmserras.sot.data.domain.Utils;
 import org.bmserras.sot.data.domain.Widget;
 import org.bmserras.sot.data.repository.WidgetRepository;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class WidgetService implements AbstractService<Widget> {
     @Override
     public void save(Widget widget) {
         if (widget == null) return;
-        WidgetDB widgetDB = new WidgetDB(widget.getId(), widget.getName());
+        WidgetDB widgetDB = Utils.toWidgetDB(widget);
         widgetRepository.save(widgetDB);
     }
 
@@ -58,7 +59,7 @@ public class WidgetService implements AbstractService<Widget> {
     }
 
     private Widget convertToWidget(WidgetDB widgetDB) {
-        return new Widget(widgetDB.getIdentifier(), widgetDB.getName());
+        return Utils.toWidget(widgetDB);
     }
 
     public void deleteAll() {

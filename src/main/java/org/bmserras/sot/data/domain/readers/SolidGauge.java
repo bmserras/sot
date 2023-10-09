@@ -5,10 +5,15 @@ public class SolidGauge extends IntValueReader {
     private String color;
 
     public SolidGauge() {
+        this("black");
     }
 
-    public SolidGauge(int min, int max, String color) {
-        super(min, max);
+    public SolidGauge(long identifier, String name, int min, int max, String color) {
+        super(identifier, name, min, max);
+        this.color = color;
+    }
+
+    public SolidGauge(String color) {
         this.color = color;
     }
 

@@ -26,7 +26,10 @@ public class AuthenticatedUser {
     public Optional<User> get() {
         try {
             Optional<UserDetails> authenticatedUserEmail = authenticationContext.getAuthenticatedUser(UserDetails.class);
-            return authenticatedUserEmail.map(userDetails -> userService.findByName(userDetails.getUsername()).get());
+            return authenticatedUserEmail.map(userDetails -> {
+                String username = userDetails.getUsername();
+                return userService.findByName(username).get();
+            });
         }
         catch (Exception e) {
 

@@ -19,6 +19,10 @@ public class ReadersTab extends VerticalLayout {
         add(readerCardLayout);
     }
 
+    public List<ValueReader> getItems() {
+        return readerCardLayout.getItems();
+    }
+
     public void setItems(List<ValueReader> readers) {
         readerCardLayout.setItems(readers);
     }

@@ -37,9 +37,11 @@ public class ReaderDialog extends CustomDialog {
 
         addToContent(div);
 
-        addSaveClickListener(click -> fireEvent(
-                new ReaderSaveEvent(this, Optional.of(valueReaderLayout.getValueReader()))
-        ));
+        addSaveClickListener(click -> {
+            fireEvent(
+                    new ReaderSaveEvent(this, Optional.of(valueReaderLayout.getValueReader()))
+            );
+        });
 
         setDeleteButtonVisible(false);
     }
