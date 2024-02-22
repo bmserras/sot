@@ -1,6 +1,7 @@
 package org.bmserras.sot.data.domain;
 
 import org.bmserras.sot.data.domain.readers.ValueReader;
+import org.bmserras.sot.data.domain.writers.ValueWriter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
