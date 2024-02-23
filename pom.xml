@@ -137,11 +137,11 @@
         </dependency>
 
         <!-- ISystem0 Library -->
-        <dependency>
+        <!--<dependency>
             <groupId>mdeos.isos</groupId>
             <artifactId>isystem0-lib</artifactId>
             <version>0.4.0</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <build>
