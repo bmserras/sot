@@ -62,7 +62,7 @@ public class AppLayoutNavbar extends AppLayout {
         RouterLink widgetsLink = new RouterLink("", WidgetsView.class);
         widgetsLink.add(LineAwesomeIcon.LIGHTBULB.create(), new Span("Widgets"));
         Tab widgetsTab = new Tab(widgetsLink);
-        widgetsTab.setTooltipText("Create and view common widgets").withPosition(Tooltip.TooltipPosition.BOTTOM);
+        widgetsTab.setTooltipText("Create and view global widgets").withPosition(Tooltip.TooltipPosition.BOTTOM);
 
         // Set the icon on top
         for (Tab tab : new Tab[] { projectsTab, widgetsTab }) {

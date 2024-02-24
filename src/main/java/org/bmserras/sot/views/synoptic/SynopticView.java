@@ -65,12 +65,12 @@ public class SynopticView extends HorizontalLayout implements HasUrlParameter<St
             dragSource.setDragData(w.getId());
         });
 
-        AccordionPanel commonWidgetsPanel = list.add("Common widgets", commonWidgetsLayout);
+        AccordionPanel commonWidgetsPanel = list.add("Global widgets", commonWidgetsLayout);
         commonWidgetsPanel.addThemeVariants(DetailsVariant.FILLED);
 
         VerticalLayout specificWidgetsLayout = new VerticalLayout();
 
-        AccordionPanel specificWidgetsPanel = list.add("Specific widgets", specificWidgetsLayout);
+        AccordionPanel specificWidgetsPanel = list.add("Project widgets", specificWidgetsLayout);
         specificWidgetsPanel.addThemeVariants(DetailsVariant.FILLED);
 
         Scroller scroller = new Scroller(list, Scroller.ScrollDirection.VERTICAL);

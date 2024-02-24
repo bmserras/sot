@@ -1,6 +1,8 @@
-# sot
+# Synoptics of Things - Workbench
 
-# Init database
+A generic tool to develop widgets and synoptics.
+
+## Init database
 
 ```sh
 docker compose -p sot-workbench-db -f database/docker-compose.yml up -d
