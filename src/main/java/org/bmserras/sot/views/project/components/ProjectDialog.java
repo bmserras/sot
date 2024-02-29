@@ -12,8 +12,8 @@ public class ProjectDialog extends CustomDialog {
 
     private final ProjectForm projectForm;
 
-    public ProjectDialog(ProjectForm projectForm, String title, int widthAsPercentage, int heightAsPercentage) {
-        super(title, widthAsPercentage, heightAsPercentage);
+    public ProjectDialog(ProjectForm projectForm, int widthAsPercentage, int heightAsPercentage) {
+        super(widthAsPercentage, heightAsPercentage);
 
         this.projectForm = projectForm;
         addToContent(projectForm);

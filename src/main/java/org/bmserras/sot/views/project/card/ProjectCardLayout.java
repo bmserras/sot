@@ -39,6 +39,7 @@ public class ProjectCardLayout extends VerticalLayout {
         );
         newCard.addMainListener(click -> {
             form.setProject(new Project());
+            dialog.setTitle("Create project");
             dialog.setDeleteButtonVisible(false);
             dialog.open();
         });
@@ -57,7 +58,7 @@ public class ProjectCardLayout extends VerticalLayout {
     private void configureDialogForm() {
         form = new ProjectForm(false);
         form.setWidth("25em");
-        dialog = new ProjectDialog(form, "Create project", 50, 50);
+        dialog = new ProjectDialog(form, 50, 50);
         //dialog.addToContent(form);
 
         dialog.addSaveListener(click -> dialog.close());
@@ -78,6 +79,7 @@ public class ProjectCardLayout extends VerticalLayout {
 
             existingCard.addEditListener(event -> {
                 form.setProject(project);
+                dialog.setTitle("Edit project");
                 dialog.setDeleteButtonVisible(true);
                 dialog.open();
             });

@@ -32,6 +32,10 @@ public class CustomDialog extends Dialog {
         );
     }
 
+    public CustomDialog(int widthAsPercentage, int heightAsPercentage) {
+        this("Default title", widthAsPercentage, heightAsPercentage);
+    }
+
     private Button configureCloseButton() {
         close.setIcon(LineAwesomeIcon.TIMES_SOLID.create());
         close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
@@ -95,5 +99,9 @@ public class CustomDialog extends Dialog {
 
     public void setCancelButtonVisible(boolean visible) {
         cancel.setVisible(visible);
+    }
+
+    public void setTitle(String title) {
+        setHeaderTitle(title);
     }
 }
