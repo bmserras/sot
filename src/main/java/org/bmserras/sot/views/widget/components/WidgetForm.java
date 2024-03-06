@@ -79,5 +79,7 @@ public class WidgetForm extends CustomDialog {
         readerCardLayout.setItems(widget.getReaders());
         System.out.println("#####");
         System.out.println(readerCardLayout.getItems());
+
+        tabSheet.setSelectedIndex(0);
     }
 }
