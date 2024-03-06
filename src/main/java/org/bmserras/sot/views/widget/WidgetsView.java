@@ -39,9 +39,13 @@ public class WidgetsView extends VerticalLayout {
 
         layout = new WidgetLayout("My Widgets", 40);
         layout.setItems(widgets);
+        for (Widget widget : widgets) {
+            System.out.println(widget);
+        }
 
         layout.addOpenListener(click -> {
             Optional<Widget> widget = click.getWidget();
+            System.out.println(widget.get());
             // open widget form
         });
         layout.addSaveListener(click -> {

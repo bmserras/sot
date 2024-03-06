@@ -24,7 +24,7 @@ public class ReaderCardLayout extends VerticalLayout {
 
     private ReaderDialog readerDialog;
 
-    private final List<ValueReader> readers = new ArrayList<>();
+    private List<ValueReader> readers = new ArrayList<>();
 
     public ReaderCardLayout() {
         setSizeFull();
@@ -51,6 +51,7 @@ public class ReaderCardLayout extends VerticalLayout {
         cards.setHeight("40%");
 
         openListeners = new ArrayList<>();
+        openListeners.add(click -> System.out.println(click.getReader().get()));
         deleteListeners = new ArrayList<>();
 
         add(cards);
@@ -63,6 +64,9 @@ public class ReaderCardLayout extends VerticalLayout {
     }
 
     public void setItems(List<ValueReader> readers) {
+        System.out.println("###");
+        System.out.println(readers);
+        this.readers = readers;
         existingCards.clear();
         cards.removeAll();
         cards.add(newCard);

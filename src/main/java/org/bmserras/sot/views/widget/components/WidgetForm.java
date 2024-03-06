@@ -13,6 +13,7 @@ import org.bmserras.sot.views.widget.properties.PropertiesForm;
 import org.bmserras.sot.views.widget.readers.card.ReaderCardLayout;
 import org.bmserras.sot.views.widget.writers.WritersForm;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,8 @@ public class WidgetForm extends CustomDialog {
     private final WritersForm writersForm = new WritersForm();
     private final PropertiesForm propertiesForm = new PropertiesForm();
     private final PropertiesForm widgetsForm = new PropertiesForm();
+
+    private Widget widget;
 
     public WidgetForm() {
         super("Configure widget", 55, 85);
@@ -48,13 +51,15 @@ public class WidgetForm extends CustomDialog {
                     generalForm.getWidget().getId(),
                     generalForm.getWidget().getName(),
                     readerCardLayout.getItems(),
-                    null,
-                    null
+                    new ArrayList<>(),
+                    new ArrayList<>()
             );
             fireEvent(new WidgetSaveEvent(this, Optional.of(widget)));
         });
 
         setDeleteButtonVisible(false);
+
+        System.out.println(widget);
     }
 
     public void addSaveListener(ComponentEventListener<WidgetSaveEvent> listener) {
@@ -66,7 +71,13 @@ public class WidgetForm extends CustomDialog {
     }
 
     public void setWidget(Widget widget) {
+        this.widget = widget;
+        System.out.println("#");
+        System.out.println(widget);
+
         generalForm.setWidget(widget);
         readerCardLayout.setItems(widget.getReaders());
+        System.out.println("#####");
+        System.out.println(readerCardLayout.getItems());
     }
 }

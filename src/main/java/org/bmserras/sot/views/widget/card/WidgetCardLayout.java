@@ -29,7 +29,10 @@ public class WidgetCardLayout extends VerticalLayout {
         setSizeFull();
         setPadding(false);
 
-        configureDialogForm();
+        form = new WidgetForm();
+
+        form.addSaveListener(click -> form.close());
+        form.addCloseListener(click -> form.close());
 
         newCard = new WidgetNewCard(
                 LineAwesomeIcon.PLUS_SQUARE_SOLID.create(),
@@ -50,13 +53,6 @@ public class WidgetCardLayout extends VerticalLayout {
         deleteListeners = new ArrayList<>();
 
         add(cards);
-    }
-
-    private void configureDialogForm() {
-        form = new WidgetForm();
-
-        form.addSaveListener(click -> form.close());
-        form.addCloseListener(click -> form.close());
     }
 
     public void setItems(List<Widget> widgets) {
