@@ -102,7 +102,7 @@ public class Utils {
 
     public static ValueReaderDB toReaderDB(ValueReader reader) {
         if (reader instanceof Gauge gauge) {
-            return new GaugeDB(gauge.getId(), gauge.getName(), null, gauge.getMax(), gauge.getMin());
+            return new GaugeDB(gauge.getId(), gauge.getName(), null, gauge.getMin(), gauge.getMax());
         } else if (reader instanceof SolidGauge solidGauge) {
             return new SolidGaugeDB(solidGauge.getId(), solidGauge.getName(), null, solidGauge.getMin(),
                     solidGauge.getMax(), solidGauge.getColor());
