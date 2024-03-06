@@ -71,5 +71,6 @@ public class WidgetForm extends CustomDialog {
 
     public void setWidget(Widget widget) {
         generalForm.setWidget(widget);
+        readersTab.setItems(widget.getReaders());
     }
 }
