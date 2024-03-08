@@ -2,8 +2,10 @@ package org.bmserras.sot.views.widget.card;
 
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Unit;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.theme.lumo.LumoUtility;
 import org.bmserras.sot.data.domain.Widget;
 import org.bmserras.sot.events.widget.WidgetDeleteEvent;
 import org.bmserras.sot.events.widget.WidgetOpenEvent;
@@ -14,20 +16,22 @@ import org.vaadin.lineawesome.LineAwesomeIcon;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WidgetCardLayout extends VerticalLayout {
+public class WidgetCardLayout extends FlexLayout {
 
     private final List<ComponentEventListener<WidgetOpenEvent>> openListeners;
     private final List<ComponentEventListener<WidgetDeleteEvent>> deleteListeners;
 
     private final List<WidgetExistingCard> existingCards;
-    private final HorizontalLayout cards;
     private final WidgetNewCard newCard;
 
     private WidgetForm form;
 
-    public WidgetCardLayout(int cardHeightAsPercentage) {
+    public WidgetCardLayout() {
         setSizeFull();
-        setPadding(false);
+
+        this.setFlexDirection(FlexDirection.ROW);
+        this.setFlexWrap(FlexWrap.WRAP);
+        this.setJustifyContentMode(JustifyContentMode.CENTER);
 
         form = new WidgetForm();
 
@@ -45,26 +49,23 @@ public class WidgetCardLayout extends VerticalLayout {
         });
 
         existingCards = new ArrayList<>();
-        cards = new HorizontalLayout();
-        cards.setWidthFull();
-        cards.setHeight(cardHeightAsPercentage, Unit.PERCENTAGE);
 
         openListeners = new ArrayList<>();
         deleteListeners = new ArrayList<>();
 
-        add(cards);
+        add(newCard);
     }
 
     public void setItems(List<Widget> widgets) {
         existingCards.clear();
-        cards.removeAll();
-        cards.add(newCard);
+        removeAll();
+        add(newCard);
         for (Widget widget : widgets) {
             WidgetExistingCard existingCard = new WidgetExistingCard(LineAwesomeIcon.LIGHTBULB.create(),
                     widget.getName(),
                     "Open widget", widget);
             existingCards.add(existingCard);
-            cards.add(existingCard);
+            add(existingCard);
             openListeners.forEach(existingCard::addMainListener);
             openListeners.forEach(existingCard::addOpenListener);
             deleteListeners.forEach(existingCard::addDeleteListener);

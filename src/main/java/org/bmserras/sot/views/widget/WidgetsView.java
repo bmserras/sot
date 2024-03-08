@@ -30,14 +30,16 @@ public class WidgetsView extends VerticalLayout {
         this.authenticatedUser = authenticatedUser;
         this.userService = userService;
         this.widgetService = widgetService;
+        //setWidth("75%");
         setSizeFull();
+        setJustifyContentMode(JustifyContentMode.CENTER);
 
         Optional<User> userOp = authenticatedUser.get();
         if (userOp.isEmpty()) return;
         User user = userOp.get();
         List<Widget> widgets = user.getWidgets();
 
-        layout = new WidgetLayout("My Widgets", 40);
+        layout = new WidgetLayout("My Widgets");
         layout.setItems(widgets);
         for (Widget widget : widgets) {
             System.out.println(widget);

@@ -1,6 +1,9 @@
 .card {
 
-    max-width: 15%;
+    min-width: 250px;
+    min-height: 300px;
+    max-width: 25%;
+    max-height: 40%;
 
     border: 1px solid grey;
     border-radius: 10px;

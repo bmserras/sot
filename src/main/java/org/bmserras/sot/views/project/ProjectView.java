@@ -83,7 +83,7 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Strin
             });
         });
 
-        widgetLayout = new WidgetLayout("Widgets", 100);
+        widgetLayout = new WidgetLayout("Widgets");
         List<Widget> widgets = new ArrayList<>();
         widgetLayout.setItems(widgets);
 

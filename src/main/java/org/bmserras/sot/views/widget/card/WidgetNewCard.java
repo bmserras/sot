@@ -19,6 +19,7 @@ public class WidgetNewCard extends VerticalLayout {
     public WidgetNewCard(Component icon, String title, String tooltipText) {
         addClassName("card");
         addClassName("new-card");
+        setMargin(true);
 
         this.mainButton = new Button(icon);
         this.mainButton.addClassName("main-button");

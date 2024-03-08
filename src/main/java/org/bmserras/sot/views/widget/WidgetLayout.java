@@ -38,9 +38,9 @@ public class WidgetLayout extends VerticalLayout {
     // true = card, false = list
     private boolean view = false;
 
-    public WidgetLayout(String name, int cardHeightAsPercentage) {
+    public WidgetLayout(String name) {
         setSizeFull();
-
+        setMargin(true);
         title = new H2(name);
         toolbar = new Toolbar();
         header = new HorizontalLayout(title, toolbar);
@@ -53,7 +53,7 @@ public class WidgetLayout extends VerticalLayout {
         infoButton = toolbar.addButton(infoIcon, click -> displayInfo());
         infoDialog = new Dialog("This is an information dialog");
 
-        cardLayout = new WidgetCardLayout(cardHeightAsPercentage);
+        cardLayout = new WidgetCardLayout();
         listLayout = new WidgetListLayout();
         changeView();
 
