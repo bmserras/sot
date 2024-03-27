@@ -6,7 +6,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import org.bmserras.sot.data.domain.readers.ValueReader;
+import org.bmserras.sot.data.domain.readers.Reader;
 import org.bmserras.sot.events.widget.reader.ReaderDeleteEvent;
 import org.bmserras.sot.events.widget.reader.ReaderEditEvent;
 import org.bmserras.sot.events.widget.reader.ReaderOpenEvent;
@@ -24,7 +24,7 @@ public class ReaderExistingCard extends VerticalLayout {
     private ReaderCardContextMenu mainContextMenu;
     private ReaderCardContextMenu optionsContextMenu;
 
-    public ReaderExistingCard(Component icon, String title, String tooltipText, ValueReader reader) {
+    public ReaderExistingCard(Component icon, String title, String tooltipText, Reader reader) {
         addClassName("card");
         addClassName("reader-card");
 

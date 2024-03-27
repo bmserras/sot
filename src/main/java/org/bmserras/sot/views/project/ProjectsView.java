@@ -50,7 +50,6 @@ public class ProjectsView extends VerticalLayout {
         layout.addSaveListener(click -> {
             Optional<Project> project = click.getProject();
             project.ifPresent(p -> {
-                if (p.getName().equals("")) p.setName("Blank Project");
                 if (!user.getProjects().contains(p)) {
                     user.addProject(p);
                     userService.save(user);

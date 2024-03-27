@@ -2,7 +2,6 @@ package org.bmserras.sot.data.db.widget;
 
 import jakarta.persistence.*;
 import org.bmserras.sot.data.db.AbstractEntity;
-import org.bmserras.sot.data.domain.readers.ValueReader;
 
 import java.util.ArrayList;
 import java.util.List;

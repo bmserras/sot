@@ -6,7 +6,7 @@ import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import org.bmserras.sot.data.domain.readers.ValueReader;
+import org.bmserras.sot.data.domain.readers.Reader;
 import org.bmserras.sot.events.widget.reader.ReaderDeleteEvent;
 import org.bmserras.sot.events.widget.reader.ReaderEditEvent;
 import org.bmserras.sot.events.widget.reader.ReaderOpenEvent;
@@ -24,7 +24,7 @@ public class ReaderCardContextMenu extends ContextMenu {
     private MenuItem edit;
     private MenuItem delete;
 
-    public ReaderCardContextMenu(Component target, ValueReader reader) {
+    public ReaderCardContextMenu(Component target, Reader reader) {
         super(target);
 
         open = addItem(new HorizontalLayout(openIcon, new Span("Open")),

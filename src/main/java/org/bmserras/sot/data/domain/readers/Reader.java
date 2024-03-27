@@ -2,16 +2,16 @@ package org.bmserras.sot.data.domain.readers;
 
 import java.util.Date;
 
-public abstract class ValueReader {
+public abstract class Reader {
 
     private long id;
     private String name;
 
-    public ValueReader() {
+    public Reader() {
         this(new Date().getTime(), "Default");
     }
 
-    public ValueReader(long id, String name) {
+    public Reader(long id, String name) {
         this.id = id;
         this.name = name;
     }

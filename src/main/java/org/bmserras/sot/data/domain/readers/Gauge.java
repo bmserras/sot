@@ -1,6 +1,6 @@
 package org.bmserras.sot.data.domain.readers;
 
-public class Gauge extends IntValueReader {
+public class Gauge extends IntReader {
 
     public Gauge() {
     }

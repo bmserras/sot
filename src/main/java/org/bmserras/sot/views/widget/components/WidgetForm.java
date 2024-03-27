@@ -4,7 +4,7 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.component.tabs.TabSheetVariant;
 import org.bmserras.sot.data.domain.Widget;
-import org.bmserras.sot.data.domain.readers.ValueReader;
+import org.bmserras.sot.data.domain.readers.Reader;
 import org.bmserras.sot.events.widget.WidgetCloseEvent;
 import org.bmserras.sot.events.widget.WidgetSaveEvent;
 import org.bmserras.sot.views.components.CustomDialog;
@@ -45,7 +45,7 @@ public class WidgetForm extends CustomDialog {
         add(tabSheet);
 
         addSaveClickListener(click -> {
-            List<ValueReader> items = readerCardLayout.getItems();
+            List<Reader> items = readerCardLayout.getItems();
             System.out.println(items);
             Widget widget = new Widget(
                     generalForm.getWidget().getId(),

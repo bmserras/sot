@@ -4,7 +4,7 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.select.Select;
-import org.bmserras.sot.data.domain.readers.ValueReaderType;
+import org.bmserras.sot.data.domain.readers.ReaderType;
 import org.bmserras.sot.events.widget.reader.ReaderSaveEvent;
 import org.bmserras.sot.views.components.CustomDialog;
 import org.bmserras.sot.views.widget.readers.gauge.GaugeLayout;
@@ -14,15 +14,15 @@ import java.util.Optional;
 
 public class ReaderDialog extends CustomDialog {
 
-    private final Select<ValueReaderType> type = new Select<>();
+    private final Select<ReaderType> type = new Select<>();
     private final Div div = new Div();
     private ValueReaderLayout valueReaderLayout;
 
     public ReaderDialog() {
         super("Configure reader", 50, 80);
 
-        type.setItemLabelGenerator(ValueReaderType::getType);
-        type.setItems(ValueReaderType.values());
+        type.setItemLabelGenerator(ReaderType::getType);
+        type.setItems(ReaderType.values());
         type.addValueChangeListener(event -> {
             switch (event.getValue()) {
                 case GAUGE -> valueReaderLayout = new GaugeLayout();
@@ -31,7 +31,7 @@ public class ReaderDialog extends CustomDialog {
             div.removeAll();
             div.add(valueReaderLayout);
         });
-        type.setValue(ValueReaderType.GAUGE);
+        type.setValue(ReaderType.GAUGE);
 
         addToHeader(new Span("Type"), type);
 

@@ -1,6 +1,6 @@
 package org.bmserras.sot.data.domain.readers;
 
-public class SolidGauge extends IntValueReader {
+public class SolidGauge extends IntReader {
 
     private String color;
 

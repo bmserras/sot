@@ -13,7 +13,7 @@ import org.bmserras.sot.data.db.widget.ValueReaderDB;
 import org.bmserras.sot.data.db.widget.WidgetDB;
 import org.bmserras.sot.data.domain.readers.Gauge;
 import org.bmserras.sot.data.domain.readers.SolidGauge;
-import org.bmserras.sot.data.domain.readers.ValueReader;
+import org.bmserras.sot.data.domain.readers.Reader;
 
 import java.util.List;
 
@@ -95,12 +95,12 @@ public class Utils {
 
     public static WidgetDB toWidgetDB(Widget widget) {
         WidgetDB widgetDB = new WidgetDB(widget.getId(), widget.getName());
-        List<ValueReader> readers = widget.getReaders();
+        List<Reader> readers = widget.getReaders();
         readers.forEach(reader -> widgetDB.addReader(toReaderDB(reader)));
         return widgetDB;
     }
 
-    public static ValueReader toReader(ValueReaderDB readerDB) {
+    public static Reader toReader(ValueReaderDB readerDB) {
         if (readerDB instanceof GaugeDB gaugeDB) {
             return new Gauge(gaugeDB.getIdentifier(), gaugeDB.getName(), gaugeDB.getMin(), gaugeDB.getMax());
         }
@@ -111,7 +111,7 @@ public class Utils {
         return null;
     }
 
-    public static ValueReaderDB toReaderDB(ValueReader reader) {
+    public static ValueReaderDB toReaderDB(Reader reader) {
         if (reader instanceof Gauge gauge) {
             return new GaugeDB(gauge.getId(), gauge.getName(), null, gauge.getMin(), gauge.getMax());
         } else if (reader instanceof SolidGauge solidGauge) {

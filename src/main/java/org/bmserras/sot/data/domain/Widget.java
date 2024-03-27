@@ -1,7 +1,7 @@
 package org.bmserras.sot.data.domain;
 
-import org.bmserras.sot.data.domain.readers.ValueReader;
-import org.bmserras.sot.data.domain.writers.ValueWriter;
+import org.bmserras.sot.data.domain.readers.Reader;
+import org.bmserras.sot.data.domain.writers.Writer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,9 +11,13 @@ import java.util.List;
 public class Widget {
 
     private long id;
+
     private String name;
-    private List<ValueReader> readers;
-    private List<ValueWriter> writers;
+
+    private List<Reader> readers;
+
+    private List<Writer> writers;
+
     private List<Property> properties;
 
     public Widget() {
@@ -24,7 +28,7 @@ public class Widget {
         this(id, name, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
 
-    public Widget(long id, String name, List<ValueReader> readers, List<ValueWriter> writers, List<Property> properties) {
+    public Widget(long id, String name, List<Reader> readers, List<Writer> writers, List<Property> properties) {
         this.id = id;
         this.name = name;
         this.readers = readers;
@@ -48,35 +52,35 @@ public class Widget {
         this.name = name;
     }
 
-    public List<ValueReader> getReaders() {
+    public List<Reader> getReaders() {
         return readers;
     }
 
-    public void setReaders(List<ValueReader> readers) {
+    public void setReaders(List<Reader> readers) {
         this.readers = readers;
     }
 
-    public void addReaders(ValueReader... readers) {
+    public void addReaders(Reader... readers) {
         this.readers.addAll(Arrays.asList(readers));
     }
 
-    public void removeReader(ValueReader reader) {
+    public void removeReader(Reader reader) {
         this.readers.remove(reader);
     }
 
-    public List<ValueWriter> getWriters() {
+    public List<Writer> getWriters() {
         return writers;
     }
 
-    public void setWriters(List<ValueWriter> writers) {
+    public void setWriters(List<Writer> writers) {
         this.writers = writers;
     }
 
-    public void addWriters(ValueWriter... writers) {
+    public void addWriters(Writer... writers) {
         this.writers.addAll(Arrays.asList(writers));
     }
 
-    public void removeWriter(ValueWriter writer) {
+    public void removeWriter(Writer writer) {
         this.writers.remove(writer);
     }
 

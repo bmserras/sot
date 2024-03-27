@@ -8,21 +8,23 @@ import java.util.List;
 public class Project {
 
     private long id;
+
     private String name;
+
     private List<Synoptic> synoptics;
 
-    public Project() {
-        this(new Date().getTime(), "");
+    public Project(long id, String name, List<Synoptic> synoptics) {
+        this.id = id;
+        this.name = name;
+        this.synoptics = synoptics;
     }
 
     public Project(long id, String name) {
         this(id, name, new ArrayList<>());
     }
 
-    public Project(long id, String name, List<Synoptic> synoptics) {
-        this.id = id;
-        this.name = name;
-        this.synoptics = synoptics;
+    public Project() {
+        this(new Date().getTime(), "Untitled Project");
     }
 
     public long getId() {

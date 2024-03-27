@@ -1,20 +1,20 @@
 package org.bmserras.sot.data.domain.readers;
 
-public abstract class IntValueReader extends ValueReader {
+public abstract class IntReader extends Reader {
 
     private int min;
     private int max;
 
-    public IntValueReader() {
+    public IntReader() {
         this(0, 100);
     }
 
-    public IntValueReader(int min, int max) {
+    public IntReader(int min, int max) {
         this.min = min;
         this.max = max;
     }
 
-    public IntValueReader(long identifier, String name, int min, int max) {
+    public IntReader(long identifier, String name, int min, int max) {
         super(identifier, name);
         this.min = min;
         this.max = max;

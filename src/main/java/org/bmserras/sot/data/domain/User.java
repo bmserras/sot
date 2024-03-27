@@ -8,18 +8,14 @@ import java.util.List;
 public class User {
 
     private long id;
+
     private String username;
+
     private String passwordHash;
+
     private List<Project> projects;
+
     private List<Widget> widgets;
-
-    public User(String username, String passwordHash) {
-        this(new Date().getTime(), username, passwordHash, new ArrayList<>(), new ArrayList<>());
-    }
-
-    public User(long id, String username, String passwordHash) {
-        this(id, username, passwordHash, new ArrayList<>(), new ArrayList<>());
-    }
 
     public User(long id, String username, String passwordHash, List<Project> projects, List<Widget> widgets) {
         this.id = id;
@@ -27,6 +23,14 @@ public class User {
         this.passwordHash = passwordHash;
         this.projects = projects;
         this.widgets = widgets;
+    }
+
+    public User(long id, String username, String passwordHash) {
+        this(id, username, passwordHash, new ArrayList<>(), new ArrayList<>());
+    }
+
+    public User(String username, String passwordHash) {
+        this(new Date().getTime(), username, passwordHash);
     }
 
     public long getId() {

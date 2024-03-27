@@ -1,7 +1,7 @@
 package org.bmserras.sot.views.widget.readers.solidgauge;
 
 import org.bmserras.sot.data.domain.readers.SolidGauge;
-import org.bmserras.sot.data.domain.readers.ValueReader;
+import org.bmserras.sot.data.domain.readers.Reader;
 import org.bmserras.sot.views.widget.readers.ValueReaderLayout;
 
 public class SolidGaugeLayout extends ValueReaderLayout {
@@ -33,7 +33,7 @@ public class SolidGaugeLayout extends ValueReaderLayout {
     }
 
     @Override
-    public ValueReader getValueReader() {
+    public Reader getValueReader() {
         return solidGaugeForm.getSolidGauge();
     }
 }

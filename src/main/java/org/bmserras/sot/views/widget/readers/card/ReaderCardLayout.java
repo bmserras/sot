@@ -3,7 +3,7 @@ package org.bmserras.sot.views.widget.readers.card;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import org.bmserras.sot.data.domain.readers.ValueReader;
+import org.bmserras.sot.data.domain.readers.Reader;
 import org.bmserras.sot.events.widget.reader.ReaderDeleteEvent;
 import org.bmserras.sot.events.widget.reader.ReaderOpenEvent;
 import org.bmserras.sot.events.widget.reader.ReaderSaveEvent;
@@ -24,7 +24,7 @@ public class ReaderCardLayout extends VerticalLayout {
 
     private ReaderDialog readerDialog;
 
-    private List<ValueReader> readers = new ArrayList<>();
+    private List<Reader> readers = new ArrayList<>();
 
     public ReaderCardLayout() {
         setSizeFull();
@@ -59,18 +59,18 @@ public class ReaderCardLayout extends VerticalLayout {
         setItems(readers);
     }
 
-    public List<ValueReader> getItems() {
+    public List<Reader> getItems() {
         return readers;
     }
 
-    public void setItems(List<ValueReader> readers) {
+    public void setItems(List<Reader> readers) {
         System.out.println("###");
         System.out.println(readers);
         this.readers = readers;
         existingCards.clear();
         cards.removeAll();
         cards.add(newCard);
-        for (ValueReader reader : readers) {
+        for (Reader reader : readers) {
             ReaderExistingCard existingCard = new ReaderExistingCard(LineAwesomeIcon.GLASSES_SOLID.create(),
                     reader.getName(), "Open reader", reader);
             existingCards.add(existingCard);

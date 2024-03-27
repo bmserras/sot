@@ -1,6 +1,6 @@
 package org.bmserras.sot.data.domain.readers;
 
-public enum ValueReaderType {
+public enum ReaderType {
     GAUGE("Gauge"),
     SOLID_GAUGE("Solid Gauge"),
     TEXT_FIELD("Text field"),
@@ -8,7 +8,7 @@ public enum ValueReaderType {
 
     private String type;
 
-    ValueReaderType(String type) {
+    ReaderType(String type) {
         this.type = type;
     }
 
