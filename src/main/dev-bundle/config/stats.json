@@ -1,7 +1,6 @@
 {
  "packageJsonDependencies": {
   "@polymer/polymer": "3.5.1",
-  "@vaadin-component-factory/vcf-nav": "1.0.6",
   "@vaadin/a11y-base": "24.1.0",
   "@vaadin/accordion": "24.1.0",
   "@vaadin/app-layout": "24.1.0",
@@ -79,10 +78,9 @@
   "proj4": "2.9.0"
  },
  "npmModules": {
-  "@lit/reactive-element": "1.6.2",
+  "@lit/reactive-element": "1.6.3",
   "@open-wc/dedupe-mixin": "1.3.1",
   "@polymer/polymer": "3.5.1",
-  "@vaadin-component-factory/vcf-nav": "1.0.6",
   "@vaadin/a11y-base": "24.1.0",
   "@vaadin/accordion": "24.1.0",
   "@vaadin/app-layout": "24.1.0",
@@ -118,6 +116,7 @@
   "@vaadin/integer-field": "24.1.0",
   "@vaadin/item": "24.1.0",
   "@vaadin/list-box": "24.1.0",
+  "@vaadin/lit-renderer": "24.1.0",
   "@vaadin/login": "24.1.0",
   "@vaadin/map": "24.1.0",
   "@vaadin/menu-bar": "24.1.0",
@@ -155,8 +154,8 @@
   "date-fns": "2.29.3",
   "highcharts": "9.2.2",
   "is-regexp": "3.1.0",
-  "lit-element": "3.3.2",
-  "lit-html": "2.7.4",
+  "lit-element": "3.3.3",
+  "lit-html": "2.8.0",
   "mgrs": "1.0.0",
   "mobile-drag-drop": "2.3.0-rc.2",
   "ol": "6.13.0",
@@ -164,11 +163,10 @@
   "quickselect": "2.0.0",
   "rbush": "3.0.1",
   "strip-css-comments": "5.0.0",
-  "tslib": "2.5.3",
+  "tslib": "2.6.1",
   "wkt-parser": "1.3.3"
  },
  "bundleImports": [
-  "@vaadin-component-factory/vcf-nav",
   "@vaadin/accordion/theme/lumo/vaadin-accordion-panel.js",
   "@vaadin/accordion/theme/lumo/vaadin-accordion.js",
   "@vaadin/app-layout/theme/lumo/vaadin-app-layout.js",
@@ -248,6 +246,7 @@
   "@vaadin/vertical-layout/theme/lumo/vaadin-vertical-layout.js",
   "@vaadin/virtual-list/theme/lumo/vaadin-virtual-list.js",
   "Frontend/generated/jar-resources/buttonFunctions.js",
+  "Frontend/generated/jar-resources/color-picker.ts",
   "Frontend/generated/jar-resources/comboBoxConnector.js",
   "Frontend/generated/jar-resources/contextMenuConnector.js",
   "Frontend/generated/jar-resources/contextMenuTargetConnector.js",
@@ -266,14 +265,11 @@
   "Frontend/generated/jar-resources/vaadin-grid-flow-selection-column.js",
   "Frontend/generated/jar-resources/vaadin-map/mapConnector.js",
   "Frontend/generated/jar-resources/vaadin-time-picker/timepickerConnector.js",
-  "Frontend/generated/jar-resources/virtualListConnector.js",
-  "Frontend/src/cabin-widget.js",
-  "Frontend/src/radar-widget.js"
+  "Frontend/generated/jar-resources/virtualListConnector.js"
  ],
  "frontendHashes": {
-  "src/radar-widget.js": "f22bd7fd7694a34598c9b8ca7ead981246a3bfc3cb489f7aab1812f79a81d997",
-  "src/cabin-widget.js": "ec0e445f65ffc3089fa87f42a245823631f968945821578982f02fc10d5e2204",
   "buttonFunctions.js": "c852123f9b2c44eb75e555119d3e05a7dbe78b91d0ab616feb9df1654474707d",
+  "color-picker.ts": "dfbb5ea4cbf54672e89cbde42c09fabfdb1104ed3c7566de6ae70fb1320f9ebc",
   "comboBoxConnector.js": "1d004c3dae9c76f8bcc68678abe1b8f7bdc8b456f5c9c4c7f190df8ed25d66cd",
   "contextMenuConnector.js": "25a200f8086461635ddd92316ebeb5a868294c8650a190efbae120edb1088f4f",
   "contextMenuTargetConnector.js": "870f67643988dd5618c247bd3c28d843f70aa026ee89f44c3c7556b5e70856af",
@@ -298,7 +294,7 @@
   "sot": "{\n  \"lumoImports\" : [ \"typography\", \"color\", \"spacing\", \"badge\", \"utility\" ]\n}"
  },
  "entryScripts": [
-  "VAADIN/build/indexhtml-1c426f15.js"
+  "VAADIN/build/indexhtml-a2ca16ca.js"
  ],
  "webComponents": [],
  "cvdlModules": {
@@ -331,8 +327,8 @@
    "version": "24.1.0"
   }
  },
- "packageJsonHash": "5ece2624af9b760c1a3c8f10ef055fff2fc1fe9ae70dc2f5e41aee94bfb07c18",
+ "packageJsonHash": "2e5b002dfea194d0021170f05797ae72085b5094e257f33185f59fcaa2febf4a",
  "indexHtmlGenerated": [
-  "  <script type=\"module\" crossorigin src=\"./VAADIN/build/indexhtml-1c426f15.js\"></script>"
+  "  <script type=\"module\" crossorigin src=\"./VAADIN/build/indexhtml-a2ca16ca.js\"></script>"
  ]
 }
