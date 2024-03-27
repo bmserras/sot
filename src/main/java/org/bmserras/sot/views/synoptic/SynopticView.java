@@ -112,6 +112,18 @@ public class SynopticView extends HorizontalLayout implements HasUrlParameter<St
             Optional<Synoptic> byName = synopticService.findByName(synopticName.getValue());
             System.out.println("###");
             System.out.println(byName.get());
+
+            Span span = new Span(widgetInstance.getName());
+            ContextMenu contextMenu = new ContextMenu(span);
+            widgetInstance.getWidget().getReaders().forEach(reader -> {
+                if (reader instanceof SolidGauge solidGauge) {
+                    contextMenu.add(new SolidGaugeComponent(solidGauge));
+                }
+                else if (reader instanceof Gauge gauge) {
+                    contextMenu.add(new GaugeComponent(gauge));
+                }
+            });
+            canvas.add(span, (int) x, (int) y);
         });
     }
 
@@ -146,17 +158,7 @@ public class SynopticView extends HorizontalLayout implements HasUrlParameter<St
                 widgetInstanceDialog.setDeleteButtonVisible(false);
                 widgetInstanceDialog.open();
 
-                /*Span span = new Span(byId.get().getName());
-                ContextMenu contextMenu = new ContextMenu(span);
-                widget.getReaders().forEach(reader -> {
-                    if (reader instanceof SolidGauge solidGauge) {
-                        contextMenu.add(new SolidGaugeComponent(solidGauge));
-                    }
-                    else if (reader instanceof Gauge gauge) {
-                        contextMenu.add(new GaugeComponent(gauge));
-                    }
-                });
-                canvas.add(span, (int) x, (int) y);*/
+
                 /*ValueReader valueReader = widget.getReaders().get(0);
                 if (valueReader instanceof SolidGauge solidGauge) {
                     canvas.add(new SolidGaugeComponent(solidGauge), (int) x, (int) y);
