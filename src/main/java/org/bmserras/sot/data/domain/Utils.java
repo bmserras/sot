@@ -1,5 +1,6 @@
 package org.bmserras.sot.data.domain;
 
+import org.bmserras.sot.data.db.WidgetInstanceDB;
 import org.bmserras.sot.data.db.project.ProjectDB;
 import org.bmserras.sot.data.db.project.ProjectSynopticDB;
 import org.bmserras.sot.data.db.synoptic.SynopticDB;
@@ -66,11 +67,21 @@ public class Utils {
     }
 
     public static Synoptic toSynoptic(SynopticDB synopticDB) {
-        return new Synoptic(synopticDB.getIdentifier(), synopticDB.getName());
+        Synoptic synoptic =  new Synoptic(synopticDB.getIdentifier(), synopticDB.getName());
+        List<WidgetInstanceDB> widgetInstancesDB = synopticDB.getWidgetInstances();
+        widgetInstancesDB.forEach(widgetInstanceDB -> {
+            synoptic.addWidgetInstance(toWidgetInstance(widgetInstanceDB));
+        });
+        return synoptic;
     }
 
     public static SynopticDB toSynopticDB(Synoptic synoptic) {
-        return new SynopticDB(synoptic.getId(), synoptic.getName());
+        SynopticDB synopticDB = new SynopticDB(synoptic.getId(), synoptic.getName());
+        List<WidgetInstance> widgetInstances = synoptic.getWidgetInstances();
+        widgetInstances.forEach(widgetInstance -> {
+            synopticDB.addWidgetInstance(toWidgetInstanceDB(widgetInstance));
+        });
+        return synopticDB;
     }
 
     public static Widget toWidget(WidgetDB widgetDB) {
@@ -108,5 +119,13 @@ public class Utils {
                     solidGauge.getMax(), solidGauge.getColor());
         }
         return null;
+    }
+
+    public static WidgetInstance toWidgetInstance(WidgetInstanceDB widgetInstanceDB) {
+        return new WidgetInstance(widgetInstanceDB.getIdentifier(), widgetInstanceDB.getName(), toWidget(widgetInstanceDB.getWidget()));
+    }
+
+    public static WidgetInstanceDB toWidgetInstanceDB(WidgetInstance widgetInstance) {
+        return new WidgetInstanceDB(widgetInstance.getId(), widgetInstance.getName(), toWidgetDB(widgetInstance.getWidget()));
     }
 }

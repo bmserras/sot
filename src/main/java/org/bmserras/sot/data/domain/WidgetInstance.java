@@ -9,8 +9,20 @@ public class WidgetInstance {
     private String name;
     private Widget widget;
 
+    public WidgetInstance() {
+        this.id = new Date().getTime();
+        this.name = "";
+        this.widget = null;
+    }
+
     public WidgetInstance(String name, Widget widget) {
         this.id = new Date().getTime();
+        this.name = name;
+        this.widget = widget;
+    }
+
+    public WidgetInstance(long id, String name, Widget widget) {
+        this.id = id;
         this.name = name;
         this.widget = widget;
     }

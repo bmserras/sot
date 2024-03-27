@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProjectService implements AbstractService<Project> {
+public class    ProjectService implements AbstractService<Project> {
 
     private final ProjectRepository projectRepository;
     private final SynopticService synopticService;

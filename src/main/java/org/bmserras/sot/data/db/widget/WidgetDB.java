@@ -59,7 +59,7 @@ public class WidgetDB extends AbstractEntity {
         reader.setWidget(this);
     }
 
-    public void removeBranches(ValueReaderDB reader){
+    public void removeReaders(ValueReaderDB reader){
         readers.remove(reader);
         reader.setWidget(null);
     }

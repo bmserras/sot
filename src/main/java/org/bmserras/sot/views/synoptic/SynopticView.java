@@ -1,10 +1,12 @@
 package org.bmserras.sot.views.synoptic;
 
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.accordion.AccordionPanel;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.details.DetailsVariant;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.dnd.DragSource;
 import com.vaadin.flow.component.dnd.DropTarget;
 import com.vaadin.flow.component.html.Span;
@@ -19,15 +21,22 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import elemental.json.JsonObject;
 import jakarta.annotation.security.PermitAll;
+import org.bmserras.sot.data.domain.Synoptic;
 import org.bmserras.sot.data.domain.Widget;
+import org.bmserras.sot.data.domain.WidgetInstance;
 import org.bmserras.sot.data.domain.readers.Gauge;
 import org.bmserras.sot.data.domain.readers.SolidGauge;
+import org.bmserras.sot.data.domain.readers.ValueReader;
 import org.bmserras.sot.data.service.SynopticService;
 import org.bmserras.sot.data.service.WidgetService;
+import org.bmserras.sot.events.project.ProjectSaveEvent;
 import org.bmserras.sot.events.synoptic.WidgetDropEvent;
+import org.bmserras.sot.events.widgetinstance.WidgetInstanceSaveEvent;
 import org.bmserras.sot.views.layout.AppLayoutNavbar;
 import org.bmserras.sot.views.widget.readers.gauge.GaugeComponent;
 import org.bmserras.sot.views.widget.readers.solidgauge.SolidGaugeComponent;
+import org.bmserras.sot.views.widgetinstance.WidgetInstanceDialog;
+import org.bmserras.sot.views.widgetinstance.WidgetInstanceForm;
 
 import java.util.Optional;
 
@@ -43,6 +52,9 @@ public class SynopticView extends HorizontalLayout implements HasUrlParameter<St
 
     private final SynopticCanvas canvas = new SynopticCanvas();
 
+    private final WidgetInstanceForm widgetInstanceForm;
+    private final WidgetInstanceDialog widgetInstanceDialog;
+
     private final SynopticService synopticService;
     private final WidgetService widgetService;
 
@@ -53,7 +65,7 @@ public class SynopticView extends HorizontalLayout implements HasUrlParameter<St
 
         configureCanvas();
 
-        verticalLayout.add(canvas);
+        verticalLayout.add(synopticName, canvas);
 
         list.setSizeFull();
 
@@ -81,6 +93,26 @@ public class SynopticView extends HorizontalLayout implements HasUrlParameter<St
         scroller.setWidth("20%");
 
         add(scroller, verticalLayout);
+
+        widgetInstanceForm = new WidgetInstanceForm(false);
+        widgetInstanceForm.setWidth("25em");
+        widgetInstanceDialog = new WidgetInstanceDialog(widgetInstanceForm, 50, 50);
+        widgetInstanceDialog.addSaveListener(click -> {
+            WidgetInstance widgetInstance = click.getWidgetInstance().get();
+            System.out.println(widgetInstance);
+
+            if (widgetInstance.getName().equals("")) widgetInstance.setName("Blank Widget");
+            Synoptic synoptic = synopticService.findByName(synopticName.getValue()).get();
+            synoptic.addWidgetInstance(widgetInstance);
+            System.out.println(synoptic);
+            synopticService.save(synoptic);
+
+            widgetInstanceDialog.close();
+
+            Optional<Synoptic> byName = synopticService.findByName(synopticName.getValue());
+            System.out.println("###");
+            System.out.println(byName.get());
+        });
     }
 
     private double x;
@@ -106,7 +138,15 @@ public class SynopticView extends HorizontalLayout implements HasUrlParameter<St
                 Optional<Widget> byId = widgetService.findById(data.toString());
                 Widget widget = byId.get();
                 System.out.println(widget);
-                Span span = new Span(byId.get().getName());
+
+                WidgetInstance widgetInstance = new WidgetInstance();
+                widgetInstance.setWidget(widget);
+                widgetInstanceForm.setWidgetInstance(widgetInstance);
+                widgetInstanceDialog.setTitle("Create widget instance");
+                widgetInstanceDialog.setDeleteButtonVisible(false);
+                widgetInstanceDialog.open();
+
+                /*Span span = new Span(byId.get().getName());
                 ContextMenu contextMenu = new ContextMenu(span);
                 widget.getReaders().forEach(reader -> {
                     if (reader instanceof SolidGauge solidGauge) {
@@ -116,7 +156,14 @@ public class SynopticView extends HorizontalLayout implements HasUrlParameter<St
                         contextMenu.add(new GaugeComponent(gauge));
                     }
                 });
-                canvas.add(span, (int) x, (int) y);
+                canvas.add(span, (int) x, (int) y);*/
+                /*ValueReader valueReader = widget.getReaders().get(0);
+                if (valueReader instanceof SolidGauge solidGauge) {
+                    canvas.add(new SolidGaugeComponent(solidGauge), (int) x, (int) y);
+                }
+                else if (valueReader instanceof Gauge gauge) {
+                    canvas.add(new GaugeComponent(gauge), (int) x, (int) y);
+                }*/
             });
         });
     }

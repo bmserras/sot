@@ -1,13 +1,18 @@
 package org.bmserras.sot.data.service;
 
+import org.bmserras.sot.data.db.WidgetInstanceDB;
 import org.bmserras.sot.data.db.synoptic.SynopticDB;
 import org.bmserras.sot.data.domain.Synoptic;
+import org.bmserras.sot.data.domain.Utils;
+import org.bmserras.sot.data.domain.WidgetInstance;
 import org.bmserras.sot.data.repository.SynopticRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.bmserras.sot.data.domain.Utils.toSynopticDB;
 
 @Service
 public class SynopticService implements AbstractService<Synoptic> {
@@ -47,7 +52,7 @@ public class SynopticService implements AbstractService<Synoptic> {
     @Override
     public void save(Synoptic synoptic) {
         if (synoptic == null) return;
-        SynopticDB synopticDB = new SynopticDB(synoptic.getId(), synoptic.getName());
+        SynopticDB synopticDB = toSynopticDB(synoptic);
         synopticRepository.save(synopticDB);
     }
 
@@ -58,7 +63,7 @@ public class SynopticService implements AbstractService<Synoptic> {
     }
 
     private Synoptic convertToSynoptic(SynopticDB synopticDB) {
-        return new Synoptic(synopticDB.getIdentifier(), synopticDB.getName());
+        return Utils.toSynoptic(synopticDB);
     }
 
     public void deleteAll() {
