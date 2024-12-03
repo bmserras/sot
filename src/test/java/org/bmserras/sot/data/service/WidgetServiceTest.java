@@ -1,7 +1,7 @@
 package org.bmserras.sot.data.service;
 
 import org.bmserras.sot.data.db.widget.SolidGaugeDB;
-import org.bmserras.sot.data.db.widget.ValueReaderDB;
+import org.bmserras.sot.data.db.widget.ReaderDB;
 import org.bmserras.sot.data.db.widget.WidgetDB;
 import org.bmserras.sot.data.repository.UserRepository;
 import org.bmserras.sot.data.repository.WidgetRepository;
@@ -36,8 +36,8 @@ public class WidgetServiceTest {
 
         WidgetDB widget = widgetRepository.findByName("W").get();
 
-        List<ValueReaderDB> readers = widget.getReaders();
-        for (ValueReaderDB reader : readers) {
+        List<ReaderDB> readers = widget.getReaders();
+        for (ReaderDB reader : readers) {
             if (reader instanceof SolidGaugeDB) System.out.println("YES");
         }
 

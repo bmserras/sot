@@ -19,6 +19,7 @@ public class SynopticNewCard extends VerticalLayout {
     public SynopticNewCard(Component icon, String title, String tooltipText) {
         addClassName("card");
         addClassName("new-card");
+        setMargin(true);
 
         this.mainButton = new Button(icon);
         this.mainButton.addClassName("main-button");

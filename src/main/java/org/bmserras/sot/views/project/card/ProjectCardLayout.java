@@ -1,6 +1,7 @@
 package org.bmserras.sot.views.project.card;
 
 import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.bmserras.sot.data.domain.Project;
@@ -14,13 +15,12 @@ import org.vaadin.lineawesome.LineAwesomeIcon;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectCardLayout extends VerticalLayout {
+public class ProjectCardLayout extends FlexLayout {
 
     private final List<ComponentEventListener<ProjectOpenEvent>> openListeners;
     private final List<ComponentEventListener<ProjectDeleteEvent>> deleteListeners;
 
     private final List<ProjectExistingCard> existingCards;
-    private final HorizontalLayout cards;
     private final ProjectNewCard newCard;
 
     private ProjectDialog dialog;
@@ -28,7 +28,10 @@ public class ProjectCardLayout extends VerticalLayout {
 
     public ProjectCardLayout() {
         setSizeFull();
-        setPadding(false);
+
+        this.setFlexDirection(FlexDirection.ROW);
+        this.setFlexWrap(FlexWrap.WRAP);
+        this.setJustifyContentMode(JustifyContentMode.CENTER);
 
         configureDialogForm();
 
@@ -45,18 +48,15 @@ public class ProjectCardLayout extends VerticalLayout {
         });
 
         existingCards = new ArrayList<>();
-        cards = new HorizontalLayout();
-        cards.setWidthFull();
-        cards.setHeight("40%");
 
         openListeners = new ArrayList<>();
         deleteListeners = new ArrayList<>();
 
-        add(cards);
+        add(newCard);
     }
 
     private void configureDialogForm() {
-        form = new ProjectForm(false);
+        form = new ProjectForm();
         form.setWidth("25em");
         dialog = new ProjectDialog(form, 50, 50);
         //dialog.addToContent(form);
@@ -67,12 +67,12 @@ public class ProjectCardLayout extends VerticalLayout {
 
     public void setItems(List<Project> projects) {
         existingCards.clear();
-        cards.removeAll();
-        cards.add(newCard);
+        removeAll();
+        add(newCard);
         for (Project project : projects) {
             ProjectExistingCard existingCard = new ProjectExistingCard(LineAwesomeIcon.FOLDER_OPEN.create(), project.getName(), "Open project", project);
             existingCards.add(existingCard);
-            cards.add(existingCard);
+            add(existingCard);
             openListeners.forEach(existingCard::addMainListener);
             openListeners.forEach(existingCard::addOpenListener);
             deleteListeners.forEach(existingCard::addDeleteListener);

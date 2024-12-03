@@ -12,11 +12,13 @@ public class SVGWrapper extends Div {
 
     public void setSvgContent(String svgContent) {
 
-        this.getElement().getNode().runWhenAttached(ui -> {
+        this.getElement().setProperty("innerHTML", svgContent);
+
+        /*this.getElement().getNode().runWhenAttached(ui -> {
             ui.beforeClientResponse(this, executionContext -> {
                 this.getElement().setProperty("innerHTML", svgContent);
             });
-        });
+        });*/
 
     }
 

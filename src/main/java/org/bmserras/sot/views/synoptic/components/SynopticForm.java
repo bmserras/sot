@@ -4,16 +4,21 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import org.bmserras.sot.data.domain.Grid;
 import org.bmserras.sot.data.domain.Synoptic;
 import org.bmserras.sot.events.synoptic.SynopticCloseEvent;
 import org.bmserras.sot.events.synoptic.SynopticDeleteEvent;
 import org.bmserras.sot.events.synoptic.SynopticSaveEvent;
+import org.bmserras.sot.views.components.CustomDialog;
+import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.util.Optional;
 
@@ -21,6 +26,7 @@ public class SynopticForm extends FormLayout {
 
     private final NumberField identifier = new NumberField("Identifier");
     private final TextField name = new TextField("Name");
+    private final ComboBox<Grid> grid = new ComboBox<>("Grid", Grid.values());
 
     private final Button save = new Button("Save");
     private final Button delete = new Button("Delete");
@@ -31,44 +37,25 @@ public class SynopticForm extends FormLayout {
     public SynopticForm() {
         binder.bind(identifier, synoptic -> (double) synoptic.getId(), null);
         binder.bind(name, Synoptic::getName, Synoptic::setName);
+        binder.bind(grid, Synoptic::getGrid, Synoptic::setGrid);
 
-        add(identifier, name, createButtonsLayout());
-    }
-
-    private HorizontalLayout createButtonsLayout() {
-        save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-
-        save.addClickShortcut(Key.ENTER);
-        delete.addClickShortcut(Key.DELETE);
-        close.addClickShortcut(Key.ESCAPE);
-
-        save.addClickListener(event -> validateAndSave());
-        delete.addClickListener(event -> {
-
-            ConfirmDialog confirmDialog = new ConfirmDialog();
-            confirmDialog.setHeader("Delete synoptic");
-            confirmDialog.setText("Are you sure you want to delete this synoptic?");
-
-            confirmDialog.setCancelable(true);
-            confirmDialog.setConfirmText("Yes");
-            confirmDialog.addConfirmListener(confirm -> fireEvent(new SynopticDeleteEvent(this, Optional.of(binder.getBean()))));
-
-            confirmDialog.open();
+        Button button = new Button("Import synoptic", LineAwesomeIcon.FILE_IMPORT_SOLID.create());
+        button.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        button.addClickListener(click -> {
+            fireEvent(new SynopticSaveEvent(this, Optional.of(new Synoptic(123L, "SINCRO IC19"))));
         });
-        close.addClickListener(event -> fireEvent(new SynopticCloseEvent(this)));
 
-        binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));
-        HorizontalLayout horizontalLayout = new HorizontalLayout(save, delete, close);
-        horizontalLayout.expand(save, delete, close);
-        return horizontalLayout;
+        add(identifier, name, grid, new Span("\nOR\n"), button);
     }
 
     private void validateAndSave() {
         if (binder.isValid()) {
             fireEvent(new SynopticSaveEvent(this, Optional.of(binder.getBean())));
         }
+    }
+
+    public Synoptic getSynoptic() {
+        return binder.getBean();
     }
 
     public void setSynoptic(Synoptic synoptic) {

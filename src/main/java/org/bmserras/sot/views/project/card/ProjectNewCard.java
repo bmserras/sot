@@ -19,6 +19,7 @@ public class ProjectNewCard extends VerticalLayout {
     public ProjectNewCard(Component icon, String title, String tooltipText) {
         addClassName("card");
         addClassName("new-card");
+        setMargin(true);
 
         this.mainButton = new Button(icon);
         this.mainButton.addClassName("main-button");

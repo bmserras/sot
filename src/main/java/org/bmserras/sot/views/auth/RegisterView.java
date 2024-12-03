@@ -23,7 +23,8 @@ public class RegisterView extends VerticalLayout {
 
     private final AuthenticatedUser authenticatedUser;
 
-    private final Image logo = new Image("icons/logo-variation-sot.svg", "Synoptics of Things");
+    private final Image logo = new Image("icons/logo-variation-sot-workbench.svg", "Synoptics of Things");
+    //private final Image logo = new Image("icons/logo-variation-sot-operations.svg", "Synoptics of Things");
     private final VerticalLayout register = new VerticalLayout();
     private final RouterLink login = new RouterLink("Login", LoginView.class);
 

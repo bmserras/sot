@@ -19,6 +19,9 @@ public class WidgetCardContextMenu extends ContextMenu {
     private Component openIcon = LineAwesomeIcon.EXTERNAL_LINK_ALT_SOLID.create();
     private Component editIcon = LineAwesomeIcon.EDIT.create();
     private Component deleteIcon = LineAwesomeIcon.TRASH_SOLID.create();
+    private Component exportIcon = LineAwesomeIcon.FILE_EXPORT_SOLID.create();
+    private Component importIcon = LineAwesomeIcon.FILE_IMPORT_SOLID.create();
+
 
     private MenuItem open;
     private MenuItem edit;
@@ -27,12 +30,15 @@ public class WidgetCardContextMenu extends ContextMenu {
     public WidgetCardContextMenu(Component target, Widget widget) {
         super(target);
 
-        open = addItem(new HorizontalLayout(openIcon, new Span("Open")),
+        /*open = addItem(new HorizontalLayout(openIcon, new Span("Open")),
                 click -> fireEvent(new WidgetOpenEvent(this, Optional.of(widget))));
         edit = addItem(new HorizontalLayout(editIcon, new Span("Edit")),
                 click -> fireEvent(new WidgetEditEvent(this, Optional.of(widget))));
         delete = addItem(new HorizontalLayout(deleteIcon, new Span("Delete")),
-                click -> fireEvent(new WidgetDeleteEvent(this, Optional.of(widget))));
+                click -> fireEvent(new WidgetDeleteEvent(this, Optional.of(widget))));*/
+
+        //addItem(new HorizontalLayout(exportIcon, new Span("Export")));
+        addItem(new HorizontalLayout(importIcon, new Span("Import")));
     }
 
     public void addOpenListener(ComponentEventListener<WidgetOpenEvent> listener) {

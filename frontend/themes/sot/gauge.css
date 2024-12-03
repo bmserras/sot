@@ -1,0 +1,18 @@
+.gauge-container {
+    border-color:white;
+    border-style:solid;
+    border-width:10px;
+}
+
+.gauge-form {
+    border-color:rgba(84,124,173,0.94);
+    border-style:solid;
+    border-width:10px;
+}
+
+/* for gauges in containers */
+.in-gauge-container {
+    border-style:solid;
+    border-width:5px;
+    border-color:white;
+}

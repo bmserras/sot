@@ -12,15 +12,17 @@ public class Project {
     private String name;
 
     private List<Synoptic> synoptics;
+    private List<Widget> widgets;
 
-    public Project(long id, String name, List<Synoptic> synoptics) {
+    public Project(long id, String name, List<Synoptic> synoptics, List<Widget> widgets) {
         this.id = id;
         this.name = name;
         this.synoptics = synoptics;
+        this.widgets = widgets;
     }
 
     public Project(long id, String name) {
-        this(id, name, new ArrayList<>());
+        this(id, name, new ArrayList<>(), new ArrayList<>());
     }
 
     public Project() {
@@ -63,12 +65,33 @@ public class Project {
         this.synoptics.remove(synoptic);
     }
 
+    public List<Widget> getWidgets() {
+        return widgets;
+    }
+
+    public void setWidgets(List<Widget> widgets) {
+        this.widgets = widgets;
+    }
+
+    public void addWidget(Widget widget) {
+        this.widgets.add(widget);
+    }
+
+    public void addWidgets(Widget... widgets) {
+        this.widgets.addAll(Arrays.asList(widgets));
+    }
+
+    public void removeWidget(Widget widget) {
+        this.widgets.remove(widget);
+    }
+
     @Override
     public String toString() {
         return "Project{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", synoptics=" + synoptics +
+                ", widgets=" + widgets +
                 '}';
     }
 }

@@ -58,7 +58,7 @@ public class SynopticService implements AbstractService<Synoptic> {
 
     @Override
     public void delete(Synoptic synoptic) {
-        SynopticDB synopticDB = new SynopticDB(synoptic.getId(), synoptic.getName());
+        SynopticDB synopticDB = new SynopticDB(synoptic.getId(), synoptic.getName(), synoptic.getGrid());
         synopticRepository.delete(synopticDB);
     }
 

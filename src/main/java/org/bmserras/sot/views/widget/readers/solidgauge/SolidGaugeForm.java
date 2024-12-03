@@ -1,79 +1,74 @@
 package org.bmserras.sot.views.widget.readers.solidgauge;
 
-import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.checkbox.Checkbox;
+import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.html.H4;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.Binder;
-import org.bmserras.sot.data.domain.readers.SolidGauge;
-import org.bmserras.sot.events.widget.solidgauge.SolidGaugeColorEvent;
-import org.bmserras.sot.events.widget.solidgauge.SolidGaugeMaxEvent;
-import org.bmserras.sot.events.widget.solidgauge.SolidGaugeMinEvent;
-import org.bmserras.sot.events.widget.solidgauge.SolidGaugeNameEvent;
 
-import java.util.Optional;
+public class SolidGaugeForm extends Scroller {
 
-public class SolidGaugeForm extends VerticalLayout {
+    public SolidGaugeForm(SolidGaugeChart gaugeChart) {
 
-    private final NumberField identifier = new NumberField("Identifier");
-    private TextField name = new TextField("Name");
-    private IntegerField min = new IntegerField("Minimum value");
-    private IntegerField max = new IntegerField("Maximum value");
-    private TextField color = new TextField("Color");
+        setScrollDirection(ScrollDirection.VERTICAL);
+        setHeight("800px");
 
-    private Binder<SolidGauge> binder = new Binder<>(SolidGauge.class);
+        getStyle().set("margin", "var(--lumo-space-xs)");
 
-    public SolidGaugeForm() {
-        this.setPadding(false);
-        this.setSpacing(false);
+        TextField title = new TextField("Title", e -> gaugeChart.setTitle(e.getValue()));
+        title.setValue("Chart");
 
-        binder.bind(identifier, solidGauge -> (double) solidGauge.getId(), null);
-        binder.bind(name, SolidGauge::getName, SolidGauge::setName);
-        binder.bind(min, SolidGauge::getMin, SolidGauge::setMin);
-        binder.bind(max, SolidGauge::getMax, SolidGauge::setMax);
-        binder.bind(color, SolidGauge::getColor, SolidGauge::setColor);
+        NumberField scale = new NumberField("Scale", e -> gaugeChart.setScale(e.getValue().intValue()));
+        scale.setValue(5d);
+        scale.setStepButtonsVisible(true);
+        scale.setMin(0);
+        scale.setMax(10);
 
-        name.addValueChangeListener(event -> {
-            fireEvent(new SolidGaugeNameEvent(this, Optional.of(binder.getBean())));
+        TextField unit = new TextField("Unit", e -> gaugeChart.setUnit(e.getValue()));
+        unit.setValue("Unit");
+
+        NumberField minValue = new NumberField("Minimum", e -> gaugeChart.setMin(e.getValue().intValue()));
+        minValue.setValue(0d);
+        minValue.setStepButtonsVisible(true);
+
+        NumberField maxValue = new NumberField("Maximum", e -> gaugeChart.setMax(e.getValue().intValue()));
+        maxValue.setValue(100d);
+        maxValue.setStepButtonsVisible(true);
+
+        Button refresh = new Button("Refresh", e -> {
+            gaugeChart.refreshValue();
+            System.out.println(gaugeChart.getSolidGaugeData());
         });
 
-        min.addValueChangeListener(event -> {
-            fireEvent(new SolidGaugeMinEvent(this, Optional.of(binder.getBean())));
-        });
+        NumberField borderWidth = new NumberField("Border width (px)", e -> gaugeChart.getStyle().set("border-width", e.getValue() + "px"));
+        borderWidth.setValue(5d);
+        borderWidth.setStepButtonsVisible(true);
+        borderWidth.setMin(0);
+        borderWidth.setMax(10);
 
-        max.addValueChangeListener(event -> {
-            fireEvent(new SolidGaugeMaxEvent(this, Optional.of(binder.getBean())));
-        });
+        ComboBox<String> borderStyle = new ComboBox<>("Border style", "solid", "dotted", "dashed");
+        borderStyle.addValueChangeListener(e -> gaugeChart.getStyle().set("border-style", e.getValue()));
+        borderStyle.setValue("solid");
 
-        color.addValueChangeListener(event -> {
-            fireEvent(new SolidGaugeColorEvent(this, Optional.of(binder.getBean())));
-        });
+        VerticalLayout customization = new VerticalLayout(new H4("Customization"), title, scale, borderWidth, borderStyle);
+        customization.setSpacing(false);
 
-        add(identifier, name, min, max, color);
-    }
+        VerticalLayout chart = new VerticalLayout(new H4("Chart"), unit, minValue, maxValue, refresh);
+        chart.setSpacing(false);
 
-    public void setSolidGauge(SolidGauge solidGauge) {
-        binder.setBean(solidGauge);
-    }
+        IntegerField minStatus = new IntegerField("Minimum value");
+        IntegerField maxStatus = new IntegerField("Maximum value");
+        IntegerField marginStatus = new IntegerField("Margin");
+        Checkbox propagateStatus = new Checkbox("Propagate");
+        VerticalLayout status = new VerticalLayout(new H4("Status"), minStatus, maxStatus, marginStatus, propagateStatus);
+        status.setSpacing(false);
 
-    public SolidGauge getSolidGauge() {
-        return binder.getBean();
-    }
+        setContent(new HorizontalLayout(customization, chart, status));
 
-    public void addSolidGaugeNameListener(ComponentEventListener<SolidGaugeNameEvent> listener) {
-        addListener(SolidGaugeNameEvent.class, listener);
-    }
-
-    public void addSolidGaugeMinListener(ComponentEventListener<SolidGaugeMinEvent> listener) {
-        addListener(SolidGaugeMinEvent.class, listener);
-    }
-
-    public void addSolidGaugeMaxListener(ComponentEventListener<SolidGaugeMaxEvent> listener) {
-        addListener(SolidGaugeMaxEvent.class, listener);
-    }
-
-    public void addSolidGaugeColorListener(ComponentEventListener<SolidGaugeColorEvent> listener) {
-        addListener(SolidGaugeColorEvent.class, listener);
     }
 }

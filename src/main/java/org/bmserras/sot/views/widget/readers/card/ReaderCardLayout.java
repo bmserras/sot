@@ -41,6 +41,7 @@ public class ReaderCardLayout extends VerticalLayout {
                 save.getReader().ifPresent(readers::add);
                 setItems(readers);
                 readerDialog.close();
+                System.out.println("Saving reader: " + save.getReader().get());
             });
             readerDialog.open();
         });
@@ -64,8 +65,6 @@ public class ReaderCardLayout extends VerticalLayout {
     }
 
     public void setItems(List<Reader> readers) {
-        System.out.println("###");
-        System.out.println(readers);
         this.readers = readers;
         existingCards.clear();
         cards.removeAll();

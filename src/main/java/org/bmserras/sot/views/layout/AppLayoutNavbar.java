@@ -44,7 +44,8 @@ public class AppLayoutNavbar extends AppLayout {
 
     private Image getLogo() {
 
-        Image logo = new Image("icons/logo-variation-sot.svg", "Synoptics of Things Logo");
+        Image logo = new Image("icons/logo-variation-sot-workbench.svg", "Synoptics of Things Logo");
+        //Image logo = new Image("icons/logo-variation-sot-operations.svg", "Synoptics of Things Logo");
         logo.getStyle().set("width", "150px")
                 .set("margin-left", "20px")
                 .set("position", "absolute");

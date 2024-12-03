@@ -8,6 +8,7 @@ import org.bmserras.sot.data.domain.readers.ReaderType;
 import org.bmserras.sot.events.widget.reader.ReaderSaveEvent;
 import org.bmserras.sot.views.components.CustomDialog;
 import org.bmserras.sot.views.widget.readers.gauge.GaugeLayout;
+import org.bmserras.sot.views.widget.readers.rotextfield.ROTextFieldLayout;
 import org.bmserras.sot.views.widget.readers.solidgauge.SolidGaugeLayout;
 
 import java.util.Optional;
@@ -16,20 +17,21 @@ public class ReaderDialog extends CustomDialog {
 
     private final Select<ReaderType> type = new Select<>();
     private final Div div = new Div();
-    private ValueReaderLayout valueReaderLayout;
+    private ReaderLayout readerLayout;
 
     public ReaderDialog() {
-        super("Configure reader", 50, 80);
+        super("Configure reader", 60, 80);
 
         type.setItemLabelGenerator(ReaderType::getType);
         type.setItems(ReaderType.values());
         type.addValueChangeListener(event -> {
             switch (event.getValue()) {
-                case GAUGE -> valueReaderLayout = new GaugeLayout();
-                case SOLID_GAUGE -> valueReaderLayout = new SolidGaugeLayout();
+                case GAUGE -> readerLayout = new GaugeLayout();
+                case SOLID_GAUGE -> readerLayout = new SolidGaugeLayout();
+                case RO_TEXT_FIELD -> readerLayout = new ROTextFieldLayout();
             }
             div.removeAll();
-            div.add(valueReaderLayout);
+            div.add(readerLayout);
         });
         type.setValue(ReaderType.GAUGE);
 
@@ -39,7 +41,7 @@ public class ReaderDialog extends CustomDialog {
 
         addSaveClickListener(click -> {
             fireEvent(
-                    new ReaderSaveEvent(this, Optional.of(valueReaderLayout.getValueReader()))
+                    new ReaderSaveEvent(this, Optional.of(readerLayout.getReader()))
             );
         });
 

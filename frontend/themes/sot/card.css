@@ -1,7 +1,7 @@
 .card {
 
-    min-width: 250px;
-    min-height: 300px;
+    min-width: 150px;
+    min-height: 160px;
     max-width: 25%;
     max-height: 40%;
 
@@ -24,7 +24,7 @@
 }
 
 .card .main-button::part(prefix) {
-    scale: 2.5;
+    scale: 4.5;
 }
 
 .card .container {
@@ -69,6 +69,7 @@
 
 .reader-card {
     max-width: 25%;
+    min-height: 80%;
 
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
 }
@@ -83,4 +84,88 @@
 
 .reader-card .container .title {
     font-size: 75%;
+}
+
+
+.widget-instance-card {
+
+
+
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+.widget-instance-card .main-button {
+    width: 100%;
+    color: black;
+    flex-grow: 1;
+    background-color: white;
+}
+
+.widget-instance-card .main-button::part(prefix) {
+    scale: 5;
+}
+
+.widget-instance-card .container {
+    width: 100%;
+    border-top: 1px solid grey;
+}
+
+.widget-instance-card .container .title {
+    color: black;
+    align-self: baseline;
+}
+
+.widget-instance-card .container .options-button {
+    color: black;
+    background-color: white;
+    --lumo-button-size:var(--lumo-size-xs);
+    margin-left: auto;
+    align-self: baseline;
+}
+
+.invisible-button {
+    display: none;
+}
+
+.button-container {
+    margin-top: 20px;
+
+    min-width: 500px;
+    min-height: 500px;
+    max-width: 25%;
+    max-height: 40%;
+
+    border: 1px solid grey;
+    border-radius: 10px;
+
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.textfield-container {
+    margin-top: 20px;
+
+    min-width: 500px;
+    min-height: 500px;
+    max-width: 25%;
+    max-height: 40%;
+
+    border: 1px solid grey;
+    border-radius: 10px;
+
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.button2-container {
+    margin-top: 20px;
+
+    min-width: 500px;
+    min-height: 500px;
+    max-width: 25%;
+    max-height: 40%;
+
+    border: 1px solid grey;
+    border-radius: 10px;
+
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }

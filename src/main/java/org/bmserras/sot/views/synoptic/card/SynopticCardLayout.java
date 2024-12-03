@@ -2,33 +2,40 @@ package org.bmserras.sot.views.synoptic.card;
 
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.bmserras.sot.data.domain.Synoptic;
 import org.bmserras.sot.events.synoptic.SynopticDeleteEvent;
+import org.bmserras.sot.events.synoptic.SynopticExportEvent;
 import org.bmserras.sot.events.synoptic.SynopticOpenEvent;
 import org.bmserras.sot.events.synoptic.SynopticSaveEvent;
+import org.bmserras.sot.views.project.components.ProjectDialog;
+import org.bmserras.sot.views.synoptic.components.SynopticDialog;
 import org.bmserras.sot.views.synoptic.components.SynopticForm;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SynopticCardLayout extends VerticalLayout {
+public class SynopticCardLayout extends FlexLayout {
 
     private final List<ComponentEventListener<SynopticOpenEvent>> openListeners;
     private final List<ComponentEventListener<SynopticDeleteEvent>> deleteListeners;
+    private final List<ComponentEventListener<SynopticExportEvent>> exportListeners;
 
     private final List<SynopticExistingCard> existingCards;
-    private final HorizontalLayout cards;
     private final SynopticNewCard newCard;
 
-    private Dialog dialogForm;
+    private SynopticDialog dialog;
     private SynopticForm form;
 
     public SynopticCardLayout() {
         setSizeFull();
-        setPadding(false);
+
+        this.setFlexDirection(FlexLayout.FlexDirection.ROW);
+        this.setFlexWrap(FlexLayout.FlexWrap.WRAP);
+        this.setJustifyContentMode(JustifyContentMode.CENTER);
 
         configureDialogForm();
 
@@ -39,46 +46,49 @@ public class SynopticCardLayout extends VerticalLayout {
         );
         newCard.addMainListener(click -> {
             form.setSynoptic(new Synoptic());
-            dialogForm.open();
+            dialog.setTitle("Create synoptic");
+            dialog.setDeleteButtonVisible(false);
+            dialog.open();
         });
 
         existingCards = new ArrayList<>();
-        cards = new HorizontalLayout();
-        cards.setWidthFull();
-        cards.setHeight("100%");
 
         openListeners = new ArrayList<>();
         deleteListeners = new ArrayList<>();
+        exportListeners = new ArrayList<>();
 
-        add(cards);
+        add(newCard);
     }
 
     private void configureDialogForm() {
         form = new SynopticForm();
         form.setWidth("25em");
-        dialogForm = new Dialog(form);
+        dialog = new SynopticDialog(form, 50, 50);
 
-        form.addSaveListener(click -> dialogForm.close());
-        form.addCloseListener(click -> dialogForm.close());
-        form.addDeleteListener(click -> dialogForm.close());
+        dialog.addSaveListener(click -> dialog.close());
+        dialog.addDeleteListener(click -> dialog.close());
+        dialog.addExportListener(click -> dialog.close());
     }
 
     public void setItems(List<Synoptic> synoptics) {
         existingCards.clear();
-        cards.removeAll();
-        cards.add(newCard);
+        removeAll();
+        add(newCard);
         for (Synoptic synoptic : synoptics) {
             SynopticExistingCard existingCard = new SynopticExistingCard(LineAwesomeIcon.CHART_PIE_SOLID.create(),
                     synoptic.getName(), "Open synoptic", synoptic);
             existingCards.add(existingCard);
-            cards.add(existingCard);
+            add(existingCard);
             openListeners.forEach(existingCard::addMainListener);
             openListeners.forEach(existingCard::addOpenListener);
             deleteListeners.forEach(existingCard::addDeleteListener);
+            exportListeners.forEach(existingCard::addExportListener);
 
             existingCard.addEditListener(event -> {
                 form.setSynoptic(synoptic);
-                dialogForm.open();
+                dialog.setTitle("Edit synoptic");
+                dialog.setDeleteButtonVisible(true);
+                dialog.open();
             });
         }
     }
@@ -90,12 +100,17 @@ public class SynopticCardLayout extends VerticalLayout {
     }
 
     public void addSaveListener(ComponentEventListener<SynopticSaveEvent> listener) {
-        form.addSaveListener(listener);
+        dialog.addSaveListener(listener);
     }
 
     public void addDeleteListener(ComponentEventListener<SynopticDeleteEvent> listener) {
         existingCards.forEach(card -> card.addDeleteListener(listener));
         form.addDeleteListener(listener);
         deleteListeners.add(listener);
+    }
+
+    public void addExportListener(ComponentEventListener<SynopticExportEvent> listener) {
+        existingCards.forEach(card -> card.addExportListener(listener));
+        exportListeners.add(listener);
     }
 }

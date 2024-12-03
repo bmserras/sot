@@ -19,9 +19,13 @@ public class CustomDialog extends Dialog {
     private final Button cancel = new Button();
 
     public CustomDialog(String title, int widthAsPercentage, int heightAsPercentage) {
-        setHeaderTitle(title);
+        this(title);
         setWidth(widthAsPercentage, Unit.PERCENTAGE);
         setHeight(heightAsPercentage, Unit.PERCENTAGE);
+    }
+
+    public CustomDialog(String title) {
+        setHeaderTitle(title);
         addClassName("dialog");
         addToHeader(configureCloseButton());
 
@@ -30,6 +34,14 @@ public class CustomDialog extends Dialog {
                 configureDeleteButton(),
                 configureCancelButton()
         );
+    }
+
+    public CustomDialog(String title, int widthAsPercentage, int heightAsPercentage, boolean showButtons) {
+        setHeaderTitle(title);
+        setWidth(widthAsPercentage, Unit.PERCENTAGE);
+        setHeight(heightAsPercentage, Unit.PERCENTAGE);
+        addClassName("dialog");
+        addToHeader(configureCloseButton());
     }
 
     public CustomDialog(int widthAsPercentage, int heightAsPercentage) {

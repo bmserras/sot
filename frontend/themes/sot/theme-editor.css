@@ -2,16 +2,3 @@
  * This file has been created by the Vaadin Theme Editor. Please note that
  * manual changes to individual CSS properties may be overwritten by the theme editor.
  */
-vaadin-button.click-button:hover {
-    outline: 1px solid black;
-}
-
-vaadin-vertical-layout.space {
-    outline: 1px solid black;
-}
-
-vaadin-vertical-layout.space:hover {
-    outline: 5px solid black;
-}
-
-

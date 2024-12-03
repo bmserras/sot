@@ -2,7 +2,6 @@ package org.bmserras.sot.data.db;
 
 import jakarta.persistence.*;
 import org.bmserras.sot.data.db.synoptic.SynopticDB;
-import org.bmserras.sot.data.db.widget.ValueReaderDB;
 import org.bmserras.sot.data.db.widget.WidgetDB;
 
 import java.util.Objects;
@@ -20,6 +19,9 @@ public class WidgetInstanceDB extends AbstractEntity {
     @ManyToOne(targetEntity = WidgetDB.class, fetch = FetchType.EAGER)
     private WidgetDB widget;
 
+    private int posX;
+    private int posY;
+
     public WidgetInstanceDB() {
         super();
     }
@@ -28,6 +30,16 @@ public class WidgetInstanceDB extends AbstractEntity {
         super(identifier);
         this.name = name;
         this.widget = widgetDB;
+        this.posX = 0;
+        this.posY = 0;
+    }
+
+    public WidgetInstanceDB(long identifier, String name, WidgetDB widgetDB, int posX, int posY) {
+        super(identifier);
+        this.name = name;
+        this.widget = widgetDB;
+        this.posX = posX;
+        this.posY = posY;
     }
 
     public String getName() {
@@ -50,6 +62,26 @@ public class WidgetInstanceDB extends AbstractEntity {
         this.synoptic = synopticDB;
     }
 
+    public SynopticDB getSynoptic() {
+        return synoptic;
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,7 +99,10 @@ public class WidgetInstanceDB extends AbstractEntity {
     public String toString() {
         return "WidgetInstanceDB{" +
                 "name='" + name + '\'' +
+                ", synoptic=" + synoptic +
                 ", widget=" + widget +
-                '}';
+                ", posX=" + posX +
+                ", posY=" + posY +
+                "} " + super.toString();
     }
 }

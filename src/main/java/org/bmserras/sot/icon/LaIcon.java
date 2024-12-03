@@ -3,7 +3,6 @@ package org.bmserras.sot.icon;
 import java.util.Locale;
 
 public enum LaIcon {
-    _500PX,
     ACCESSIBLE_ICON,
     ACCUSOFT,
     ACQUISITIONS_INCORPORATED,

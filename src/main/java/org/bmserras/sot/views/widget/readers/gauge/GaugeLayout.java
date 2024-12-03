@@ -1,35 +1,29 @@
 package org.bmserras.sot.views.widget.readers.gauge;
 
-import org.bmserras.sot.data.domain.readers.Gauge;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H4;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.bmserras.sot.data.domain.readers.Reader;
-import org.bmserras.sot.views.widget.readers.ValueReaderLayout;
+import org.bmserras.sot.views.widget.readers.ReaderLayout;
 
-public class GaugeLayout extends ValueReaderLayout {
+public class GaugeLayout extends ReaderLayout {
 
-    private GaugeForm gaugeForm = new GaugeForm();
-    private GaugePreview gaugePreview;
+    GaugeChart gaugeChart = new GaugeChart();
 
     public GaugeLayout() {
-        Gauge gauge = new Gauge();
-        gaugeForm.setGauge(gauge);
+        setSizeFull();
 
-        gaugePreview = new GaugePreview(gauge);
+        GaugeContainer gaugeContainer = new GaugeContainer(gaugeChart);
+        GaugeForm gaugeForm = new GaugeForm(gaugeChart);
 
-        gaugeForm.addGaugeNameListener(event -> {
-            event.getGauge().ifPresent(g -> gaugePreview.setName(g.getName()));
-        });
-        gaugeForm.addGaugeMinListener(event -> {
-            event.getGauge().ifPresent(g -> gaugePreview.setMin(g.getMin()));
-        });
-        gaugeForm.addGaugeMaxListener(event -> {
-            event.getGauge().ifPresent(g -> gaugePreview.setMax(g.getMax()));
-        });
-
-        add(gaugeForm, gaugePreview);
+        Div div = new Div(gaugeContainer);
+        setAlignSelf(Alignment.START, div);
+        expand();
+        add(new Div(gaugeForm), new VerticalLayout(new H4("Preview"), div));
     }
 
     @Override
-    public Reader getValueReader() {
-        return gaugeForm.getGauge();
+    public Reader getReader() {
+        return gaugeChart.getGaugeData();
     }
 }

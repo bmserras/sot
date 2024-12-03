@@ -9,6 +9,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.bmserras.sot.data.domain.Synoptic;
 import org.bmserras.sot.events.synoptic.SynopticDeleteEvent;
 import org.bmserras.sot.events.synoptic.SynopticEditEvent;
+import org.bmserras.sot.events.synoptic.SynopticExportEvent;
 import org.bmserras.sot.events.synoptic.SynopticOpenEvent;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
@@ -26,6 +27,9 @@ public class SynopticExistingCard extends VerticalLayout {
 
     public SynopticExistingCard(Component icon, String title, String tooltipText, Synoptic synoptic) {
         addClassName("card");
+
+        setSizeFull();
+        setMargin(true);
 
         this.mainButton = new Button(icon);
         this.mainButton.addClassName("main-button");
@@ -72,5 +76,10 @@ public class SynopticExistingCard extends VerticalLayout {
         optionsContextMenu.addDeleteListener(listener);
         mainContextMenu.addDeleteListener(click -> mainContextMenu.close());
         optionsContextMenu.addDeleteListener(click -> optionsContextMenu.close());
+    }
+
+    public void addExportListener(ComponentEventListener<SynopticExportEvent> listener) {
+        mainContextMenu.addExportListener(listener);
+        optionsContextMenu.addExportListener(listener);
     }
 }

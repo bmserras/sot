@@ -29,44 +29,13 @@ public class ProjectForm extends FormLayout {
 
     private final Binder<Project> binder = new Binder<>(Project.class);
 
-    public ProjectForm(boolean withButtons) {
+    public ProjectForm() {
         name.setPlaceholder("Blank project");
 
         binder.bind(identifier, project -> (double) project.getId(), null);
         binder.bind(name, Project::getName, Project::setName);
 
         add(identifier, name);
-        if (withButtons) add(createButtonsLayout());
-    }
-
-    private HorizontalLayout createButtonsLayout() {
-        save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-
-        save.addClickShortcut(Key.ENTER);
-        delete.addClickShortcut(Key.DELETE);
-        close.addClickShortcut(Key.ESCAPE);
-
-        save.addClickListener(event -> validateAndSave());
-        delete.addClickListener(event -> {
-
-            CustomConfirmDialog confirmDialog = new CustomConfirmDialog(
-                    "Delete project",
-                    "Are you sure you want to delete this project?",
-                    "Yes",
-                    true
-            );
-            confirmDialog.addConfirmListener(confirm -> fireEvent(new ProjectDeleteEvent(this, Optional.of(binder.getBean()))));
-
-            confirmDialog.open();
-        });
-        close.addClickListener(event -> fireEvent(new ProjectCloseEvent(this)));
-
-        binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));
-        HorizontalLayout horizontalLayout = new HorizontalLayout(save, delete, close);
-        horizontalLayout.expand(save, delete, close);
-        return horizontalLayout;
     }
 
     private void validateAndSave() {

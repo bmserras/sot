@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "reader_gauge")
-public class GaugeDB extends IntValueReaderDB {
+public class GaugeDB extends IntReaderDB {
 
     public GaugeDB() {
     }

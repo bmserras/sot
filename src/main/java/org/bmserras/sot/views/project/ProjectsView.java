@@ -34,6 +34,8 @@ public class ProjectsView extends VerticalLayout {
         this.userService = userService;
         this.projectService = projectService;
         setSizeFull();
+        setPadding(false);
+        setJustifyContentMode(JustifyContentMode.CENTER);
 
         Optional<User> userOp = authenticatedUser.get();
         if (userOp.isEmpty()) return;

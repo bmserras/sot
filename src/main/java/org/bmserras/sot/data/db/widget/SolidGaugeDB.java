@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "reader_solid_gauge")
-public class SolidGaugeDB extends IntValueReaderDB {
+public class SolidGaugeDB extends IntReaderDB {
 
     private String color;
 

@@ -75,6 +75,7 @@
     "@vaadin/virtual-list": "24.1.0",
     "construct-style-sheets-polyfill": "3.1.0",
     "date-fns": "2.29.3",
+    "echarts": "5.5.0",
     "lit": "2.7.4",
     "mobile-drag-drop": "2.3.0-rc.2",
     "proj4": "2.9.0"
@@ -172,7 +173,8 @@
     "proj4": "$proj4",
     "@vaadin/vaadin-themable-mixin": "$@vaadin/vaadin-themable-mixin",
     "date-fns": "$date-fns",
-    "mobile-drag-drop": "$mobile-drag-drop"
+    "mobile-drag-drop": "$mobile-drag-drop",
+    "echarts": "$echarts"
   },
   "vaadin": {
     "dependencies": {
@@ -249,6 +251,7 @@
       "@vaadin/virtual-list": "24.1.0",
       "construct-style-sheets-polyfill": "3.1.0",
       "date-fns": "2.29.3",
+      "echarts": "5.5.0",
       "lit": "2.7.4",
       "mobile-drag-drop": "2.3.0-rc.2",
       "proj4": "2.9.0"
@@ -270,6 +273,7 @@
       "workbox-core": "7.0.0",
       "workbox-precaching": "7.0.0"
     },
-    "hash": "2e5b002dfea194d0021170f05797ae72085b5094e257f33185f59fcaa2febf4a"
-  }
+    "hash": "60133a5ed4e26665d08787da10401dde54f2aef944df967b32f0ff95e745b8e2"
+  },
+  "type": "module"
 }

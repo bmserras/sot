@@ -1,10 +1,11 @@
 .v-dragged {
-    outline: 5px dotted hotpink;
+    outline: 5px solid #3c9eb9;
     opacity: 1;
 }
 
 .v-drag-over-target {
-    outline: 6px dotted blue;
+    outline: 5px solid #3c9eb9;
+    opacity: 1;
 }
 
 .highlight {
@@ -13,4 +14,12 @@
 
 vaadin-accordion-panel {
     background-color: #efefef;
+}
+
+.space {
+    outline: 1px solid black;
+}
+
+.gauge-container {
+    outline: 10px black;
 }

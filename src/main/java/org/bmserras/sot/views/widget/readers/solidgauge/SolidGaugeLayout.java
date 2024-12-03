@@ -1,39 +1,29 @@
 package org.bmserras.sot.views.widget.readers.solidgauge;
 
-import org.bmserras.sot.data.domain.readers.SolidGauge;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H4;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.bmserras.sot.data.domain.readers.Reader;
-import org.bmserras.sot.views.widget.readers.ValueReaderLayout;
+import org.bmserras.sot.views.widget.readers.ReaderLayout;
 
-public class SolidGaugeLayout extends ValueReaderLayout {
+public class SolidGaugeLayout extends ReaderLayout {
 
-    private SolidGaugeForm solidGaugeForm = new SolidGaugeForm();
-    private SolidGaugePreview solidGaugePreview;
+    SolidGaugeChart solidGaugeChart = new SolidGaugeChart();
 
     public SolidGaugeLayout() {
+        setSizeFull();
 
-        SolidGauge solidGauge = new SolidGauge();
-        solidGaugeForm.setSolidGauge(solidGauge);
+        SolidGaugeContainer solidGaugeContainer = new SolidGaugeContainer(solidGaugeChart);
+        SolidGaugeForm solidGaugeForm = new SolidGaugeForm(solidGaugeChart);
 
-        solidGaugePreview = new SolidGaugePreview(solidGauge);
-
-        solidGaugeForm.addSolidGaugeNameListener(event -> {
-            event.getSolidGauge().ifPresent(sg -> solidGaugePreview.setName(sg.getName()));
-        });
-        solidGaugeForm.addSolidGaugeMinListener(event -> {
-            event.getSolidGauge().ifPresent(sg -> solidGaugePreview.setMin(sg.getMin()));
-        });
-        solidGaugeForm.addSolidGaugeMaxListener(event -> {
-            event.getSolidGauge().ifPresent(sg -> solidGaugePreview.setMax(sg.getMax()));
-        });
-        solidGaugeForm.addSolidGaugeColorListener(event -> {
-            event.getSolidGauge().ifPresent(sg -> solidGaugePreview.setColor(sg.getColor()));
-        });
-
-        add(solidGaugeForm, solidGaugePreview);
+        Div div = new Div(solidGaugeContainer);
+        setAlignSelf(Alignment.START, div);
+        expand();
+        add(new Div(solidGaugeForm), new VerticalLayout(new H4("Preview"), div));
     }
 
     @Override
-    public Reader getValueReader() {
-        return solidGaugeForm.getSolidGauge();
+    public Reader getReader() {
+        return solidGaugeChart.getSolidGaugeData();
     }
 }

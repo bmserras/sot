@@ -3,8 +3,7 @@ package org.bmserras.sot.data.domain.readers;
 public enum ReaderType {
     GAUGE("Gauge"),
     SOLID_GAUGE("Solid Gauge"),
-    TEXT_FIELD("Text field"),
-    NUMBER_FIELD("Number field");
+    RO_TEXT_FIELD("Read-only Text field");
 
     private String type;
 
